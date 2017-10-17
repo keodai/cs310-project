@@ -18,3 +18,9 @@ This is the project repository, containing both the project code and documentati
 * Plots are now saved to a file, rather than displayed.
 * Added flag to toggle plotting behaviour on or off, so only conversion and feature extraction performed on dataset.
 
+### TO DO
+* SoX for conversion?
+* Retain metadata with wav files to be able to output the song names/artist details for recommendations/ labels.
+* Raw feature extraction from frames python wave and numpy.fft.
+* Yaafe, Aubio or Marsyas/WEKA for feature extraction/vector creation.
+* Using pyAudioAnalysis library for feature extraction - installed dependencies numpy matplotlib scipy sklearn hmmlearn simplejson eyed3 pydub
