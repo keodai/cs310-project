@@ -18,6 +18,9 @@ This is the project repository, containing both the project code and documentati
 * Plots are now saved to a file, rather than displayed.
 * Added flag to toggle plotting behaviour on or off, so only conversion and feature extraction performed on dataset.
 
+### 17/10/2017
+* Researched STFT features. Used librosa to extract ZCR, SC, SR, SB
+
 ### TO DO
 * SoX for conversion?
 * Retain metadata with wav files to be able to output the song names/artist details for recommendations/ labels.
