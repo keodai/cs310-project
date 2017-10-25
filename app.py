@@ -5,6 +5,7 @@ import librosa.display
 import matplotlib.pyplot as plt # For graphs.
 import numpy as np
 from scipy.io import wavfile
+from tinytag import TinyTag
 
 PLOT_RESULTS = True
 
@@ -14,7 +15,9 @@ plot_path = "/Users/matthew/Documents/university/CS310-Third-Year-Project/cs310-
 src_ext = ".mp3"
 dest_ext = ".wav"
 
-file_list = []
+filepaths = []
+genres = []
+titles_and_artists = []
 
 
 def mp3_to_wav():
@@ -22,21 +25,39 @@ def mp3_to_wav():
         name = file[:file.rfind(".")]
         src = src_path + name + src_ext
         dest = dest_path + name + dest_ext
-        file_list.append(dest)
+        filepaths.append(dest)
         subprocess.call(["ffmpeg", "-i", src, dest])
+        genre_from_metadata(src)
+        title_and_artist_from_metadata(src)
 
+
+def genre_from_metadata(src):
+    TinyTag.get(src).genre.replace('\x00', '')
+
+
+def title_and_artist_from_metadata(src):
+    titles_and_artists.append([
+        TinyTag.get(src).title.replace('\x00', ''),
+        TinyTag.get(src).artist.replace('\x00', ''),
+        TinyTag.get(src).album.replace('\x00', '')
+    ])
 
 def feature_extraction():
-    ysr, stfeatures = ([] for i in range(2))
-    #y, sr, mfcc, zcr, scent, sband, sroll = [0] * len(file_list)
+    ysr = []
+    stfeatures = []
+    # y, sr, mfcc, zcr, scent, sband, sroll = [0] * len(file_list)
+    # lists = [[] for i in xrange(num_lists)]
 
-    for i, file in enumerate(file_list):
+    for i, file in enumerate(filepaths):
         ysr.append(librosa.load(file))
-        stfeatures.append(librosa.feature.zero_crossing_rate(ysr[i][0]))
-        stfeatures.append(librosa.feature.spectral_centroid(y=ysr[i][0], sr=ysr[i][1]))
-        stfeatures.append(librosa.feature.spectral_rolloff(y=ysr[i][0], sr=ysr[i][1]))
-        stfeatures.append(librosa.feature.spectral_bandwidth(y=ysr[i][0], sr=ysr[i][1]))
-        stfeatures.append(librosa.feature.mfcc(y=ysr[i][0], sr=ysr[i][1]))
+        feature_vector = []
+        feature_vector.append(librosa.feature.zero_crossing_rate(ysr[i][0]))
+        feature_vector.append(librosa.feature.spectral_centroid(y=ysr[i][0], sr=ysr[i][1]))
+        feature_vector.append(librosa.feature.spectral_rolloff(y=ysr[i][0], sr=ysr[i][1]))
+        feature_vector.append(librosa.feature.spectral_bandwidth(y=ysr[i][0], sr=ysr[i][1]))
+        feature_vector.append(librosa.feature.mfcc(y=ysr[i][0], sr=ysr[i][1]))
+        # scale/normalise
+        stfeatures.append(feature_vector)
         if PLOT_RESULTS:
             plt.figure(num=i, figsize=(10, 4))
             librosa.display.specshow(stfeatures[4], x_axis="time")
