@@ -28,6 +28,7 @@ This is the project repository, containing both the project code and documentati
 * Feature vector now 1d list containing mean and variances of individual features.
 * Scaled feature values to be in range 0-1.
 
+### 26/10/2017
 
 ### TO DO
 * SoX for conversion?

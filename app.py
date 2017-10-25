@@ -83,6 +83,7 @@ def feature_extraction():
         plot_mfcc(mfcc, i)
     return preprocessing.minmax_scale(stfeatures)
 
+
 def main():
     mp3_to_wav()
     normalised_features = feature_extraction()
