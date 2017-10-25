@@ -18,8 +18,13 @@ This is the project repository, containing both the project code and documentati
 * Plots are now saved to a file, rather than displayed.
 * Added flag to toggle plotting behaviour on or off, so only conversion and feature extraction performed on dataset.
 
-### 17/10/2017
+### 18/10/2017
 * Researched STFT features. Used librosa to extract ZCR, SC, SR, SB
+
+### 25/10/2017
+* Extracted genre, title, artist and album details from MP3 metadata. 
+* Genre required as it will be used as label in SVM.
+
 
 ### TO DO
 * SoX for conversion?

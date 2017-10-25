@@ -7,7 +7,7 @@ import numpy as np
 from scipy.io import wavfile
 from tinytag import TinyTag
 
-PLOT_RESULTS = True
+PLOT_MFCC_RESULTS = False
 
 src_path = "/Users/matthew/Documents/university/CS310-Third-Year-Project/cs310-Project/samples/src/"
 dest_path = "/Users/matthew/Documents/university/CS310-Third-Year-Project/cs310-Project/samples/dest/"
@@ -58,13 +58,13 @@ def feature_extraction():
         feature_vector.append(librosa.feature.mfcc(y=ysr[i][0], sr=ysr[i][1]))
         # scale/normalise
         stfeatures.append(feature_vector)
-        if PLOT_RESULTS:
+        if PLOT_MFCC_RESULTS:
             plt.figure(num=i, figsize=(10, 4))
-            librosa.display.specshow(stfeatures[4], x_axis="time")
+            librosa.display.specshow(stfeatures[i][4], x_axis="time")
             plt.colorbar()
             plt.title("MFCC " + str(i))
             plt.tight_layout()
-            plt.savefig(plot_path + "temp" + str(i) + ".png")
+            plt.savefig(plot_path + "mfcc" + str(i) + ".png")
 
 
 def main():
