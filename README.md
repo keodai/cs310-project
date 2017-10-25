@@ -24,6 +24,7 @@ This is the project repository, containing both the project code and documentati
 ### 25/10/2017
 * Extracted genre, title, artist and album details from MP3 metadata. 
 * Genre required as it will be used as label in SVM.
+* Refactored plotting.
 
 
 ### TO DO

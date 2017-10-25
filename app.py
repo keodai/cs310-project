@@ -42,6 +42,17 @@ def title_and_artist_from_metadata(src):
         TinyTag.get(src).album.replace('\x00', '')
     ])
 
+
+def plot_mfcc(stfeatures, i):
+    if PLOT_MFCC_RESULTS:
+        plt.figure(num=i, figsize=(10, 4))
+        librosa.display.specshow(stfeatures[i][4], x_axis="time")
+        plt.colorbar()
+        plt.title("MFCC " + str(i))
+        plt.tight_layout()
+        plt.savefig(plot_path + "mfcc" + str(i) + ".png")
+
+
 def feature_extraction():
     ysr = []
     stfeatures = []
@@ -56,16 +67,9 @@ def feature_extraction():
         feature_vector.append(librosa.feature.spectral_rolloff(y=ysr[i][0], sr=ysr[i][1]))
         feature_vector.append(librosa.feature.spectral_bandwidth(y=ysr[i][0], sr=ysr[i][1]))
         feature_vector.append(librosa.feature.mfcc(y=ysr[i][0], sr=ysr[i][1]))
-        # scale/normalise
         stfeatures.append(feature_vector)
-        if PLOT_MFCC_RESULTS:
-            plt.figure(num=i, figsize=(10, 4))
-            librosa.display.specshow(stfeatures[i][4], x_axis="time")
-            plt.colorbar()
-            plt.title("MFCC " + str(i))
-            plt.tight_layout()
-            plt.savefig(plot_path + "mfcc" + str(i) + ".png")
-
+        plot_mfcc(stfeatures, i)
+    
 
 def main():
     mp3_to_wav()
