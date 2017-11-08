@@ -5,9 +5,11 @@ import librosa.display  # For plots.
 import matplotlib.pyplot as plt  # For plots.
 import numpy as np  # For list processing - summary statistics of features in vector.
 import sklearn  # For pre-processing and classifier.
-from mlxtend.plotting import plot_decision_regions # For plotting decision region boundaries.
+from mlxtend.plotting import plot_decision_regions  # For plotting decision region boundaries.
 from sklearn.preprocessing import MinMaxScaler
 import logging
+from sklearn.externals import joblib  # Saving stuff.
+import os.path  # Check path
 
 from tinytag import TinyTag  # For extracting metadata.
 
@@ -118,18 +120,28 @@ def main():
     logging.info(str(genres))
     # Perform feature extraction on WAV.
     logging.info("FEATURE EXTRACTION =================================================================================")
-    stfeatures = feature_extraction(filepaths)
+    if os.path.isfile("features.pkl"):
+        stfeatures = joblib.load("features.pkl")
+    else:
+        stfeatures = feature_extraction(filepaths)
+        joblib.dump(stfeatures, 'features.pkl')
+
     # Normalise/scale
     scaler = MinMaxScaler()
     scaler.fit(stfeatures)
     normalised_features = scaler.transform(stfeatures)
     logging.info("NORMALISED FEATURE VECTORS =========================================================================")
     logging.info(str(normalised_features))
-    # Create an SVM classifier.
-    clf = sklearn.svm.SVC()
-    # Train the classifier.
-    logging.info("Training classifier...")
-    clf.fit(normalised_features, genres)
+
+    if os.path.isfile("classifier.pkl"):
+        clf = joblib.load("classifier.pkl")
+    else:
+        # Create an SVM classifier.
+        clf = sklearn.svm.SVC()
+        # Train the classifier.
+        logging.info("Training classifier...")
+        clf.fit(normalised_features, genres)
+        joblib.dump(clf, 'classifier.pkl')
 
     # Plot Decision Region
     # plot_decision_regions(X=np.array(normalised_features),
@@ -147,7 +159,6 @@ def main():
     logging.info("Training complete.")
     logging.info("TESTING *******************************************************************************************")
 
-    # TODO: Test classifier
     # Convert testing data from MP3 to WAV
     logging.info("CONVERTING FILES...")
     mp3_to_wav_test(test_src_path, src_ext, test_dest_path, dest_ext)
@@ -157,10 +168,17 @@ def main():
 
     # Feature extraction
     logging.info("FEATURE EXTRACTION =================================================================================")
-    test_features = feature_extraction(test_filepaths)
+
+    if os.path.isfile("test_features.pkl"):
+        test_features = joblib.load("test_features.pkl")
+    else:
+        test_features = feature_extraction(test_filepaths)
+        joblib.dump(test_features, 'test_features.pkl')
+
     normalised_test_features = scaler.transform(test_features)
     logging.info("NORMALISED FEATURE VECTORS =========================================================================")
     logging.info(str(normalised_test_features))
+
     # Check exists?
 
     # Predict genre using extracted feature data
