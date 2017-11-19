@@ -1,18 +1,16 @@
-import os  # Filesystem navigation.
-import subprocess  # For call to ffmpeg script.
-import librosa  # For feature extraction.
-import librosa.display  # For plots.
-import matplotlib.pyplot as plt  # For plots.
-import numpy as np  # For list processing - summary statistics of features in vector.
-import sklearn  # For pre-processing and classifier.
-from mlxtend.plotting import plot_decision_regions  # For plotting decision region boundaries.
-from sklearn.preprocessing import MinMaxScaler
-import logging
-from sklearn.externals import joblib  # Saving stuff.
-import os.path  # Check path
-from multiprocessing import Process  # multithreading.
+import os                                           # Filesystem navigation.
+import subprocess                                   # For call to ffmpeg script.
+import librosa                                      # For feature extraction.
+import librosa.display                              # For plots.
+import matplotlib.pyplot as plt                     # For plots.
+import numpy as np                                  # For list processing - summary statistics of features in vector.
+import sklearn                                      # For pre-processing and classifier.
+from sklearn.preprocessing import MinMaxScaler      # For scaling of extracted features.
+import logging                                      # For recording progress for debugging.
+from sklearn.externals import joblib                # Saving stuff.
+import os.path                                      # Check path
 
-from tinytag import TinyTag  # For extracting metadata.
+from tinytag import TinyTag                         # For extracting metadata.
 
 PLOT_MFCC_RESULTS = False
 
@@ -94,8 +92,6 @@ def feature_extraction(filepaths):
         sr = librosa.feature.spectral_rolloff(y=ysr[i][0], sr=ysr[i][1])
         sb = librosa.feature.spectral_bandwidth(y=ysr[i][0], sr=ysr[i][1])
         mfcc = librosa.feature.mfcc(y=ysr[i][0], sr=ysr[i][1])
-        # Vector of mean and variance of features. Depending on performance, mean can be sum(l)/float(len(l)).
-        # Var param  ddof=1 for n-1 instead of n. sum([(xi - m)**2 for xi in results]) / (len(results) - 1)
         feature_vector = [
             np.mean(zcr), np.var(zcr),
             np.mean(sc), np.var(sc),
@@ -108,26 +104,23 @@ def feature_extraction(filepaths):
         if PLOT_MFCC_RESULTS:
             plot_mfcc(mfcc, i)
     return stfeatures
-    # return sklearn.preprocessing.minmax_scale(stfeatures)
 
 
 def main():
     logging.basicConfig(filename='output.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
-    # Convert training data from MP3 to WAV.
     logging.info("TRAINING *******************************************************************************************")
     logging.info("CONVERTING FILES...")
     mp3_to_wav_training(training_src_path, src_ext, training_dest_path, dest_ext)
     logging.info("GENRES =============================================================================================")
     logging.info(str(genres))
-    # Perform feature extraction on WAV.
     logging.info("FEATURE EXTRACTION =================================================================================")
+
     if os.path.isfile("features.pkl"):
         stfeatures = joblib.load("features.pkl")
     else:
         stfeatures = feature_extraction(filepaths)
         joblib.dump(stfeatures, 'features.pkl')
 
-    # Normalise/scale
     scaler = MinMaxScaler()
     scaler.fit(stfeatures)
     normalised_features = scaler.transform(stfeatures)
@@ -144,30 +137,15 @@ def main():
         clf.fit(normalised_features, genres)
         joblib.dump(clf, 'classifier.pkl')
 
-    # Plot Decision Region
-    # plot_decision_regions(X=np.array(normalised_features),
-    #                       y=np.array(list(range(len(genres)))),
-    #                       # feature_index=(),
-    #                       filler_feature_values={"zcr_mean": 0, "zcr_var": 1, "sc_mean": 2, "sc_var": 3, "sr_mean": 4, "sr_var": 5, "sb_mean": 6, "sb_var": 7},
-    #                       filler_feature_ranges={"zcr_mean": [0,1], "zcr_var": [0,1], "sc_mean": [0,1], "sc_var": [0,1], "sr_mean": [0,1], "sr_var": [0,1], "sb_mean": [0,1], "sb_var": [0,1]},
-    #                       clf=clf,
-    #                       legend=2)
-    #
-    # # Update plot object with X/Y axis labels and Figure Title
-    # plt.xlabel(X.columns[0], size=14)
-    # plt.ylabel(X.columns[1], size=14)
-    # plt.title('SVM Decision Region Boundary', size=16)
     logging.info("Training complete.")
     logging.info("TESTING *******************************************************************************************")
 
-    # Convert testing data from MP3 to WAV
     logging.info("CONVERTING FILES...")
     mp3_to_wav_test(test_src_path, src_ext, test_dest_path, dest_ext)
 
     logging.info("GENRES =============================================================================================")
     logging.info(str(test_listed_genre))
 
-    # Feature extraction
     logging.info("FEATURE EXTRACTION =================================================================================")
 
     if os.path.isfile("test_features.pkl"):
@@ -180,7 +158,6 @@ def main():
     logging.info("NORMALISED FEATURE VECTORS =========================================================================")
     logging.info(str(normalised_test_features))
 
-    # Check exists?
 
     # Predict genre using extracted feature data
     predicted_genres = clf.predict(test_features)
