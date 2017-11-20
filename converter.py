@@ -12,5 +12,3 @@ def convert(src, dst_dir, dst_ext):
     except subprocess.CalledProcessError:
         logging.error(proc)
         return
-
-

@@ -10,12 +10,16 @@ from sklearn.preprocessing import MinMaxScaler
 import sklearn
 
 
+def single_song(src, dst_path):
+    logging.info("Processing: " + src)
+    dst = converter.convert(src, dst_path, paths.dst_ext)
+    return Song(src, dst)
+
+
 def convert_and_get_data(src_path, dst_path):
     song_data = []
     for src in utils.visible(src_path):
-        logging.info("Processing: " + src)
-        dst = converter.convert(src, dst_path, paths.dst_ext)
-        song_data.append(Song(src, dst))
+        song_data.append(single_song(src, dst_path))
     return song_data
 
 
@@ -35,8 +39,7 @@ def songs_to_features(song_data):
     return features, listed_genres
 
 
-def main():
-    logging.basicConfig(filename='logs/output.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
+def classify():
     logging.info("Starting setup...")
     logging.info("-Starting Training...")
 

@@ -43,5 +43,5 @@ class Song:
             np.mean(sb), np.var(sb),
             np.mean(mfcc), np.var(mfcc)
         ]
-        logging.info(str(i) + ": " + str(feature_vector))
+        logging.info(str(feature_vector))
         return feature_vector
