@@ -36,8 +36,9 @@ This is the project repository, containing both the project code and documentati
 * Added code for processing and prediction for test dataset.
 * Added analysis statistics to evaluate accuracy of genre classification.
 
-### 08/11/2017
-
+### 19/11/2017
+* Refactored all
+* Added lookup and recommendation by distance within genre.
 
 ### TO DO
 * SoX for conversion?

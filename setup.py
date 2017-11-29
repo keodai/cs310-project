@@ -55,7 +55,7 @@ def classify():
     scaler.fit(features)
     normalised_features = scaler.transform(features)
     logging.info(str(normalised_features))
-    normalised = normalised_features.reverse()
+    normalised = normalised_features[::-1]
     for song in song_data:
         song.normalised_features = normalised.pop()
 
