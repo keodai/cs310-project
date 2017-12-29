@@ -39,6 +39,11 @@ def songs_to_features(song_data):
     return features, listed_genres
 
 
+# # Implement DBScan
+# def cluster(data):
+#     return data
+
+
 def classify():
     logging.info("Starting setup...")
     logging.info("-Starting Training...")
@@ -89,6 +94,17 @@ def classify():
     logging.info("Genre conflicts: " + str(non_matches))
     accuracy = len(non_matches) / len(predicted_genres)
     logging.info("Accuracy: " + str(accuracy) + "%")
+
+    # # Begin clustering for each class
+    # clusters = []
+    # for cls in clf.classes_:
+    #     cls_songs = for song in song_data:
+    #         if song.predicted_genre == cls:
+    #             song
+    #     cls_fvs = for song in cls_songs:
+    #         song.normalised_features
+    #     clusters.append((cls, cluster(cls_fvs)))
+
 
     logging.info("--Storage...")
     joblib.dump(song_data, "data/song_data.pkl")
