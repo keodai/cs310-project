@@ -8,4 +8,4 @@ def format_string(s):
 def visible(src_path):
     return [os.path.join(src_path, file)
             for file in os.listdir(src_path)
-            if not file.startswith('.') and os.path.isfile(file)]
+            if not file.startswith('.') and os.path.isfile(os.path.join(src_path, file))]

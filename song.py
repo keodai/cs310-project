@@ -7,13 +7,13 @@ import logging
 
 class Song:
     def __init__(self, src, dst):
+        self.src = src
+        self.dst = dst
         self.title = self.title_from_metadata()
         self.artist = self.artist_from_metadata()
         self.album = self.album_from_metadata()
         self.listed_genre = self.genre_from_metadata()
         self.predicted_genre = None
-        self.src = src
-        self.dst = dst
         self.features = self.extract_features()
         self.normalised_features = None
 

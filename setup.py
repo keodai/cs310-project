@@ -58,15 +58,18 @@ def classify():
     logging.info("--Normalisation...")
     scaler = MinMaxScaler()
     scaler.fit(features)
-    normalised_features = scaler.transform(features)
+    normalised_features = scaler.transform(features).tolist()
     logging.info(str(normalised_features))
-    normalised = normalised_features[::-1]
-    for song in song_data:
-        song.normalised_features = normalised.pop()
 
     logging.info("--Training Classifier...")
     clf = sklearn.svm.SVC()
     clf.fit(normalised_features, listed_genres)
+
+    normalised = normalised_features[::-1]
+    predicted_genres = clf.predict(normalised).tolist()
+    for song in song_data:
+        song.normalised_features = normalised.pop()
+        song.predicted_genre = predicted_genres.pop()
 
     logging.info("-Starting Testing...")
     logging.info("--File Conversion and Metadata Retrieval (inc. features)...")
@@ -77,17 +80,17 @@ def classify():
     test_features, test_listed_genres = songs_to_features(test_song_data)
 
     logging.info("--Normalisation...")
-    normalised_test_features = scaler.transform(test_features)
+    normalised_test_features = scaler.transform(test_features).tolist()
     logging.info(str(normalised_test_features))
-    test_normalised = normalised_test_features.reverse()
-    for song in song_data:
-        song.normalised_features = test_normalised.pop()
+    test_normalised = normalised_test_features[::-1]  # .reverse()
+    for test_song in test_song_data:
+        test_song.normalised_features = test_normalised.pop()
 
     logging.info("--Prediction...")
-    predicted_genres = clf.predict(normalised_test_features)
-    predicted = predicted_genres.reverse()
-    for song in test_song_data:
-        song.predicted_genre = predicted.pop()
+    predicted_genres = clf.predict(normalised_test_features).tolist()
+    predicted = predicted_genres[::-1]  # .reverse()
+    for test_song in test_song_data:
+        test_song.predicted_genre = predicted.pop()
 
     logging.info("--Analysis...")
     non_matches = [(i, j) for i, j in zip(predicted_genres, test_listed_genres) if i != j]
@@ -104,7 +107,6 @@ def classify():
     #     cls_fvs = for song in cls_songs:
     #         song.normalised_features
     #     clusters.append((cls, cluster(cls_fvs)))
-
 
     logging.info("--Storage...")
     joblib.dump(song_data, "data/song_data.pkl")
