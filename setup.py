@@ -39,9 +39,11 @@ def songs_to_features(song_data):
     return features, listed_genres
 
 
-# # Implement DBScan
-# def cluster(data):
-#     return data
+# Implement DBScan
+def cluster(data):
+    db = sklearn.cluster.DBSCAN()
+    db.fit(data)
+    return db
 
 
 def classify():
@@ -82,13 +84,13 @@ def classify():
     logging.info("--Normalisation...")
     normalised_test_features = scaler.transform(test_features).tolist()
     logging.info(str(normalised_test_features))
-    test_normalised = normalised_test_features[::-1]  # .reverse()
+    test_normalised = normalised_test_features[::-1]
     for test_song in test_song_data:
         test_song.normalised_features = test_normalised.pop()
 
     logging.info("--Prediction...")
     predicted_genres = clf.predict(normalised_test_features).tolist()
-    predicted = predicted_genres[::-1]  # .reverse()
+    predicted = predicted_genres[::-1]
     for test_song in test_song_data:
         test_song.predicted_genre = predicted.pop()
 
@@ -98,18 +100,17 @@ def classify():
     accuracy = len(non_matches) / len(predicted_genres)
     logging.info("Accuracy: " + str(accuracy) + "%")
 
-    # # Begin clustering for each class
-    # clusters = []
-    # for cls in clf.classes_:
-    #     cls_songs = for song in song_data:
-    #         if song.predicted_genre == cls:
-    #             song
-    #     cls_fvs = for song in cls_songs:
-    #         song.normalised_features
-    #     clusters.append((cls, cluster(cls_fvs)))
+    # Begin clustering for each class
+    clusters = []
+    for cls in clf.classes_:
+            cls_songs = [song for song in song_data if song.predicted_genre == cls]
+            if len(cls_songs) > 0:
+                cls_features = [song.normalised_features for song in cls_songs]
+                clusters.append((cls, cluster(cls_features)))
 
     logging.info("--Storage...")
     joblib.dump(song_data, "data/song_data.pkl")
     joblib.dump(scaler, "data/scaler.pkl")
     joblib.dump(clf, 'data/classifier.pkl')
     joblib.dump(test_song_data, "data/test_song_data.pkl")
+    joblib.dump(clusters, "data/clusters.pkl")

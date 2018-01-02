@@ -40,6 +40,9 @@ This is the project repository, containing both the project code and documentati
 * Refactored all
 * Added lookup and recommendation by distance within genre.
 
+### 30/12/2017
+* Fixed issues ready for DBScan Clustering.
+
 ### TO DO
 * SoX for conversion?
 * Retain metadata with wav files to be able to output the song names/artist details for recommendations/ labels.
