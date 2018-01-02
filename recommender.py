@@ -58,6 +58,7 @@ def main(args):
         # BEGIN RECOMMENDATION
         logging.info("Recommendations:")
         if mode == "SVM" or mode == "ALL": # Sorted songs in genre region.
+            logging.info("SVM")
             matches = []
             for song in song_data:
                 if song.predicted_genre == predicted:
@@ -66,22 +67,25 @@ def main(args):
             sorted_recommendations = sorted(matches, key=lambda l: l[1])[:10]
             for recommendation in sorted_recommendations:
                 logging.info(recommendation)
-        elif mode == "FASTKMEANS" or mode == "ALL": # Unsorted songs in single cluster.
-            nearest_cluster = kmeans.predict(norm_features)
+        if mode == "FASTKMEANS" or mode == "ALL": # Unsorted songs in single cluster.
+            logging.info("FASTKMEANS")
+            [nearest_cluster] = kmeans.predict([norm_features])
             recommendations = [entry[0].src for entry in zip(song_data, kmeans.labels_) if entry[1] == nearest_cluster]
             for recommendation in recommendations:
                 logging.info(recommendation)
-        elif mode == "FASTSORTEDKMEANS" or mode == "ALL":  # Sorted songs in single cluster.
-            nearest_cluster = kmeans.predict(norm_features)
+        if mode == "FASTSORTEDKMEANS" or mode == "ALL":  # Sorted songs in single cluster.
+            logging.info("FASTSORTEDKMEANS")
+            [nearest_cluster] = kmeans.predict([norm_features])
             songs_in_cluster = [entry[0].src for entry in zip(song_data, kmeans.labels_) if entry[1] == nearest_cluster]
             recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
             for recommendation in recommendations:
                 logging.info(recommendation)
-        elif mode == "KMEANS" or mode == "ALL": # All clusters, sorted by cluster, then song distance.
+        if mode == "KMEANS" or mode == "ALL": # All clusters, sorted by cluster, then song distance.
+            logging.info("KMEANS")
             recommendations = []
             cluster_label = -2
             song_cluster_ids = zip(song_data, kmeans.labels_)
-            cluster_distances = zip([kmeans.predict(point) for point in kmeans.cluster_centers_],
+            cluster_distances = zip(kmeans.predict(kmeans.cluster_centers_),
                                     [distance.euclidean(cluster_center, norm_features) for cluster_center in
                                      kmeans.cluster_centers_])
             sorted_cluster_distances = sorted(cluster_distances, key=lambda l: l[1])
@@ -93,23 +97,26 @@ def main(args):
                     recommendations.extend(sorted(songs_in_cluster, key=lambda l: l[1]))
             for recommendation in recommendations:
                 logging.info(recommendation)
-        elif mode == "DBSCAN" or mode == "ALL": # Sorted songs in single cluster.
+        if mode == "DBSCAN" or mode == "ALL": # Sorted songs in single cluster.
+            logging.info("DBSCAN")
             # How to deal with noise?
-            core_samples = list(zip(dbscan.core_sample_indices_, dbscan.components_)) # Indices same as labels/cluster_ids?
+            core_samples = list(zip(dbscan.core_sample_indices_, dbscan.components_))  # Indices same as labels/cluster_ids?
             song_cluster_ids = zip(song_data, dbscan.labels_)
             tree = KDTree(dbscan.components_)
-            nearest_cluster = core_samples[tree.query([norm_features])][0] # For single nearest cluster, change query for more clusters.
+            [[index]] = tree.query([norm_features])[1]
+            nearest_cluster = core_samples[index][0]  # For single nearest cluster, change query for more clusters.
             songs_in_cluster = [entry[0].src for entry in song_cluster_ids if entry[1] == nearest_cluster]
             recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
             for recommendation in recommendations:
                 logging.info(recommendation)
-        elif mode == "SVM+KMEANS" or mode == "ALL":
+        if mode == "SVM+KMEANS" or mode == "ALL":
+            logging.info("SVM+KMEANS")
             [genre_clusters] = [i[1] for i in genre_kmeans if i[0] == predicted]
             songs_in_genre = [song for song in song_data if song.predicted_genre == predicted]
             recommendations = []
             cluster_label = -2
             song_cluster_ids = zip(songs_in_genre, genre_clusters.labels_)
-            cluster_distances = zip([genre_clusters.predict(point) for point in genre_clusters.cluster_centers_],
+            cluster_distances = zip(genre_clusters.predict(genre_clusters.cluster_centers_),
                                     [distance.euclidean(cluster_center, norm_features) for cluster_center in
                                      genre_clusters.cluster_centers_])
             sorted_cluster_distances = sorted(cluster_distances, key=lambda l: l[1])
@@ -121,19 +128,22 @@ def main(args):
                     recommendations.extend(sorted(songs_in_cluster, key=lambda l: l[1]))
             for recommendation in recommendations:
                 logging.info(recommendation)
-        elif mode == "SVM+DBSCAN" or mode == "ALL":
+        if mode == "SVM+DBSCAN" or mode == "ALL":
+            logging.info("SVM+DBSCAN")
             [genre_clusters] = [i[1] for i in genre_dbscan if i[0] == predicted]
             songs_in_genre = [song for song in song_data if song.predicted_genre == predicted]
             core_samples = list(zip(genre_clusters.core_sample_indices_, genre_clusters.components_))  # Indices same as labels/cluster_ids?
             song_cluster_ids = zip(songs_in_genre, genre_clusters.labels_)
             tree = KDTree(genre_clusters.components_)
-            nearest_cluster = core_samples[tree.query([norm_features])][0]  # For single nearest cluster, change query for more clusters.
+            [[index]] = tree.query([norm_features])[1]
+            nearest_cluster = core_samples[index][0]  # For single nearest cluster, change query for more clusters.
             songs_in_cluster = [entry[0].src for entry in song_cluster_ids if entry[1] == nearest_cluster]
             recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
             for recommendation in recommendations:
                 logging.info(recommendation)
-        elif mode == "DBSCAN+SVM" or mode == "ALL":
-            predicted_cluster = svm_on_dbscan.predict(norm_features)
+        if mode == "DBSCAN+SVM" or mode == "ALL":
+            logging.info("DBSCAN+SVM")
+            [predicted_cluster] = svm_on_dbscan.predict([norm_features])
             songs_in_cluster = [song for song in song_data if song.dbscan_cluster_id == predicted_cluster]
             matches = []
             for song in songs_in_cluster:

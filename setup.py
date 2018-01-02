@@ -128,9 +128,9 @@ def create():
     # BEGIN SVM ON DBSCAN
     svm_on_dbscan = sklearn.svm.SVC().fit(normalised_features, dbscan.labels_)
     for song in song_data:
-        song.dbscan_cluster_id = svm_on_dbscan.predict(song.normalised_features)
+        [song.dbscan_cluster_id] = svm_on_dbscan.predict([song.normalised_features])
     for test_song in test_song_data:
-        test_song.dbscan_cluster_id = svm_on_dbscan.predict(test_song.normalised_features)
+        [test_song.dbscan_cluster_id] = svm_on_dbscan.predict([test_song.normalised_features])
     # END SVM ON DBSCAN
 
     # BEGIN GENRE DBSCAN
