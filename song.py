@@ -16,6 +16,7 @@ class Song:
         self.predicted_genre = None
         self.features = self.extract_features()
         self.normalised_features = None
+        self.dbscan_cluster_id = None
 
     def genre_from_metadata(self):
         return utils.format_string(TinyTag.get(self.src).genre).replace('\x00', '')

@@ -6,36 +6,43 @@ import os
 from sklearn.externals import joblib
 import logging
 from scipy.spatial import distance
-from sklearn.metrics.pairwise import pairwise_distances
+# from sklearn.metrics.pairwise import pairwise_distances
+from sklearn.neighbors import KDTree
 
 
 def main(args):
-    logging.basicConfig(filename='logs/output.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
+    logging.basicConfig(filename="logs/output.log", level=logging.DEBUG, format="%(asctime)s %(message)s")
+    required_files = ["data/song_data.pkl", "data/test_song_data.pkl", "data/scaler.pkl", "data/classifier.pkl", 
+                      "data/kmeans.pkl", "data/genre_kmeans.pkl", "data/dbscan.pkl", "data/svm_on_dbscan.pkl", 
+                      "data/genre_dbscan.pkl"]
+    required_files_present = [os.path.isfile(file) for file in required_files]
+    if not all(required_files_present):
+        setup.create()
 
-    if (not os.path.isfile("data/classifier.pkl")
-            or not os.path.isfile("data/song_data.pkl")
-            or not os.path.isfile("data/scaler.pkl")
-            or not os.path.isfile("data/clusters.pkl")):
-        setup.classify()
+    song_data = joblib.load(required_files[0])
+    test_song_data = joblib.load(required_files[1])
+    scaler = joblib.load(required_files[2])
+    clf = joblib.load(required_files[3])
+    kmeans = joblib.load(required_files[4])
+    genre_kmeans = joblib.load(required_files[5])
+    dbscan = joblib.load(required_files[6])
+    svm_on_dbscan = joblib.load(required_files[7])
+    genre_dbscan = joblib.load(required_files[8])
 
-    clf = joblib.load("data/classifier.pkl")
-    song_data = joblib.load("data/song_data.pkl")
-    scaler = joblib.load("data/scaler.pkl")
-    clusters = joblib.load("data/clusters.pkl")
-
-    if len(args) < 1:
-        print("One argument is required - the path to song file or directory to use.")
+    if len(args) != 2:
+        print("Usage: python recommender path_to_music recommendation_mode")
     else:
         path = args[0]
+        mode = args[1]
         predicted = None
-        features = None
+        norm_features = None
         if os.path.isfile(path):
             song = setup.single_song(path, paths.output_dir)
             logging.info("Listed Genre: " + song.listed_genre)
             [song.normalised_features] = scaler.transform([song.features])
             [song.predicted_genre] = clf.predict([song.normalised_features])
-            logging.info("Predicted Genre: " + song.predicted_genre)
-            features, predicted = song.normalised_features, song.predicted_genre
+            logging.info("Predicted Genre (SVM): " + song.predicted_genre)
+            norm_features, predicted = song.normalised_features, song.predicted_genre
         elif os.path.isdir(path):
             songs = setup.convert_and_get_data(path, paths.output_dir)
             normalised = []
@@ -43,34 +50,103 @@ def main(args):
                 [song.normalised_features] = scaler.transform([song.features])
                 [song.predicted_genre] = clf.predict([song.normalised_features])
                 normalised.append(song.normalised_features)
-            features = [float(sum(l)) / len(l) for l in zip(*normalised)]
-            [predicted] = clf.predict([features])
+            norm_features = [float(sum(l)) / len(l) for l in zip(*normalised)]
+            [predicted] = clf.predict([norm_features])
         else:
             print("Path does not point to a file or directory")
 
-        matches = []
-        for song in song_data:
-            if song.predicted_genre == predicted:
-                dist = distance.euclidean(song.features, features)
-                matches.append((song.src, dist))
-        sorted_recommendations = sorted(matches, key=lambda l: l[1])[:10]
+        # BEGIN RECOMMENDATION
         logging.info("Recommendations:")
-        for recommendation in sorted_recommendations:
-            logging.info(recommendation)
+        if mode == "SVM" or mode == "ALL": # Sorted songs in genre region.
+            matches = []
+            for song in song_data:
+                if song.predicted_genre == predicted:
+                    dist = distance.euclidean(song.normalised_features, norm_features)
+                    matches.append((song.src, dist))
+            sorted_recommendations = sorted(matches, key=lambda l: l[1])[:10]
+            for recommendation in sorted_recommendations:
+                logging.info(recommendation)
+        elif mode == "FASTKMEANS" or mode == "ALL": # Unsorted songs in single cluster.
+            nearest_cluster = kmeans.predict(norm_features)
+            recommendations = [entry[0].src for entry in zip(song_data, kmeans.labels_) if entry[1] == nearest_cluster]
+            for recommendation in recommendations:
+                logging.info(recommendation)
+        elif mode == "FASTSORTEDKMEANS" or mode == "ALL":  # Sorted songs in single cluster.
+            nearest_cluster = kmeans.predict(norm_features)
+            songs_in_cluster = [entry[0].src for entry in zip(song_data, kmeans.labels_) if entry[1] == nearest_cluster]
+            recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
+            for recommendation in recommendations:
+                logging.info(recommendation)
+        elif mode == "KMEANS" or mode == "ALL": # All clusters, sorted by cluster, then song distance.
+            recommendations = []
+            cluster_label = -2
+            song_cluster_ids = zip(song_data, kmeans.labels_)
+            cluster_distances = zip([kmeans.predict(point) for point in kmeans.cluster_centers_],
+                                    [distance.euclidean(cluster_center, norm_features) for cluster_center in
+                                     kmeans.cluster_centers_])
+            sorted_cluster_distances = sorted(cluster_distances, key=lambda l: l[1])
+            for entry in sorted_cluster_distances:
+                if cluster_label != entry[0]:
+                    cluster_label = entry[0]
+                    songs_in_cluster = [entry[0].src for entry in song_cluster_ids if
+                                        entry[1] == cluster_label]
+                    recommendations.extend(sorted(songs_in_cluster, key=lambda l: l[1]))
+            for recommendation in recommendations:
+                logging.info(recommendation)
+        elif mode == "DBSCAN" or mode == "ALL": # Sorted songs in single cluster.
+            # How to deal with noise?
+            core_samples = list(zip(dbscan.core_sample_indices_, dbscan.components_)) # Indices same as labels/cluster_ids?
+            song_cluster_ids = zip(song_data, dbscan.labels_)
+            tree = KDTree(dbscan.components_)
+            nearest_cluster = core_samples[tree.query([norm_features])][0] # For single nearest cluster, change query for more clusters.
+            songs_in_cluster = [entry[0].src for entry in song_cluster_ids if entry[1] == nearest_cluster]
+            recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
+            for recommendation in recommendations:
+                logging.info(recommendation)
+        elif mode == "SVM+KMEANS" or mode == "ALL":
+            [genre_clusters] = [i[1] for i in genre_kmeans if i[0] == predicted]
+            songs_in_genre = [song for song in song_data if song.predicted_genre == predicted]
+            recommendations = []
+            cluster_label = -2
+            song_cluster_ids = zip(songs_in_genre, genre_clusters.labels_)
+            cluster_distances = zip([genre_clusters.predict(point) for point in genre_clusters.cluster_centers_],
+                                    [distance.euclidean(cluster_center, norm_features) for cluster_center in
+                                     genre_clusters.cluster_centers_])
+            sorted_cluster_distances = sorted(cluster_distances, key=lambda l: l[1])
+            for entry in sorted_cluster_distances:
+                if cluster_label != entry[0]:
+                    cluster_label = entry[0]
+                    songs_in_cluster = [entry[0].src for entry in song_cluster_ids if
+                                        entry[1] == cluster_label]
+                    recommendations.extend(sorted(songs_in_cluster, key=lambda l: l[1]))
+            for recommendation in recommendations:
+                logging.info(recommendation)
+        elif mode == "SVM+DBSCAN" or mode == "ALL":
+            [genre_clusters] = [i[1] for i in genre_dbscan if i[0] == predicted]
+            songs_in_genre = [song for song in song_data if song.predicted_genre == predicted]
+            core_samples = list(zip(genre_clusters.core_sample_indices_, genre_clusters.components_))  # Indices same as labels/cluster_ids?
+            song_cluster_ids = zip(songs_in_genre, genre_clusters.labels_)
+            tree = KDTree(genre_clusters.components_)
+            nearest_cluster = core_samples[tree.query([norm_features])][0]  # For single nearest cluster, change query for more clusters.
+            songs_in_cluster = [entry[0].src for entry in song_cluster_ids if entry[1] == nearest_cluster]
+            recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
+            for recommendation in recommendations:
+                logging.info(recommendation)
+        elif mode == "DBSCAN+SVM" or mode == "ALL":
+            predicted_cluster = svm_on_dbscan.predict(norm_features)
+            songs_in_cluster = [song for song in song_data if song.dbscan_cluster_id == predicted_cluster]
+            matches = []
+            for song in songs_in_cluster:
+                dist = distance.euclidean(song.normalised_features, norm_features)
+                matches.append((song.src, dist))
+            sorted_recommendations = sorted(matches, key=lambda l: l[1])[:10]
+            for recommendation in sorted_recommendations:
+                logging.info(recommendation)
+        else:
+            print("Invalid mode. Options: [SVM, FASTKMEANS, FASTSORTEDKMEANS, KMEANS, DBSCAN, SVM+KMEANS, SVM+DBSCAN, DBSCAN+SVM]")
 
-        # With clustering
-        dist_matrix = pairwise_distances([song.normalised_features for song in song_data])
-        [genre_clusters] = [i[1] for i in clusters if i[0] == predicted]
-        distances = []
-        for cluster in genre_clusters:
-            dist = dist_matrix[features, cluster].min()  # Single linkage
-            distances.append(dist)
-            print(distances)
-            print("The cluster for {} is {}").format(features, cluster)
-        # print(genre_clusters.fit_predict([features]))  # Not sure about this - need to find core points or use knn instead?
-        # Select recommendations from this cluster
-        # cluster_dict = {i: X[clusters.labels == i] for i in xrange(n_clusters_)}
+        # END RECOMMENDATION
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main(sys.argv[1:])

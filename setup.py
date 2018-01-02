@@ -8,6 +8,16 @@ import logging
 from sklearn.externals import joblib
 from sklearn.preprocessing import MinMaxScaler
 import sklearn
+import numpy as np
+
+# CONVERSION/NORMALISATION
+# ------------------------
+# SVM - FOR STANDALONE AND BEFORE GENRE K-MEANS
+# INDIVIDUAL K-MEANS -
+# GENRE K-MEANS
+# DBSCAN
+# DBSCAN ON SVM
+# SVM ON DBSCAN
 
 
 def single_song(src, dst_path):
@@ -38,15 +48,11 @@ def songs_to_features(song_data):
         listed_genres.append(song.listed_genre)
     return features, listed_genres
 
-
-# Implement DBScan
-def cluster(data):
-    db = sklearn.cluster.DBSCAN()
-    db.fit(data)
-    return db
+def db_cluster(data):
+    return sklearn.cluster.DBSCAN().fit(data)
 
 
-def classify():
+def create():
     logging.info("Starting setup...")
     logging.info("-Starting Training...")
 
@@ -63,9 +69,9 @@ def classify():
     normalised_features = scaler.transform(features).tolist()
     logging.info(str(normalised_features))
 
+    # BEGIN STANDALONE SVM
     logging.info("--Training Classifier...")
-    clf = sklearn.svm.SVC()
-    clf.fit(normalised_features, listed_genres)
+    clf = sklearn.svm.SVC().fit(normalised_features, listed_genres)
 
     normalised = normalised_features[::-1]
     predicted_genres = clf.predict(normalised).tolist()
@@ -99,18 +105,53 @@ def classify():
     logging.info("Genre conflicts: " + str(non_matches))
     accuracy = len(non_matches) / len(predicted_genres)
     logging.info("Accuracy: " + str(accuracy) + "%")
+    # END STANDALONE SVM
 
-    # Begin clustering for each class
-    clusters = []
+    # BEGIN STANDALONE K-MEANS
+    genres = [song.listed_genre for song in song_data]
+    kmeans = sklearn.cluster.KMeans(len(set(genres))).fit(normalised_features)
+    # END STANDALONE K-MEANS
+
+    # BEGIN GENRE K-MEANS
+    genre_kmeans = []
     for cls in clf.classes_:
-            cls_songs = [song for song in song_data if song.predicted_genre == cls]
-            if len(cls_songs) > 0:
-                cls_features = [song.normalised_features for song in cls_songs]
-                clusters.append((cls, cluster(cls_features)))
+        cls_songs = [song for song in song_data if song.predicted_genre == cls]
+        if len(cls_songs) > 0:
+            cls_features = [song.normalised_features for song in cls_songs]
+            genre_kmeans.append((cls, sklearn.cluster.KMeans(min(10, len(cls_songs))).fit(cls_features)))
+    # END GENRE K-MEANS
+
+    # BEGIN DBSCAN
+    dbscan = sklearn.cluster.DBSCAN().fit(normalised_features)
+    # END DBSCAN
+
+    # BEGIN SVM ON DBSCAN
+    svm_on_dbscan = sklearn.svm.SVC().fit(normalised_features, dbscan.labels_)
+    for song in song_data:
+        song.dbscan_cluster_id = svm_on_dbscan.predict(song.normalised_features)
+    for test_song in test_song_data:
+        test_song.dbscan_cluster_id = svm_on_dbscan.predict(test_song.normalised_features)
+    # END SVM ON DBSCAN
+
+    # BEGIN GENRE DBSCAN
+    genre_dbscan = []
+    for cls in clf.classes_:
+        cls_songs = [song for song in song_data if song.predicted_genre == cls]
+        if len(cls_songs) > 0:
+            cls_features = [song.normalised_features for song in cls_songs]
+            genre_dbscan.append((cls, sklearn.cluster.DBSCAN().fit(cls_features)))
+    # END GENRE DBSCAN
 
     logging.info("--Storage...")
+    # Song Data
     joblib.dump(song_data, "data/song_data.pkl")
-    joblib.dump(scaler, "data/scaler.pkl")
-    joblib.dump(clf, 'data/classifier.pkl')
     joblib.dump(test_song_data, "data/test_song_data.pkl")
-    joblib.dump(clusters, "data/clusters.pkl")
+    joblib.dump(scaler, "data/scaler.pkl")
+
+    # Classifiers & Clusters
+    joblib.dump(clf, 'data/classifier.pkl')
+    joblib.dump(kmeans, 'data/kmeans.pkl')
+    joblib.dump(genre_kmeans, 'data/genre_kmeans.pkl')
+    joblib.dump(dbscan, 'data/dbscan.pkl')
+    joblib.dump(svm_on_dbscan, 'data/svm_on_dbscan.pkl')
+    joblib.dump(genre_dbscan, 'data/genre_dbscan.pkl')
