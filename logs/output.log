@@ -81,3 +81,402 @@
 2018-01-02 17:47:16,917 ('/Volumes/expansion/project/small_data/src/training/008025.mp3', 0.26891775749258734)
 2018-01-02 17:47:16,917 ('/Volumes/expansion/project/small_data/src/training/005246.mp3', 0.27452317462583187)
 2018-01-02 17:47:16,917 ('/Volumes/expansion/project/small_data/src/training/001049.mp3', 0.2753768672780455)
+2018-01-03 12:08:42,465 Recommendations:
+2018-01-03 12:08:42,465 SVM
+2018-01-03 12:08:42,467 FASTKMEANS
+2018-01-03 12:13:27,853 Processing: /Volumes/expansion/project/small_data/input/000722.mp3
+2018-01-03 12:13:30,628 [0.10936214054027886, 0.0021314888947089636, 2353.3821905492559, 330828.33006489242, 5086.6479662386228, 1524777.2466475745, 2546.3693774178882, 84625.453312560858, 4.3488452654220229, 628.71115100138388]
+2018-01-03 12:13:30,629 Listed Genre: Rock
+2018-01-03 12:13:30,631 Predicted Genre (SVM): Rock
+2018-01-03 12:13:30,631 Recommendations:
+2018-01-03 12:13:30,631 SVM
+2018-01-03 12:13:30,635 ('/Volumes/expansion/project/small_data/src/training/009203.mp3', 0.14574408053910548)
+2018-01-03 12:13:30,635 ('/Volumes/expansion/project/small_data/src/training/001283.mp3', 0.187193551548109)
+2018-01-03 12:13:30,635 ('/Volumes/expansion/project/small_data/src/training/004026.mp3', 0.20158340574892897)
+2018-01-03 12:13:30,635 ('/Volumes/expansion/project/small_data/src/training/003791.mp3', 0.2431337690762303)
+2018-01-03 12:13:30,635 ('/Volumes/expansion/project/small_data/src/training/010153.mp3', 0.25034576504518713)
+2018-01-03 12:13:30,635 ('/Volumes/expansion/project/small_data/src/training/005305.mp3', 0.2513422334288626)
+2018-01-03 12:13:30,635 ('/Volumes/expansion/project/small_data/src/training/001357.mp3', 0.2638024854370824)
+2018-01-03 12:13:30,636 ('/Volumes/expansion/project/small_data/src/training/008025.mp3', 0.26891775749258734)
+2018-01-03 12:13:30,636 ('/Volumes/expansion/project/small_data/src/training/005246.mp3', 0.27452317462583187)
+2018-01-03 12:13:30,636 ('/Volumes/expansion/project/small_data/src/training/001049.mp3', 0.2753768672780455)
+2018-01-03 12:13:30,636 FASTKMEANS
+2018-01-03 12:13:30,637 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:13:30,637 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:13:30,637 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:13:30,637 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:13:30,637 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:13:30,637 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:13:30,637 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:13:30,637 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:13:30,637 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:13:30,638 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:13:30,638 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:13:30,638 FASTSORTEDKMEANS
+2018-01-03 12:13:30,638 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:13:30,638 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:13:30,638 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:13:30,638 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:13:30,638 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:13:30,639 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:13:30,639 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:13:30,639 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:13:30,639 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:13:30,639 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:13:30,639 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:13:30,639 KMEANS
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:13:30,641 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:13:30,642 DBSCAN
+2018-01-03 12:13:30,644 SVM+KMEANS
+2018-01-03 12:13:30,644 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:13:30,644 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/001319.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/004078.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/004114.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/004606.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/007074.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/008025.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:13:30,645 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:13:30,645 SVM+DBSCAN
+2018-01-03 12:13:30,646 DBSCAN+SVM
+2018-01-03 12:13:30,648 ('/Volumes/expansion/project/small_data/src/training/009203.mp3', 0.14574408053910548)
+2018-01-03 12:13:30,648 ('/Volumes/expansion/project/small_data/src/training/001283.mp3', 0.187193551548109)
+2018-01-03 12:13:30,648 ('/Volumes/expansion/project/small_data/src/training/004026.mp3', 0.20158340574892897)
+2018-01-03 12:13:30,648 ('/Volumes/expansion/project/small_data/src/training/003791.mp3', 0.2431337690762303)
+2018-01-03 12:13:30,648 ('/Volumes/expansion/project/small_data/src/training/010153.mp3', 0.25034576504518713)
+2018-01-03 12:13:30,648 ('/Volumes/expansion/project/small_data/src/training/005305.mp3', 0.2513422334288626)
+2018-01-03 12:13:30,648 ('/Volumes/expansion/project/small_data/src/training/001357.mp3', 0.2638024854370824)
+2018-01-03 12:13:30,648 ('/Volumes/expansion/project/small_data/src/training/008025.mp3', 0.26891775749258734)
+2018-01-03 12:13:30,648 ('/Volumes/expansion/project/small_data/src/training/005246.mp3', 0.27452317462583187)
+2018-01-03 12:13:30,649 ('/Volumes/expansion/project/small_data/src/training/001049.mp3', 0.2753768672780455)
+2018-01-03 12:14:30,864 Processing: /Volumes/expansion/project/small_data/input/000722.mp3
+2018-01-03 12:14:34,565 [0.10936214054027886, 0.0021314888947089636, 2353.3821905492559, 330828.33006489242, 5086.6479662386228, 1524777.2466475745, 2546.3693774178882, 84625.453312560858, 4.3488452654220229, 628.71115100138388]
+2018-01-03 12:14:34,566 Listed Genre: Rock
+2018-01-03 12:14:34,569 Predicted Genre (SVM): Rock
+2018-01-03 12:14:34,570 Recommendations:
+2018-01-03 12:14:34,570 SVM
+2018-01-03 12:14:34,669 ('/Volumes/expansion/project/small_data/src/training/009203.mp3', 0.14574408053910548)
+2018-01-03 12:14:34,670 ('/Volumes/expansion/project/small_data/src/training/001283.mp3', 0.187193551548109)
+2018-01-03 12:14:34,670 ('/Volumes/expansion/project/small_data/src/training/004026.mp3', 0.20158340574892897)
+2018-01-03 12:14:34,670 ('/Volumes/expansion/project/small_data/src/training/003791.mp3', 0.2431337690762303)
+2018-01-03 12:14:34,670 ('/Volumes/expansion/project/small_data/src/training/010153.mp3', 0.25034576504518713)
+2018-01-03 12:14:34,670 ('/Volumes/expansion/project/small_data/src/training/005305.mp3', 0.2513422334288626)
+2018-01-03 12:14:34,671 ('/Volumes/expansion/project/small_data/src/training/001357.mp3', 0.2638024854370824)
+2018-01-03 12:14:34,671 ('/Volumes/expansion/project/small_data/src/training/008025.mp3', 0.26891775749258734)
+2018-01-03 12:14:34,671 ('/Volumes/expansion/project/small_data/src/training/005246.mp3', 0.27452317462583187)
+2018-01-03 12:14:34,671 ('/Volumes/expansion/project/small_data/src/training/001049.mp3', 0.2753768672780455)
+2018-01-03 12:14:34,671 FASTKMEANS
+2018-01-03 12:14:34,674 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:14:34,674 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:14:34,674 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:14:34,674 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:14:34,675 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:14:34,675 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:14:34,675 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:14:34,675 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:14:34,675 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:14:34,675 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:14:34,676 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:14:34,676 FASTSORTEDKMEANS
+2018-01-03 12:14:34,677 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:14:34,677 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:14:34,677 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:14:34,677 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:14:34,677 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:14:34,678 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:14:34,678 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:14:34,678 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:14:34,678 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:14:34,679 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:14:34,679 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:14:34,679 KMEANS
+2018-01-03 12:14:34,689 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:14:34,690 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:14:34,690 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:14:34,691 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:14:34,691 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:14:34,691 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:14:34,691 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:14:34,692 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:14:34,692 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:14:34,692 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:14:34,693 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:14:34,693 DBSCAN
+2018-01-03 12:21:39,382 Processing: /Volumes/expansion/project/small_data/input/000722.mp3
+2018-01-03 12:21:44,591 [0.10936214054027886, 0.0021314888947089636, 2353.3821905492559, 330828.33006489242, 5086.6479662386228, 1524777.2466475745, 2546.3693774178882, 84625.453312560858, 4.3488452654220229, 628.71115100138388]
+2018-01-03 12:21:44,592 Listed Genre: Rock
+2018-01-03 12:21:44,593 Predicted Genre (SVM): Rock
+2018-01-03 12:21:44,593 Recommendations:
+2018-01-03 12:21:44,593 SVM
+2018-01-03 12:21:44,673 ('/Volumes/expansion/project/small_data/src/training/009203.mp3', 0.14574408053910548)
+2018-01-03 12:21:44,673 ('/Volumes/expansion/project/small_data/src/training/001283.mp3', 0.187193551548109)
+2018-01-03 12:21:44,673 ('/Volumes/expansion/project/small_data/src/training/004026.mp3', 0.20158340574892897)
+2018-01-03 12:21:44,673 ('/Volumes/expansion/project/small_data/src/training/003791.mp3', 0.2431337690762303)
+2018-01-03 12:21:44,674 ('/Volumes/expansion/project/small_data/src/training/010153.mp3', 0.25034576504518713)
+2018-01-03 12:21:44,674 ('/Volumes/expansion/project/small_data/src/training/005305.mp3', 0.2513422334288626)
+2018-01-03 12:21:44,674 ('/Volumes/expansion/project/small_data/src/training/001357.mp3', 0.2638024854370824)
+2018-01-03 12:21:44,674 ('/Volumes/expansion/project/small_data/src/training/008025.mp3', 0.26891775749258734)
+2018-01-03 12:21:44,674 ('/Volumes/expansion/project/small_data/src/training/005246.mp3', 0.27452317462583187)
+2018-01-03 12:21:44,674 ('/Volumes/expansion/project/small_data/src/training/001049.mp3', 0.2753768672780455)
+2018-01-03 12:21:44,675 FASTKMEANS
+2018-01-03 12:21:44,675 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:21:44,676 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:21:44,676 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:21:44,676 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:21:44,676 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:21:44,676 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:21:44,676 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:21:44,677 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:21:44,677 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:21:44,677 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:21:44,677 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:21:44,677 FASTSORTEDKMEANS
+2018-01-03 12:21:44,678 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:21:44,678 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:21:44,678 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:21:44,678 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:21:44,679 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:21:44,679 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:21:44,679 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:21:44,679 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:21:44,679 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:21:44,679 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:21:44,680 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:21:44,680 KMEANS
+2018-01-03 12:21:44,683 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:21:44,683 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:21:44,683 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:21:44,683 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:21:44,683 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:21:44,684 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:21:44,684 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:21:44,684 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:21:44,684 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:21:44,684 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:21:44,684 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:21:44,684 DBSCAN
+2018-01-03 12:22:17,939 Processing: /Volumes/expansion/project/small_data/input/000722.mp3
+2018-01-03 12:22:20,819 [0.10936214054027886, 0.0021314888947089636, 2353.3821905492559, 330828.33006489242, 5086.6479662386228, 1524777.2466475745, 2546.3693774178882, 84625.453312560858, 4.3488452654220229, 628.71115100138388]
+2018-01-03 12:22:20,820 Listed Genre: Rock
+2018-01-03 12:22:20,821 Predicted Genre (SVM): Rock
+2018-01-03 12:22:20,821 Recommendations:
+2018-01-03 12:22:20,821 SVM
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/009203.mp3', 0.14574408053910548)
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/001283.mp3', 0.187193551548109)
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/004026.mp3', 0.20158340574892897)
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/003791.mp3', 0.2431337690762303)
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/010153.mp3', 0.25034576504518713)
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/005305.mp3', 0.2513422334288626)
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/001357.mp3', 0.2638024854370824)
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/008025.mp3', 0.26891775749258734)
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/005246.mp3', 0.27452317462583187)
+2018-01-03 12:22:20,823 ('/Volumes/expansion/project/small_data/src/training/001049.mp3', 0.2753768672780455)
+2018-01-03 12:22:20,823 FASTKMEANS
+2018-01-03 12:22:20,826 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:22:20,827 FASTSORTEDKMEANS
+2018-01-03 12:22:20,827 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:22:20,828 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:22:20,828 KMEANS
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:22:20,831 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:22:20,831 DBSCAN
+2018-01-03 12:22:20,836 /Volumes/expansion/project/small_data/src/training/000331.mp3
+2018-01-03 12:22:20,836 /Volumes/expansion/project/small_data/src/training/000367.mp3
+2018-01-03 12:22:20,836 /Volumes/expansion/project/small_data/src/training/000423.mp3
+2018-01-03 12:22:20,836 /Volumes/expansion/project/small_data/src/training/000584.mp3
+2018-01-03 12:22:20,836 /Volumes/expansion/project/small_data/src/training/000822.mp3
+2018-01-03 12:22:20,836 /Volumes/expansion/project/small_data/src/training/000860.mp3
+2018-01-03 12:22:20,836 /Volumes/expansion/project/small_data/src/training/000899.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/001319.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/001559.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/001798.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/001888.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/002101.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/003548.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/003590.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/003630.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/004078.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/004114.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/004606.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/004720.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/004768.mp3
+2018-01-03 12:22:20,837 /Volumes/expansion/project/small_data/src/training/004939.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/006394.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/006840.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/006890.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/007074.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/007462.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/008025.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/008209.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/008953.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/009040.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/009437.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/009477.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/009530.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/009809.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/010105.mp3
+2018-01-03 12:22:20,838 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/010206.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/010449.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/010705.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/010769.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/010807.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/011094.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/011425.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/011472.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/011512.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/011671.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/011945.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/012469.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/012505.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/012541.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/012810.mp3
+2018-01-03 12:22:20,839 /Volumes/expansion/project/small_data/src/training/012855.mp3
+2018-01-03 12:22:20,839 SVM+KMEANS
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/001319.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/004078.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/004114.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/004606.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:22:20,841 /Volumes/expansion/project/small_data/src/training/007074.mp3
+2018-01-03 12:22:20,842 /Volumes/expansion/project/small_data/src/training/008025.mp3
+2018-01-03 12:22:20,842 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:22:20,842 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:22:20,842 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:22:20,842 SVM+DBSCAN
+2018-01-03 12:22:20,842 /Volumes/expansion/project/small_data/src/training/000331.mp3
+2018-01-03 12:22:20,842 /Volumes/expansion/project/small_data/src/training/000367.mp3
+2018-01-03 12:22:20,842 /Volumes/expansion/project/small_data/src/training/000423.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/000584.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/000822.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/000860.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/000899.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/001049.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/001283.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/001319.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/001357.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/001559.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/001798.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/001888.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/002101.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/003548.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/003590.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/003630.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/003791.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/004026.mp3
+2018-01-03 12:22:20,843 /Volumes/expansion/project/small_data/src/training/004078.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/004114.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/004606.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/004720.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/004768.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/004939.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/005246.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/005305.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/005397.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/006394.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/006840.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/006890.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/007074.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/007462.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/008025.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/008209.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/008512.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/008953.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/009040.mp3
+2018-01-03 12:22:20,844 /Volumes/expansion/project/small_data/src/training/009203.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/009437.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/009477.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/009530.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/009809.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/010105.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/010153.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/010206.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/010449.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/010705.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/010769.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/010807.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/011094.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/011425.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/011472.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/011512.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/011671.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/011945.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/012469.mp3
+2018-01-03 12:22:20,845 /Volumes/expansion/project/small_data/src/training/012505.mp3
+2018-01-03 12:22:20,846 /Volumes/expansion/project/small_data/src/training/012541.mp3
+2018-01-03 12:22:20,846 /Volumes/expansion/project/small_data/src/training/012810.mp3
+2018-01-03 12:22:20,846 /Volumes/expansion/project/small_data/src/training/012855.mp3
+2018-01-03 12:22:20,846 DBSCAN+SVM
+2018-01-03 12:22:20,847 ('/Volumes/expansion/project/small_data/src/training/009203.mp3', 0.14574408053910548)
+2018-01-03 12:22:20,847 ('/Volumes/expansion/project/small_data/src/training/001283.mp3', 0.187193551548109)
+2018-01-03 12:22:20,847 ('/Volumes/expansion/project/small_data/src/training/004026.mp3', 0.20158340574892897)
+2018-01-03 12:22:20,848 ('/Volumes/expansion/project/small_data/src/training/003791.mp3', 0.2431337690762303)
+2018-01-03 12:22:20,848 ('/Volumes/expansion/project/small_data/src/training/010153.mp3', 0.25034576504518713)
+2018-01-03 12:22:20,848 ('/Volumes/expansion/project/small_data/src/training/005305.mp3', 0.2513422334288626)
+2018-01-03 12:22:20,848 ('/Volumes/expansion/project/small_data/src/training/001357.mp3', 0.2638024854370824)
+2018-01-03 12:22:20,848 ('/Volumes/expansion/project/small_data/src/training/008025.mp3', 0.26891775749258734)
+2018-01-03 12:22:20,848 ('/Volumes/expansion/project/small_data/src/training/005246.mp3', 0.27452317462583187)
+2018-01-03 12:22:20,848 ('/Volumes/expansion/project/small_data/src/training/001049.mp3', 0.2753768672780455)

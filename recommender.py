@@ -57,7 +57,7 @@ def main(args):
 
         # BEGIN RECOMMENDATION
         logging.info("Recommendations:")
-        if mode == "SVM" or mode == "ALL": # Sorted songs in genre region.
+        if mode == "SVM" or mode == "ALL":  # Sorted songs in genre region.
             logging.info("SVM")
             matches = []
             for song in song_data:
@@ -67,7 +67,7 @@ def main(args):
             sorted_recommendations = sorted(matches, key=lambda l: l[1])[:10]
             for recommendation in sorted_recommendations:
                 logging.info(recommendation)
-        if mode == "FASTKMEANS" or mode == "ALL": # Unsorted songs in single cluster.
+        if mode == "FASTKMEANS" or mode == "ALL":  # Unsorted songs in single cluster.
             logging.info("FASTKMEANS")
             [nearest_cluster] = kmeans.predict([norm_features])
             recommendations = [entry[0].src for entry in zip(song_data, kmeans.labels_) if entry[1] == nearest_cluster]
@@ -80,7 +80,7 @@ def main(args):
             recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
             for recommendation in recommendations:
                 logging.info(recommendation)
-        if mode == "KMEANS" or mode == "ALL": # All clusters, sorted by cluster, then song distance.
+        if mode == "KMEANS" or mode == "ALL":  # All clusters, sorted by cluster, then song distance.
             logging.info("KMEANS")
             recommendations = []
             cluster_label = -2
@@ -97,10 +97,11 @@ def main(args):
                     recommendations.extend(sorted(songs_in_cluster, key=lambda l: l[1]))
             for recommendation in recommendations:
                 logging.info(recommendation)
-        if mode == "DBSCAN" or mode == "ALL": # Sorted songs in single cluster.
+        if mode == "DBSCAN" or mode == "ALL":  # Sorted songs in single cluster.
             logging.info("DBSCAN")
             # How to deal with noise?
-            core_samples = list(zip(dbscan.core_sample_indices_, dbscan.components_))  # Indices same as labels/cluster_ids?
+            core_sample_labels = [dbscan.labels_[index] for index in dbscan.core_sample_indices_]
+            core_samples = list(zip(core_sample_labels, dbscan.components_))
             song_cluster_ids = zip(song_data, dbscan.labels_)
             tree = KDTree(dbscan.components_)
             [[index]] = tree.query([norm_features])[1]
@@ -132,7 +133,8 @@ def main(args):
             logging.info("SVM+DBSCAN")
             [genre_clusters] = [i[1] for i in genre_dbscan if i[0] == predicted]
             songs_in_genre = [song for song in song_data if song.predicted_genre == predicted]
-            core_samples = list(zip(genre_clusters.core_sample_indices_, genre_clusters.components_))  # Indices same as labels/cluster_ids?
+            core_sample_labels = [dbscan.labels_[index] for index in dbscan.core_sample_indices_]
+            core_samples = list(zip(core_sample_labels, dbscan.components_))
             song_cluster_ids = zip(songs_in_genre, genre_clusters.labels_)
             tree = KDTree(genre_clusters.components_)
             [[index]] = tree.query([norm_features])[1]
