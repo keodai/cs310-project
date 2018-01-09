@@ -10,7 +10,15 @@ from scipy.spatial import distance
 from sklearn.neighbors import KDTree
 
 
+def make_song_record(title, artist, album, path):
+    return {"title": title, "artist": artist, "album": album, "src": path}
+
+
 def main(args):
+    recommend(args)
+
+
+def recommend(args):
     logging.basicConfig(filename="logs/output.log", level=logging.DEBUG, format="%(asctime)s %(message)s")
     required_files = ["data/song_data.pkl", "data/test_song_data.pkl", "data/scaler.pkl", "data/classifier.pkl", 
                       "data/kmeans.pkl", "data/genre_kmeans.pkl", "data/dbscan.pkl", "data/svm_on_dbscan.pkl", 
@@ -57,30 +65,39 @@ def main(args):
 
         # BEGIN RECOMMENDATION
         logging.info("Recommendations:")
-        if mode == "SVM" or mode == "ALL":  # Sorted songs in genre region.
+        output = []
+        if mode == "SVM":  # Sorted songs in genre region.
             logging.info("SVM")
             matches = []
             for song in song_data:
                 if song.predicted_genre == predicted:
                     dist = distance.euclidean(song.normalised_features, norm_features)
-                    matches.append((song.src, dist))
+                    matches.append((song, dist))
             sorted_recommendations = sorted(matches, key=lambda l: l[1])[:10]
-            for recommendation in sorted_recommendations:
+            for rec in sorted_recommendations:
+                recommendation = rec[0]
                 logging.info(recommendation)
-        if mode == "FASTKMEANS" or mode == "ALL":  # Unsorted songs in single cluster.
+                output.append(make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
+        elif mode == "FASTKMEANS":  # Unsorted songs in single cluster.
             logging.info("FASTKMEANS")
             [nearest_cluster] = kmeans.predict([norm_features])
-            recommendations = [entry[0].src for entry in zip(song_data, kmeans.labels_) if entry[1] == nearest_cluster]
+            recommendations = [entry[0] for entry in zip(song_data, kmeans.labels_) if entry[1] == nearest_cluster]
             for recommendation in recommendations:
                 logging.info(recommendation)
-        if mode == "FASTSORTEDKMEANS" or mode == "ALL":  # Sorted songs in single cluster.
+                output.append(make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
+        elif mode == "FASTSORTEDKMEANS":  # Sorted songs in single cluster.
             logging.info("FASTSORTEDKMEANS")
             [nearest_cluster] = kmeans.predict([norm_features])
-            songs_in_cluster = [entry[0].src for entry in zip(song_data, kmeans.labels_) if entry[1] == nearest_cluster]
-            recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
-            for recommendation in recommendations:
+            songs_in_cluster = [entry[0] for entry in zip(song_data, kmeans.labels_) if entry[1] == nearest_cluster]
+            dist = []
+            for sic in songs_in_cluster:
+                dist.append(distance.euclidean(sic.normalised_features, norm_features))
+            recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])
+            for rec in recommendations:
+                recommendation = rec[0]
                 logging.info(recommendation)
-        if mode == "KMEANS" or mode == "ALL":  # All clusters, sorted by cluster, then song distance.
+                output.append(make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
+        elif mode == "KMEANS":  # All clusters, sorted by cluster, then song distance.
             logging.info("KMEANS")
             recommendations = []
             cluster_label = -2
@@ -92,12 +109,17 @@ def main(args):
             for entry in sorted_cluster_distances:
                 if cluster_label != entry[0]:
                     cluster_label = entry[0]
-                    songs_in_cluster = [entry[0].src for entry in song_cluster_ids if
+                    songs_in_cluster = [entry[0] for entry in song_cluster_ids if
                                         entry[1] == cluster_label]
-                    recommendations.extend(sorted(songs_in_cluster, key=lambda l: l[1]))
-            for recommendation in recommendations:
+                    dist = []
+                    for sic in songs_in_cluster:
+                        dist.append(distance.euclidean(sic.normalised_features, norm_features))
+                    recommendations.extend(sorted(zip(songs_in_cluster, dist), key=lambda l: l[1]))
+            for rec in recommendations:
+                recommendation = rec[0]
                 logging.info(recommendation)
-        if mode == "DBSCAN" or mode == "ALL":  # Sorted songs in single cluster.
+                output.append(make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
+        elif mode == "DBSCAN":  # Sorted songs in single cluster.
             logging.info("DBSCAN")
             # How to deal with noise?
             core_sample_labels = [dbscan.labels_[index] for index in dbscan.core_sample_indices_]
@@ -106,11 +128,16 @@ def main(args):
             tree = KDTree(dbscan.components_)
             [[index]] = tree.query([norm_features])[1]
             nearest_cluster = core_samples[index][0]  # For single nearest cluster, change query for more clusters.
-            songs_in_cluster = [entry[0].src for entry in song_cluster_ids if entry[1] == nearest_cluster]
-            recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
-            for recommendation in recommendations:
+            songs_in_cluster = [entry[0] for entry in song_cluster_ids if entry[1] == nearest_cluster]
+            dist = []
+            for sic in songs_in_cluster:
+                dist.append(distance.euclidean(sic.normalised_features, norm_features))
+            recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])
+            for rec in recommendations:
+                recommendation = rec[0]
                 logging.info(recommendation)
-        if mode == "SVM+KMEANS" or mode == "ALL":
+                output.append(make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
+        elif mode == "SVM+KMEANS":
             logging.info("SVM+KMEANS")
             [genre_clusters] = [i[1] for i in genre_kmeans if i[0] == predicted]
             songs_in_genre = [song for song in song_data if song.predicted_genre == predicted]
@@ -124,12 +151,17 @@ def main(args):
             for entry in sorted_cluster_distances:
                 if cluster_label != entry[0]:
                     cluster_label = entry[0]
-                    songs_in_cluster = [entry[0].src for entry in song_cluster_ids if
+                    songs_in_cluster = [entry[0] for entry in song_cluster_ids if
                                         entry[1] == cluster_label]
-                    recommendations.extend(sorted(songs_in_cluster, key=lambda l: l[1]))
-            for recommendation in recommendations:
+                    dist = []
+                    for sic in songs_in_cluster:
+                        dist.append(distance.euclidean(sic.normalised_features, norm_features))
+                    recommendations.extend(sorted(zip(songs_in_cluster, dist), key=lambda l: l[1]))
+            for rec in recommendations:
+                recommendation = rec[0]
                 logging.info(recommendation)
-        if mode == "SVM+DBSCAN" or mode == "ALL":
+                output.append(make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
+        elif mode == "SVM+DBSCAN":
             logging.info("SVM+DBSCAN")
             [genre_clusters] = [i[1] for i in genre_dbscan if i[0] == predicted]
             songs_in_genre = [song for song in song_data if song.predicted_genre == predicted]
@@ -139,26 +171,34 @@ def main(args):
             tree = KDTree(genre_clusters.components_)
             [[index]] = tree.query([norm_features])[1]
             nearest_cluster = core_samples[index][0]  # For single nearest cluster, change query for more clusters.
-            songs_in_cluster = [entry[0].src for entry in song_cluster_ids if entry[1] == nearest_cluster]
-            recommendations = sorted(songs_in_cluster, key=lambda l: l[1])
-            for recommendation in recommendations:
+            songs_in_cluster = [entry[0] for entry in song_cluster_ids if entry[1] == nearest_cluster]
+            dist = []
+            for sic in songs_in_cluster:
+                dist.append(distance.euclidean(sic.normalised_features, norm_features))
+            recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])
+            for rec in recommendations:
+                recommendation = rec[0]
                 logging.info(recommendation)
-        if mode == "DBSCAN+SVM" or mode == "ALL":
+                output.append(make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
+        elif mode == "DBSCAN+SVM":
             logging.info("DBSCAN+SVM")
             [predicted_cluster] = svm_on_dbscan.predict([norm_features])
             songs_in_cluster = [song for song in song_data if song.dbscan_cluster_id == predicted_cluster]
             matches = []
             for song in songs_in_cluster:
                 dist = distance.euclidean(song.normalised_features, norm_features)
-                matches.append((song.src, dist))
+                matches.append((song, dist))
             sorted_recommendations = sorted(matches, key=lambda l: l[1])[:10]
-            for recommendation in sorted_recommendations:
+            for rec in sorted_recommendations:
+                recommendation = rec[0]
                 logging.info(recommendation)
+                output.append(make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
         else:
             print("Invalid mode. Options: [SVM, FASTKMEANS, FASTSORTEDKMEANS, KMEANS, DBSCAN, SVM+KMEANS, SVM+DBSCAN, DBSCAN+SVM]")
 
+        return output
         # END RECOMMENDATION
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    recommend(sys.argv[1:])

@@ -12,8 +12,8 @@ import numpy as np
 
 # CONVERSION/NORMALISATION
 # ------------------------
-# SVM - FOR STANDALONE AND BEFORE GENRE K-MEANS
-# INDIVIDUAL K-MEANS -
+# SVM
+# INDIVIDUAL K-MEANS
 # GENRE K-MEANS
 # DBSCAN
 # DBSCAN ON SVM
@@ -47,6 +47,7 @@ def songs_to_features(song_data):
         features.append(song.features)
         listed_genres.append(song.listed_genre)
     return features, listed_genres
+
 
 def db_cluster(data):
     return sklearn.cluster.DBSCAN().fit(data)

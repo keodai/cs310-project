@@ -1,7 +1,9 @@
 import os
-from flask import Flask, jsonify, request, redirect, url_for, flash
+from flask import Flask, jsonify, request, redirect, url_for, flash, render_template, make_response
 from werkzeug.utils import secure_filename
 from flask_cors import CORS, cross_origin
+from functools import wraps, update_wrapper
+from datetime import datetime
 
 import recommender
 
@@ -13,6 +15,11 @@ CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024
 app.secret_key = 'key'
+
+
+@app.route('/')
+def index():
+    return render_template("index.html", current_song=None, recommendations=None, scroll=None, error=None)
 
 
 def allowed_file(filename):
@@ -47,26 +54,37 @@ def allowed_file(filename):
 #          <input type=submit value=Upload>
 #     </form>
 #     '''
-    # return 'Done'
+# return 'Done'
 
 
-@app.route('/uploader', methods=['GET', 'POST'])
+@app.route('/recommend', methods=['GET', 'POST'])
 def upload_file():
+    # if request.method == 'POST':
+    #     f = request.files['file']
+    #     mode = request.form['mode']
+    #     filename = secure_filename(f.filename)
+    #     path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    #     f.save(path)
+    #     args = [path, mode]
+    #     recommendations = recommender.recommend(args=args)
+    #     return render_template("index.html", current_song=filename, recommendations=recommendations, scroll="app")
+
     if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            return render_template("index.html", current_song=None, recommendations=None, scroll="app", error="No file part")
         f = request.files['file']
-        filename = secure_filename(f.filename)
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return redirect(url_for('test'))
-
-
-@app.route('/recommend')
-def recommend():
-    return jsonify(result=recommender.main(**request.args))
-
-
-@app.route('/test')
-def test():
-    return jsonify(result="value")
+        mode = request.form['mode']
+        if f.filename == '':
+            return render_template("index.html", current_song=None, recommendations=None, scroll="app", error="No selected file")
+        if f and mode and allowed_file(f.filename):
+            filename = secure_filename(f.filename)
+            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            f.save(path)
+            args = [path, mode]
+            recommendations = recommender.recommend(args=args)
+            return render_template("index.html", current_song=filename, recommendations=recommendations, scroll="app", error=None)
+    return render_template("index.html", current_song=None, recommendations=None, scroll="app", error=None)
 
 
 if __name__ == "__main__":

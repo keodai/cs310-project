@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TUNE?: The Machine Learning Music Recommendation Tool</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendor/simple-line-icons/css/simple-line-icons.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/new-age.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">TUNE?</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#app">Get started</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="masthead">
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-lg-7 my-auto">
+                <div class="header-content mx-auto">
+                    <h1 class="mb-5"><b><i>Found a song you like? Want to find more?</i></b></h1>
+                    <h2 class="mb-5">TUNE? applies machine learning algorithms to the audio features of your favourite
+                        songs to allow you to find more of the music you like.</h2>
+                    <a href="#app" class="btn btn-outline btn-xl js-scroll-trigger">Start Now!</a>
+                </div>
+            </div>
+            <div class="col-lg-5 my-auto">
+                <div class="device-container">
+                    <img src="{{ url_for('static', filename='img/vinyl.png') }}" class="img-fluid" alt="Vinyl record">
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div id="app" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <form class="form-spacing" action="http://127.0.0.1:5000/recommend" method="POST"
+                  enctype="multipart/form-data">
+                <div class="text-center form-field-spacing">
+                    <label for="file-upload" class="btn btn-outline btn-xl js-scroll-trigger upload">
+                        Choose file
+                    </label>
+                    <input id="file-upload" type="file" name="file" hidden/>
+                    <span id="file-selected" class="span-spacing">No file selected</span>
+                </div>
+
+                <div class="text-center form-field-spacing">
+                    <label for="mode">
+                        Algorithm:
+                        <select class="form-control selection-box" id="mode" name="mode">
+                            <option value="SVM" selected>SVM</option>
+                            <option value="FASTKMEANS">FASTKMEANS</option>
+                            <option value="FASTSORTEDKMEANS">FASTSORTEDKMEANS</option>
+                            <option value="KMEANS">KMEANS</option>
+                            <option value="DBSCAN">DBSCAN</option>
+                            <option value="SVM+KMEANS">SVM+KMEANS</option>
+                            <option value="SVM+DBSCAN">SVM+DBSCAN</option>
+                            <option value="DBSCAN+SVM">DBSCAN+SVM</option>
+                        </select>
+                    </label>
+                </div>
+
+                <label class="btn btn-outline btn-xl js-scroll-trigger upload label-align form-field-spacing">
+                    Submit<input type="submit" hidden/>
+                </label>
+            </form>
+        </div>
+
+        <div class="col-sm-9 panel-sizing">
+            <div id="current-song" class="song-info">Current song: {{ current_song }}</div>
+            <table class="table table-striped table-light table-hover static-table-header">
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 10%">Rank</th>
+                    <th scope="col" style="width: 30%">Title</th>
+                    <th scope="col" style="width: 30%">Artist</th>
+                    <th scope="col" style="width: 30%">Album</th>
+                </tr>
+                </thead>
+            </table>
+
+            <div class="vertical-scroll">
+                <table class="table table-striped table-light table-hover">
+                    <tbody>
+                    {% if recommendations is not none %}
+                    {% for entry in recommendations %}
+                    <tr>
+                        <th scope="row" style="width: 10%">{{ loop.index0 }}</th>
+                        <td style="width: 30%">{{ entry['title'] }}</td>
+                        <td style="width: 30%">{{ entry['artist'] }}</td>
+                        <td style="width: 30%">{{ entry['album'] }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; Matthew Penny [1509819] <br> CS310: Third Year Project, University of Warwick </p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- Plugin JavaScript -->
+<script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{{ url_for('static', filename='js/new-age.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+</body>
+
+</html>

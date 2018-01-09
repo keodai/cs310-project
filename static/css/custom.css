@@ -1,0 +1,83 @@
+#app {
+    width: 100%;
+    height: calc(100% - 49px);
+    min-height: calc(100% - 49px);
+    background: ghostwhite;
+    /*background: url("../img/bg-pattern.png"), #7b4397;*/
+    /*background: url("../img/bg-pattern.png"), -webkit-linear-gradient(to left, black, #222222);*/
+    /*background: url("../img/bg-pattern.png"), linear-gradient(to left, black, #222222); }*/
+    display: block;
+    padding-top: 5px;
+}
+
+.fill {
+    min-height: 100%;
+    height: 100%;
+}
+
+/*th, td {*/
+    /*width: 25%;*/
+/*}*/
+
+.upload {
+    font-size: 11px;
+    padding: 15px 45px;
+    color: inherit;
+    text-decoration: none;
+    margin: 0px;
+}
+
+.upload-button {
+
+}
+
+.form-spacing {
+    /*margin-top:5px;*/
+    /*margin-bottom: 5px;*/
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.input-spacing {
+    margin: 5px;
+}
+
+.vertical-scroll {
+    overflow-y: auto;
+    height: 70vh;
+}
+
+.static-table-header {
+    margin-bottom: 0;
+    color: #b7b7b7;
+}
+
+.selection-box {
+    width: 65%;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.label-align {
+    float: right;
+    margin-right: 15%;
+}
+
+.span-spacing {
+    margin-left: 10px;
+}
+
+.form-field-spacing {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.panel-sizing {
+    padding: 30px 100px 30px 30px;
+    max-height: 900px;
+    overflow: hidden;
+}
+
+.song-info {
+    padding-bottom: 15px;
+}
