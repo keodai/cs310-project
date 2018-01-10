@@ -8,7 +8,7 @@ import logging
 from sklearn.externals import joblib
 from sklearn.preprocessing import MinMaxScaler
 import sklearn
-import numpy as np
+
 
 # CONVERSION/NORMALISATION
 # ------------------------
@@ -126,7 +126,7 @@ def create():
     dbscan = sklearn.cluster.DBSCAN().fit(normalised_features)
     # END DBSCAN
 
-    # BEGIN SVM ON DBSCAN
+    # BEGIN SVM ON DBSCAN todo: justify
     svm_on_dbscan = sklearn.svm.SVC().fit(normalised_features, dbscan.labels_)
     for song in song_data:
         [song.dbscan_cluster_id] = svm_on_dbscan.predict([song.normalised_features])

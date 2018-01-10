@@ -1,33 +1,23 @@
-$("#run_btn").click(function () {
-    $.getJSON('http://127.0.0.1:5000/recommend?src=x&mode=y',
-        function (data, textStatus, jqXHR) {
-            alert(data);
-        }
-    )
-
-});
-
-$("#test").click(function () {
-    $.getJSON('http://127.0.0.1:5000/test',
-        function (data, textStatus, jqXHR) {
-            document.getElementById("output").innerHTML = data.result;
-            //alert(data.result);
-            //$( "#output" ).html(data);
-        }
-    )
-//     $.ajax({
-//    url: 'http://127.0.0.1:5000/test',
-//    success: function(response) {
-//      // here you do whatever you want with the response variable
-//        alert(response);
-//    }
-// });
-
-});
-
-
 $('#file-upload').bind('change', function () {
     var path = '';
     path = $(this).val();
     $('#file-selected').html(path.split('\\').pop());
-})
+});
+
+// Run on page load
+window.onload = function () {
+    // If sessionStorage is storing default values (ex. name), exit the function and do not restore data
+    if (sessionStorage.getItem('mode') == "SVM") {
+        return;
+    }
+
+    var mode = sessionStorage.getItem('mode');
+    if (mode !== null) $('#mode').val(mode);
+
+};
+
+// Before refreshing the page, save the form data to sessionStorage
+window.onbeforeunload = function () {
+    sessionStorage.se//tItem("file", $('#file-upload').val());
+    sessionStorage.setItem("mode", $('#mode').val());
+};

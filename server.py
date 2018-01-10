@@ -1,14 +1,14 @@
 import os
-from flask import Flask, jsonify, request, redirect, url_for, flash, render_template, make_response
+from flask import Flask, request, url_for, render_template, make_response
 from werkzeug.utils import secure_filename
 from flask_cors import CORS, cross_origin
-from functools import wraps, update_wrapper
-from datetime import datetime
 
 import recommender
 
 UPLOAD_FOLDER = "/Volumes/expansion/project/data/uploads/"
 ALLOWED_EXTENSIONS = {'mp3', 'wav'}
+previous_upload_path = None
+previous_filename = None
 
 app = Flask(__name__)
 CORS(app)
@@ -27,64 +27,39 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-# @app.route('/upload', methods=['GET', 'POST'])
-# def upload_file():
-#     if request.method == 'POST':
-#         # check if the post request has the file part
-#         if 'file' not in request.files:
-#             flash('No file part')
-#             return redirect(request.url)
-#         file = request.files['file']
-#         # if user does not select file, browser also
-#         # submit a empty part without filename
-#         if file.filename == '':
-#             flash('No selected file')
-#             return redirect(request.url)
-#         if file and allowed_file(file.filename):
-#             filename = secure_filename(file.filename)
-#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#             # return redirect(url_for('uploaded_file', filename=filename))
-#             return redirect(request.url)
-#     return '''
-#     <!doctype html>
-#     <title>Upload new File</title>
-#     <h1>Upload new File</h1>
-#     <form method=post enctype=multipart/form-data>
-#       <p><input type=file name=file>
-#          <input type=submit value=Upload>
-#     </form>
-#     '''
-# return 'Done'
-
-
 @app.route('/recommend', methods=['GET', 'POST'])
 def upload_file():
-    # if request.method == 'POST':
-    #     f = request.files['file']
-    #     mode = request.form['mode']
-    #     filename = secure_filename(f.filename)
-    #     path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    #     f.save(path)
-    #     args = [path, mode]
-    #     recommendations = recommender.recommend(args=args)
-    #     return render_template("index.html", current_song=filename, recommendations=recommendations, scroll="app")
-
     if request.method == 'POST':
+        global previous_upload_path
+        global previous_filename
+        use_previous_path = False
         # check if the post request has the file part
         if 'file' not in request.files:
-            return render_template("index.html", current_song=None, recommendations=None, scroll="app", error="No file part")
-        f = request.files['file']
+            use_previous_path = True
+        if use_previous_path:
+            if previous_upload_path is None or previous_filename is None:
+                return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No file part")
+        else:
+            f = request.files['file']
+            if f.filename == '':
+                use_previous_path = True
+                if previous_upload_path is None or previous_filename is None:
+                    return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No selected file")
         mode = request.form['mode']
-        if f.filename == '':
-            return render_template("index.html", current_song=None, recommendations=None, scroll="app", error="No selected file")
-        if f and mode and allowed_file(f.filename):
+        if use_previous_path:
+            args = [previous_upload_path, mode]
+            recommendations, predicted = recommender.recommend(args=args)
+            return render_template("index.html", current_song=previous_filename, recommendations=recommendations, predicted=predicted, scroll="app", error=None)
+        elif f and mode and allowed_file(f.filename):
             filename = secure_filename(f.filename)
             path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             f.save(path)
             args = [path, mode]
-            recommendations = recommender.recommend(args=args)
-            return render_template("index.html", current_song=filename, recommendations=recommendations, scroll="app", error=None)
-    return render_template("index.html", current_song=None, recommendations=None, scroll="app", error=None)
+            previous_upload_path = path
+            previous_filename = filename
+            recommendations, predicted = recommender.recommend(args=args)
+            return render_template("index.html", current_song=filename, recommendations=recommendations, predicted=predicted, scroll="app", error=None)
+    return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error=None)
 
 
 if __name__ == "__main__":

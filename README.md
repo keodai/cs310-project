@@ -43,6 +43,13 @@ This is the project repository, containing both the project code and documentati
 ### 30/12/2017
 * Fixed issues ready for DBScan Clustering.
 
+### 01/2017
+* Implemented variety of clustering algorithms for comparison
+* Refactored ML
+* UI
+* Refactored to use Flask.
+
+
 ### TO DO
 * SoX for conversion?
 * Retain metadata with wav files to be able to output the song names/artist details for recommendations/ labels.

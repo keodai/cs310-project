@@ -13,6 +13,16 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='img/manifest.json') }}">
+    <link rel="mask-icon" href="{{ url_for('static', filename='img/safari-pinned-tab.svg') }}" color="#fdcc52">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <meta name="msapplication-config" content="{{ url_for('static', filename='img/browserconfig.xml') }}">
+    <meta name="theme-color" content="#ffffff">
+
     <!-- Custom fonts for this template -->
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet"
@@ -69,6 +79,11 @@
     </div>
 </header>
 <div id="app" class="container-fluid">
+    {% if scroll %}
+    <script>
+        document.getElementById('{{ scroll }}').scrollIntoView();
+    </script>
+    {% endif %}
     <div class="row">
         <div class="col-sm-3">
             <form class="form-spacing" action="http://127.0.0.1:5000/recommend" method="POST"
@@ -78,14 +93,14 @@
                         Choose file
                     </label>
                     <input id="file-upload" type="file" name="file" hidden/>
-                    <span id="file-selected" class="span-spacing">No file selected</span>
+                    <span id="file-selected" class="span-spacing">{% if current_song is not none %} {{ current_song }} {% else %} No file selected {% endif %}</span>
                 </div>
 
                 <div class="text-center form-field-spacing">
                     <label for="mode">
                         Algorithm:
                         <select class="form-control selection-box" id="mode" name="mode">
-                            <option value="SVM" selected>SVM</option>
+                            <option value="SVM">SVM</option>
                             <option value="FASTKMEANS">FASTKMEANS</option>
                             <option value="FASTSORTEDKMEANS">FASTSORTEDKMEANS</option>
                             <option value="KMEANS">KMEANS</option>
@@ -104,7 +119,7 @@
         </div>
 
         <div class="col-sm-9 panel-sizing">
-            <div id="current-song" class="song-info">Current song: {{ current_song }}</div>
+            <div id="current-song" class="song-info">Current song: {{ current_song }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Detected genre: {{ predicted }}</div>
             <table class="table table-striped table-light table-hover static-table-header">
                 <thead>
                 <tr>
