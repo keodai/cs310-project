@@ -19,7 +19,7 @@ app.secret_key = 'key'
 
 @app.route('/')
 def index():
-    return render_template("index.html", current_song=None, recommendations=None, scroll=None, error=None)
+    return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll=None, error=None, warning=None)
 
 
 def allowed_file(filename):
@@ -38,18 +38,18 @@ def upload_file():
             use_previous_path = True
         if use_previous_path:
             if previous_upload_path is None or previous_filename is None:
-                return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No file part")
+                return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No file part", warning=None)
         else:
             f = request.files['file']
             if f.filename == '':
                 use_previous_path = True
                 if previous_upload_path is None or previous_filename is None:
-                    return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No selected file")
+                    return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No selected file", warning=None)
         mode = request.form['mode']
         if use_previous_path:
             args = [previous_upload_path, mode]
-            recommendations, predicted = recommender.recommend(args=args)
-            return render_template("index.html", current_song=previous_filename, recommendations=recommendations, predicted=predicted, scroll="app", error=None)
+            recommendations, predicted, warning = recommender.recommend(args=args)
+            return render_template("index.html", current_song=previous_filename, recommendations=recommendations, predicted=predicted, scroll="app", error=None, warning=warning)
         elif f and mode and allowed_file(f.filename):
             filename = secure_filename(f.filename)
             path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -57,9 +57,9 @@ def upload_file():
             args = [path, mode]
             previous_upload_path = path
             previous_filename = filename
-            recommendations, predicted = recommender.recommend(args=args)
-            return render_template("index.html", current_song=filename, recommendations=recommendations, predicted=predicted, scroll="app", error=None)
-    return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error=None)
+            recommendations, predicted, warning = recommender.recommend(args=args)
+            return render_template("index.html", current_song=filename, recommendations=recommendations, predicted=predicted, scroll="app", error=None, warning=warning)
+    return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error=None, warning=None)
 
 
 if __name__ == "__main__":

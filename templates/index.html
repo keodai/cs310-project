@@ -119,7 +119,22 @@
         </div>
 
         <div class="col-sm-9 panel-sizing">
-            <div id="current-song" class="song-info">Current song: {{ current_song }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Detected genre: {{ predicted }}</div>
+            {% if error is not none %}
+            <div class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Error:</strong> {{ error }}
+            </div>
+            {% endif %}
+            {% if warning is not none %}
+            <div class="alert alert-warning alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Warning:</strong> {{ warning }}
+            </div>
+            {% endif %}
+
+            <div id="current-song" class="song-info">Current song: {{ current_song }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Detected genre: {{ predicted }}
+            </div>
             <table class="table table-striped table-light table-hover static-table-header">
                 <thead>
                 <tr>

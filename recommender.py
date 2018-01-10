@@ -86,6 +86,7 @@ def recommend(args):
     dbscan = joblib.load(required_files[6])
     svm_on_dbscan = joblib.load(required_files[7])
     genre_dbscan = joblib.load(required_files[8])
+    warning = None
 
     if len(args) != 2:
         print("Usage: python recommender path_to_music recommendation_mode")
@@ -104,12 +105,16 @@ def recommend(args):
         elif os.path.isdir(path):
             songs = setup.convert_and_get_data(path, paths.output_dir)
             normalised = []
+            predictions = []
             for song in songs:
                 [song.normalised_features] = scaler.transform([song.features])
                 [song.predicted_genre] = clf.predict([song.normalised_features])
+                predictions.append(song.predicted_genre)
                 normalised.append(song.normalised_features)
             norm_features = [float(sum(l)) / len(l) for l in zip(*normalised)]
             [predicted] = clf.predict([norm_features])
+            if predictions.count([0]) != len(predictions):
+                warning = "Input songs are from different genres"
         else:
             print("Path does not point to a file or directory")
 
@@ -156,7 +161,7 @@ def recommend(args):
             logging.info(recommendation)
             output.append(
                 make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
-        return output, predicted
+        return output, predicted, warning
         # END RECOMMENDATION
 
 
