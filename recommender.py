@@ -95,6 +95,7 @@ def recommend(args):
         mode = args[1]
         predicted = None
         norm_features = None
+        predictions = []
         if os.path.isfile(path):
             song = setup.single_song(path, paths.output_dir)
             logging.info("Listed Genre: " + song.listed_genre)
@@ -102,10 +103,10 @@ def recommend(args):
             [song.predicted_genre] = clf.predict([song.normalised_features])
             logging.info("Predicted Genre (SVM): " + song.predicted_genre)
             norm_features, predicted = song.normalised_features, song.predicted_genre
+            predictions.append(predicted)
         elif os.path.isdir(path):
             songs = setup.convert_and_get_data(path, paths.output_dir)
             normalised = []
-            predictions = []
             for song in songs:
                 [song.normalised_features] = scaler.transform([song.features])
                 [song.predicted_genre] = clf.predict([song.normalised_features])
@@ -113,7 +114,7 @@ def recommend(args):
                 normalised.append(song.normalised_features)
             norm_features = [float(sum(l)) / len(l) for l in zip(*normalised)]
             [predicted] = clf.predict([norm_features])
-            if predictions.count([0]) != len(predictions):
+            if predictions.count(predictions[0]) != len(predictions):
                 warning = "Input songs are from different genres"
         else:
             print("Path does not point to a file or directory")
@@ -161,7 +162,7 @@ def recommend(args):
             logging.info(recommendation)
             output.append(
                 make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
-        return output, predicted, warning
+        return output, predictions, warning
         # END RECOMMENDATION
 
 

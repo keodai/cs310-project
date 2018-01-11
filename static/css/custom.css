@@ -20,12 +20,8 @@
     margin: 0px;
 }
 
-.upload-button {
-
-}
-
 .form-spacing {
-    padding-top: 15px;
+    padding-top: 45px;
     padding-bottom: 15px;
 }
 
@@ -44,18 +40,13 @@
 }
 
 .selection-box {
-    width: 66%;
+    width: 70%;
     display: inline-block;
-    margin-left: 20px;
 }
 
 .label-align {
     float: right;
     margin-right: 15%;
-}
-
-.span-spacing {
-    margin-left: 10px;
 }
 
 .form-field-spacing {
@@ -71,4 +62,30 @@
 
 .song-info {
     padding-bottom: 15px;
+}
+
+ul {
+    margin-top: 0;
+    margin-bottom: 0px;
+    text-align: center;
+    list-style-type: none;
+    padding: 0px;
+}
+
+#file-selected {
+    padding-top: 15px;
+}
+
+.divider {
+    font-weight: bold;
+    color: #b7b7b7;
+    width: 70%;
+    margin: 25px auto;
+    padding: 5px;
+}
+
+hr {
+    width: 70%;
+    margin: 25px auto;
+    max-width: 70%;
 }

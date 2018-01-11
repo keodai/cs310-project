@@ -85,36 +85,45 @@
     </script>
     {% endif %}
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-3 text-center">
             <form class="form-spacing" action="http://127.0.0.1:5000/recommend" method="POST"
                   enctype="multipart/form-data">
-                <div class="text-center form-field-spacing">
-                    <label for="file-upload" class="btn btn-outline btn-xl js-scroll-trigger upload">
-                        Choose file
-                    </label>
-                    <input id="file-upload" type="file" name="file" hidden/>
-                    <span id="file-selected" class="span-spacing">{% if current_song is not none %} {{ current_song }} {% else %} No file selected {% endif %}</span>
-                </div>
-
-                <div class="text-center form-field-spacing">
-                    <label for="mode">
-                        Algorithm:
-                        <select class="form-control selection-box" id="mode" name="mode">
-                            <option value="SVM">SVM</option>
-                            <option value="FASTKMEANS">FASTKMEANS</option>
-                            <option value="FASTSORTEDKMEANS">FASTSORTEDKMEANS</option>
-                            <option value="KMEANS">KMEANS</option>
-                            <option value="DBSCAN">DBSCAN</option>
-                            <option value="SVM+KMEANS">SVM+KMEANS</option>
-                            <option value="SVM+DBSCAN">SVM+DBSCAN</option>
-                            <option value="DBSCAN+SVM">DBSCAN+SVM</option>
-                        </select>
-                    </label>
-                </div>
-
-                <label class="btn btn-outline btn-xl js-scroll-trigger upload label-align form-field-spacing">
-                    Submit<input type="submit" hidden/>
+                <hr>
+                <div class="divider">Source Files</div>
+                <hr>
+                <label for="file-upload" class="btn btn-outline btn-xl js-scroll-trigger upload">
+                    Choose file(s)
                 </label>
+                <input id="file-upload" type="file" name="file[]" multiple hidden/>
+                <div id="file-selected">
+                    {% if current_song is not none %}
+                    <ul>
+                        {% for song in current_song: %}
+                        <li>{{ song }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                        No file(s) selected
+                    {% endif %}
+                </div>
+                <hr>
+                <div class="divider">Algorithm</div>
+                <hr>
+                <select class="form-control selection-box" id="mode" name="mode">
+                    <option value="SVM">SVM</option>
+                    <option value="FASTKMEANS">FASTKMEANS</option>
+                    <option value="FASTSORTEDKMEANS">FASTSORTEDKMEANS</option>
+                    <option value="KMEANS">KMEANS</option>
+                    <option value="DBSCAN">DBSCAN</option>
+                    <option value="SVM+KMEANS">SVM+KMEANS</option>
+                    <option value="SVM+DBSCAN">SVM+DBSCAN</option>
+                    <option value="DBSCAN+SVM">DBSCAN+SVM</option>
+                </select>
+                <hr>
+                <div><label class="btn btn-outline btn-xl js-scroll-trigger upload form-field-spacing">
+                    Submit<input type="submit" hidden/>
+                </label></div>
+                <hr>
             </form>
         </div>
 
@@ -132,8 +141,8 @@
             </div>
             {% endif %}
 
-            <div id="current-song" class="song-info">Current song: {{ current_song }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Detected genre: {{ predicted }}
+            <div id="current-song" class="song-info">Current song(s): {% for song in current_song[:-1] %}{{ song }}, {% endfor %}{{ current_song[-1] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Detected genre(s): {{ predicted }}
             </div>
             <table class="table table-striped table-light table-hover static-table-header">
                 <thead>
