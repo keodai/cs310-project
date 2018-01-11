@@ -88,14 +88,15 @@
         <div class="col-sm-3 text-center">
             <form class="form-spacing" action="http://127.0.0.1:5000/recommend" method="POST"
                   enctype="multipart/form-data">
-                <hr>
+                <hr class="short-rule">
                 <div class="divider">Source Files</div>
-                <hr>
+                <hr class="short-rule">
                 <label for="file-upload" class="btn btn-outline btn-xl js-scroll-trigger upload">
                     Choose file(s)
                 </label>
                 <input id="file-upload" type="file" name="file[]" multiple hidden/>
                 <div id="file-selected">
+                    <i>
                     {% if current_song is not none %}
                     <ul>
                         {% for song in current_song: %}
@@ -103,12 +104,13 @@
                         {% endfor %}
                     </ul>
                     {% else %}
-                        No file(s) selected
+                    No file(s) selected
                     {% endif %}
+                    </i>
                 </div>
-                <hr>
+                <hr class="short-rule">
                 <div class="divider">Algorithm</div>
-                <hr>
+                <hr class="short-rule">
                 <select class="form-control selection-box" id="mode" name="mode">
                     <option value="SVM">SVM</option>
                     <option value="FASTKMEANS">FASTKMEANS</option>
@@ -119,15 +121,18 @@
                     <option value="SVM+DBSCAN">SVM+DBSCAN</option>
                     <option value="DBSCAN+SVM">DBSCAN+SVM</option>
                 </select>
-                <hr>
+                <hr class="short-rule">
                 <div><label class="btn btn-outline btn-xl js-scroll-trigger upload form-field-spacing">
                     Submit<input type="submit" hidden/>
                 </label></div>
-                <hr>
+                <hr class="short-rule">
             </form>
         </div>
 
         <div class="col-sm-9 panel-sizing">
+            <hr class="wide-rule">
+            <div class="divider">Recommendations</div>
+            <hr class="wide-rule">
             {% if error is not none %}
             <div class="alert alert-danger alert-dismissable">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -141,8 +146,20 @@
             </div>
             {% endif %}
 
-            <div id="current-song" class="song-info">Current song(s): {% for song in current_song[:-1] %}{{ song }}, {% endfor %}{{ current_song[-1] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Detected genre(s): {{ predicted }}
+            <div id="current-song" class="song-info">
+                Current song(s):
+                <i>
+                {% if current_song is not none %}
+                {% for song in current_song[:-1] %}
+                {{ song }},
+                {%endfor %}
+                {{ current_song[-1] }}
+                {% else %}
+                No songs selected
+                {% endif %}
+                </i>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Detected genre(s): <i>{% if predicted is not none %}{{ predicted }}{% else %}N/A{% endif %}</i>
             </div>
             <table class="table table-striped table-light table-hover static-table-header">
                 <thead>

@@ -6132,3 +6132,387 @@
 2018-01-11 15:58:26,155 <song.Song object at 0x10e57a8d0>
 2018-01-11 15:58:26,167 127.0.0.1 - - [11/Jan/2018 15:58:26] "POST /recommend HTTP/1.1" 200 -
 2018-01-11 15:58:26,574 127.0.0.1 - - [11/Jan/2018 15:58:26] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:01:05,533 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-01-04/150000.mp3
+2018-01-11 16:01:07,592 [0.10347288620739736, 0.0013921253648342892, 1746.0956194331836, 197310.29570378363, 3335.31969751525, 997045.86464326165, 1767.5826925300055, 127737.53075815004, -5.5109348976376671, 2569.4536682474277]
+2018-01-11 16:01:07,593 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-01-04/150001.mp3
+2018-01-11 16:01:09,696 [0.1608280615574246, 0.011183239989038442, 2659.6651178775364, 1348385.8474412246, 6108.1603579067578, 5768402.6275356468, 2811.026204712181, 317861.98730481259, -6.8393302632150368, 2651.2602683437235]
+2018-01-11 16:01:09,698 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-01-04/150002.mp3
+2018-01-11 16:01:11,658 [0.080030847574554614, 0.0014192618291344939, 1485.6529306016696, 282309.83284303441, 2796.3974980030016, 1318822.8516678098, 1526.0187449026037, 171702.83444054046, -0.65370193679437272, 2353.9036948117009]
+2018-01-11 16:01:11,660 Recommendations:
+2018-01-11 16:01:11,660 DBSCAN
+2018-01-11 16:01:11,666 <song.Song object at 0x10f974f98>
+2018-01-11 16:01:11,666 <song.Song object at 0x10f9744e0>
+2018-01-11 16:01:11,666 <song.Song object at 0x10f9740b8>
+2018-01-11 16:01:11,666 <song.Song object at 0x10f9df630>
+2018-01-11 16:01:11,666 <song.Song object at 0x10f974e48>
+2018-01-11 16:01:11,667 <song.Song object at 0x10f9dfcc0>
+2018-01-11 16:01:11,667 <song.Song object at 0x10e5b3160>
+2018-01-11 16:01:11,667 <song.Song object at 0x10e5b3898>
+2018-01-11 16:01:11,667 <song.Song object at 0x10f9dfdd8>
+2018-01-11 16:01:11,667 <song.Song object at 0x10f9747b8>
+2018-01-11 16:01:11,667 <song.Song object at 0x10f9df748>
+2018-01-11 16:01:11,668 <song.Song object at 0x10e57ada0>
+2018-01-11 16:01:11,668 <song.Song object at 0x10e57a7f0>
+2018-01-11 16:01:11,668 <song.Song object at 0x10e5b30f0>
+2018-01-11 16:01:11,668 <song.Song object at 0x10e57a9b0>
+2018-01-11 16:01:11,668 <song.Song object at 0x10f9df208>
+2018-01-11 16:01:11,669 <song.Song object at 0x10e57ab70>
+2018-01-11 16:01:11,669 <song.Song object at 0x10f9df780>
+2018-01-11 16:01:11,669 <song.Song object at 0x10f9dfe48>
+2018-01-11 16:01:11,669 <song.Song object at 0x10e57a668>
+2018-01-11 16:01:11,669 <song.Song object at 0x10f974710>
+2018-01-11 16:01:11,669 <song.Song object at 0x10f974ba8>
+2018-01-11 16:01:11,670 <song.Song object at 0x10f9dfd30>
+2018-01-11 16:01:11,670 <song.Song object at 0x10e57aac8>
+2018-01-11 16:01:11,670 <song.Song object at 0x1112d0fd0>
+2018-01-11 16:01:11,670 <song.Song object at 0x10e5b3d68>
+2018-01-11 16:01:11,670 <song.Song object at 0x1112d0da0>
+2018-01-11 16:01:11,670 <song.Song object at 0x10f9dfef0>
+2018-01-11 16:01:11,671 <song.Song object at 0x10f974cf8>
+2018-01-11 16:01:11,671 <song.Song object at 0x10f974470>
+2018-01-11 16:01:11,671 <song.Song object at 0x10f9740f0>
+2018-01-11 16:01:11,671 <song.Song object at 0x10e5b3240>
+2018-01-11 16:01:11,671 <song.Song object at 0x10e5b3198>
+2018-01-11 16:01:11,671 <song.Song object at 0x10f974f28>
+2018-01-11 16:01:11,671 <song.Song object at 0x10e5b38d0>
+2018-01-11 16:01:11,672 <song.Song object at 0x10f974fd0>
+2018-01-11 16:01:11,672 <song.Song object at 0x10e5b3278>
+2018-01-11 16:01:11,672 <song.Song object at 0x10f9df7f0>
+2018-01-11 16:01:11,672 <song.Song object at 0x1112d0ef0>
+2018-01-11 16:01:11,672 <song.Song object at 0x10f9dfb38>
+2018-01-11 16:01:11,672 <song.Song object at 0x10f9df390>
+2018-01-11 16:01:11,673 <song.Song object at 0x10f9df668>
+2018-01-11 16:01:11,673 <song.Song object at 0x10e57a908>
+2018-01-11 16:01:11,673 <song.Song object at 0x10f974358>
+2018-01-11 16:01:11,673 <song.Song object at 0x10f974c50>
+2018-01-11 16:01:11,673 <song.Song object at 0x10f974630>
+2018-01-11 16:01:11,673 <song.Song object at 0x10f9df438>
+2018-01-11 16:01:11,673 <song.Song object at 0x10f974828>
+2018-01-11 16:01:11,674 <song.Song object at 0x10e57ac88>
+2018-01-11 16:01:11,674 <song.Song object at 0x10f9df470>
+2018-01-11 16:01:11,674 <song.Song object at 0x10f974c18>
+2018-01-11 16:01:11,674 <song.Song object at 0x10f9df240>
+2018-01-11 16:01:11,674 <song.Song object at 0x1112d0c50>
+2018-01-11 16:01:11,674 <song.Song object at 0x10f9df1d0>
+2018-01-11 16:01:11,674 <song.Song object at 0x10e5caa20>
+2018-01-11 16:01:11,675 <song.Song object at 0x10f9dfa58>
+2018-01-11 16:01:11,675 <song.Song object at 0x10f9748d0>
+2018-01-11 16:01:11,675 <song.Song object at 0x10f974588>
+2018-01-11 16:01:11,675 <song.Song object at 0x10f974080>
+2018-01-11 16:01:11,675 <song.Song object at 0x10f9df7b8>
+2018-01-11 16:01:11,675 <song.Song object at 0x10f974518>
+2018-01-11 16:01:11,676 <song.Song object at 0x10f9e7278>
+2018-01-11 16:01:11,761 127.0.0.1 - - [11/Jan/2018 16:01:11] "POST /recommend HTTP/1.1" 200 -
+2018-01-11 16:01:12,117 127.0.0.1 - - [11/Jan/2018 16:01:12] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:01:25,148 127.0.0.1 - - [11/Jan/2018 16:01:25] "GET /static/vendor/bootstrap/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 -
+2018-01-11 16:01:25,154 127.0.0.1 - - [11/Jan/2018 16:01:25] "GET /static/vendor/bootstrap/css/bootstrap.min.css.map HTTP/1.1" 404 -
+2018-01-11 16:06:32,121 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-06-30/150000.mp3
+2018-01-11 16:06:34,257 [0.10347288620739736, 0.0013921253648342892, 1746.0956194331836, 197310.29570378363, 3335.31969751525, 997045.86464326165, 1767.5826925300055, 127737.53075815004, -5.5109348976376671, 2569.4536682474277]
+2018-01-11 16:06:34,258 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-06-30/150001.mp3
+2018-01-11 16:06:36,194 [0.1608280615574246, 0.011183239989038442, 2659.6651178775364, 1348385.8474412246, 6108.1603579067578, 5768402.6275356468, 2811.026204712181, 317861.98730481259, -6.8393302632150368, 2651.2602683437235]
+2018-01-11 16:06:36,195 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-06-30/150002.mp3
+2018-01-11 16:06:38,217 [0.080030847574554614, 0.0014192618291344939, 1485.6529306016696, 282309.83284303441, 2796.3974980030016, 1318822.8516678098, 1526.0187449026037, 171702.83444054046, -0.65370193679437272, 2353.9036948117009]
+2018-01-11 16:06:38,220 Recommendations:
+2018-01-11 16:06:38,221 DBSCAN
+2018-01-11 16:06:38,227 <song.Song object at 0x10f974080>
+2018-01-11 16:06:38,227 <song.Song object at 0x10f974c88>
+2018-01-11 16:06:38,227 <song.Song object at 0x10e5ca748>
+2018-01-11 16:06:38,227 <song.Song object at 0x10e5cab00>
+2018-01-11 16:06:38,228 <song.Song object at 0x10f974908>
+2018-01-11 16:06:38,228 <song.Song object at 0x10f9629e8>
+2018-01-11 16:06:38,228 <song.Song object at 0x10f9749b0>
+2018-01-11 16:06:38,228 <song.Song object at 0x10f9746a0>
+2018-01-11 16:06:38,229 <song.Song object at 0x10e5ca470>
+2018-01-11 16:06:38,229 <song.Song object at 0x10f974be0>
+2018-01-11 16:06:38,229 <song.Song object at 0x10f962550>
+2018-01-11 16:06:38,229 <song.Song object at 0x10f9df320>
+2018-01-11 16:06:38,230 <song.Song object at 0x10f9df7b8>
+2018-01-11 16:06:38,230 <song.Song object at 0x10f974278>
+2018-01-11 16:06:38,230 <song.Song object at 0x10f9dff28>
+2018-01-11 16:06:38,230 <song.Song object at 0x10f9626a0>
+2018-01-11 16:06:38,230 <song.Song object at 0x10f974198>
+2018-01-11 16:06:38,230 <song.Song object at 0x10f962588>
+2018-01-11 16:06:38,231 <song.Song object at 0x10e5ca080>
+2018-01-11 16:06:38,231 <song.Song object at 0x10f9df898>
+2018-01-11 16:06:38,231 <song.Song object at 0x10f9744a8>
+2018-01-11 16:06:38,231 <song.Song object at 0x10f9745f8>
+2018-01-11 16:06:38,232 <song.Song object at 0x1112d0da0>
+2018-01-11 16:06:38,232 <song.Song object at 0x10f9df710>
+2018-01-11 16:06:38,232 <song.Song object at 0x10f95e160>
+2018-01-11 16:06:38,232 <song.Song object at 0x10f974da0>
+2018-01-11 16:06:38,232 <song.Song object at 0x10f95e278>
+2018-01-11 16:06:38,233 <song.Song object at 0x1112d0e48>
+2018-01-11 16:06:38,233 <song.Song object at 0x10e5cad68>
+2018-01-11 16:06:38,233 <song.Song object at 0x10e5caa90>
+2018-01-11 16:06:38,233 <song.Song object at 0x10e5ca908>
+2018-01-11 16:06:38,233 <song.Song object at 0x10f974588>
+2018-01-11 16:06:38,233 <song.Song object at 0x10f9742e8>
+2018-01-11 16:06:38,234 <song.Song object at 0x10f974b38>
+2018-01-11 16:06:38,234 <song.Song object at 0x10f974978>
+2018-01-11 16:06:38,234 <song.Song object at 0x10f974048>
+2018-01-11 16:06:38,234 <song.Song object at 0x10f974cf8>
+2018-01-11 16:06:38,234 <song.Song object at 0x10f9627b8>
+2018-01-11 16:06:38,234 <song.Song object at 0x10f95e128>
+2018-01-11 16:06:38,235 <song.Song object at 0x10e5ca4e0>
+2018-01-11 16:06:38,235 <song.Song object at 0x1112d0dd8>
+2018-01-11 16:06:38,235 <song.Song object at 0x10f962a90>
+2018-01-11 16:06:38,235 <song.Song object at 0x10f9df2b0>
+2018-01-11 16:06:38,235 <song.Song object at 0x10f974128>
+2018-01-11 16:06:38,235 <song.Song object at 0x10f974898>
+2018-01-11 16:06:38,235 <song.Song object at 0x10e5ca160>
+2018-01-11 16:06:38,236 <song.Song object at 0x10f962a58>
+2018-01-11 16:06:38,236 <song.Song object at 0x10f974c18>
+2018-01-11 16:06:38,236 <song.Song object at 0x10f95e1d0>
+2018-01-11 16:06:38,236 <song.Song object at 0x10f9628d0>
+2018-01-11 16:06:38,236 <song.Song object at 0x10e5cac88>
+2018-01-11 16:06:38,236 <song.Song object at 0x1112d0fd0>
+2018-01-11 16:06:38,237 <song.Song object at 0x10f95eac8>
+2018-01-11 16:06:38,237 <song.Song object at 0x10e5ca240>
+2018-01-11 16:06:38,237 <song.Song object at 0x1112d0c50>
+2018-01-11 16:06:38,237 <song.Song object at 0x10f962ac8>
+2018-01-11 16:06:38,237 <song.Song object at 0x10e5ca6a0>
+2018-01-11 16:06:38,237 <song.Song object at 0x10e5ca2b0>
+2018-01-11 16:06:38,238 <song.Song object at 0x10f974668>
+2018-01-11 16:06:38,238 <song.Song object at 0x10f962710>
+2018-01-11 16:06:38,238 <song.Song object at 0x10e5cac18>
+2018-01-11 16:06:38,238 <song.Song object at 0x10f9e71d0>
+2018-01-11 16:06:38,314 127.0.0.1 - - [11/Jan/2018 16:06:38] "POST /recommend HTTP/1.1" 200 -
+2018-01-11 16:06:38,342 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/vendor/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 -
+2018-01-11 16:06:38,357 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/vendor/font-awesome/css/font-awesome.min.css HTTP/1.1" 200 -
+2018-01-11 16:06:38,367 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/vendor/simple-line-icons/css/simple-line-icons.css HTTP/1.1" 200 -
+2018-01-11 16:06:38,376 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/css/new-age.css HTTP/1.1" 200 -
+2018-01-11 16:06:38,386 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/css/custom.css HTTP/1.1" 200 -
+2018-01-11 16:06:38,408 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/vendor/jquery/jquery.min.js HTTP/1.1" 200 -
+2018-01-11 16:06:38,416 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/vendor/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 -
+2018-01-11 16:06:38,422 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/vendor/jquery-easing/jquery.easing.min.js HTTP/1.1" 200 -
+2018-01-11 16:06:38,428 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/js/new-age.min.js HTTP/1.1" 200 -
+2018-01-11 16:06:38,436 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/js/custom.js HTTP/1.1" 200 -
+2018-01-11 16:06:38,454 127.0.0.1 - - [11/Jan/2018 16:06:38] "GET /static/img/vinyl.png HTTP/1.1" 200 -
+2018-01-11 16:06:39,067 127.0.0.1 - - [11/Jan/2018 16:06:39] "GET /static/img/bg-pattern.png HTTP/1.1" 200 -
+2018-01-11 16:06:39,102 127.0.0.1 - - [11/Jan/2018 16:06:39] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:06:39,117 127.0.0.1 - - [11/Jan/2018 16:06:39] "GET /static/img/favicon-16x16.png HTTP/1.1" 200 -
+2018-01-11 16:06:39,125 127.0.0.1 - - [11/Jan/2018 16:06:39] "GET /static/img/favicon.ico HTTP/1.1" 200 -
+2018-01-11 16:07:02,866 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-07-02/150000.mp3
+2018-01-11 16:07:04,814 [0.10347288620739736, 0.0013921253648342892, 1746.0956194331836, 197310.29570378363, 3335.31969751525, 997045.86464326165, 1767.5826925300055, 127737.53075815004, -5.5109348976376671, 2569.4536682474277]
+2018-01-11 16:07:04,815 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-07-02/150001.mp3
+2018-01-11 16:07:06,829 [0.1608280615574246, 0.011183239989038442, 2659.6651178775364, 1348385.8474412246, 6108.1603579067578, 5768402.6275356468, 2811.026204712181, 317861.98730481259, -6.8393302632150368, 2651.2602683437235]
+2018-01-11 16:07:06,831 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-07-02/150002.mp3
+2018-01-11 16:07:08,792 [0.080030847574554614, 0.0014192618291344939, 1485.6529306016696, 282309.83284303441, 2796.3974980030016, 1318822.8516678098, 1526.0187449026037, 171702.83444054046, -0.65370193679437272, 2353.9036948117009]
+2018-01-11 16:07:08,794 Recommendations:
+2018-01-11 16:07:08,795 DBSCAN
+2018-01-11 16:07:08,800 <song.Song object at 0x10f9dfcc0>
+2018-01-11 16:07:08,800 <song.Song object at 0x104ccac50>
+2018-01-11 16:07:08,801 <song.Song object at 0x10f9df320>
+2018-01-11 16:07:08,801 <song.Song object at 0x104cb3588>
+2018-01-11 16:07:08,801 <song.Song object at 0x104ccada0>
+2018-01-11 16:07:08,801 <song.Song object at 0x104cb3898>
+2018-01-11 16:07:08,801 <song.Song object at 0x104cca748>
+2018-01-11 16:07:08,802 <song.Song object at 0x104cca828>
+2018-01-11 16:07:08,802 <song.Song object at 0x104cb33c8>
+2018-01-11 16:07:08,802 <song.Song object at 0x104ccafd0>
+2018-01-11 16:07:08,802 <song.Song object at 0x104cb3ac8>
+2018-01-11 16:07:08,802 <song.Song object at 0x10e5caa90>
+2018-01-11 16:07:08,803 <song.Song object at 0x10e5ca828>
+2018-01-11 16:07:08,803 <song.Song object at 0x104cca7b8>
+2018-01-11 16:07:08,803 <song.Song object at 0x10e5caa20>
+2018-01-11 16:07:08,803 <song.Song object at 0x104cb3b70>
+2018-01-11 16:07:08,803 <song.Song object at 0x10e5ca6a0>
+2018-01-11 16:07:08,804 <song.Song object at 0x104cb3780>
+2018-01-11 16:07:08,804 <song.Song object at 0x104cb34e0>
+2018-01-11 16:07:08,804 <song.Song object at 0x10e5ca240>
+2018-01-11 16:07:08,804 <song.Song object at 0x104ccaeb8>
+2018-01-11 16:07:08,804 <song.Song object at 0x10f9dfc88>
+2018-01-11 16:07:08,804 <song.Song object at 0x104cb3f98>
+2018-01-11 16:07:08,804 <song.Song object at 0x10e5ca5f8>
+2018-01-11 16:07:08,805 <song.Song object at 0x10f97af60>
+2018-01-11 16:07:08,805 <song.Song object at 0x10e5ca940>
+2018-01-11 16:07:08,805 <song.Song object at 0x10f97aa90>
+2018-01-11 16:07:08,805 <song.Song object at 0x104cb3e10>
+2018-01-11 16:07:08,805 <song.Song object at 0x104cb3208>
+2018-01-11 16:07:08,805 <song.Song object at 0x104cb30f0>
+2018-01-11 16:07:08,806 <song.Song object at 0x10f9df908>
+2018-01-11 16:07:08,806 <song.Song object at 0x104ccacf8>
+2018-01-11 16:07:08,806 <song.Song object at 0x104cca630>
+2018-01-11 16:07:08,806 <song.Song object at 0x104ccac18>
+2018-01-11 16:07:08,806 <song.Song object at 0x10e5ca630>
+2018-01-11 16:07:08,806 <song.Song object at 0x10f9dfc18>
+2018-01-11 16:07:08,806 <song.Song object at 0x104cca5c0>
+2018-01-11 16:07:08,807 <song.Song object at 0x104cb37f0>
+2018-01-11 16:07:08,807 <song.Song object at 0x10f97aeb8>
+2018-01-11 16:07:08,807 <song.Song object at 0x104cb3320>
+2018-01-11 16:07:08,807 <song.Song object at 0x104cb3da0>
+2018-01-11 16:07:08,807 <song.Song object at 0x104cb3a20>
+2018-01-11 16:07:08,807 <song.Song object at 0x10e5ca978>
+2018-01-11 16:07:08,808 <song.Song object at 0x10f9dfa58>
+2018-01-11 16:07:08,808 <song.Song object at 0x104cca898>
+2018-01-11 16:07:08,808 <song.Song object at 0x104cb32b0>
+2018-01-11 16:07:08,808 <song.Song object at 0x104cb3710>
+2018-01-11 16:07:08,808 <song.Song object at 0x104ccaef0>
+2018-01-11 16:07:08,808 <song.Song object at 0x10e5caa58>
+2018-01-11 16:07:08,808 <song.Song object at 0x104cb3978>
+2018-01-11 16:07:08,809 <song.Song object at 0x10f9dfe10>
+2018-01-11 16:07:08,809 <song.Song object at 0x104cb3ef0>
+2018-01-11 16:07:08,809 <song.Song object at 0x10e5ca7f0>
+2018-01-11 16:07:08,809 <song.Song object at 0x104cb3470>
+2018-01-11 16:07:08,809 <song.Song object at 0x104cd9080>
+2018-01-11 16:07:08,809 <song.Song object at 0x104cb3668>
+2018-01-11 16:07:08,809 <song.Song object at 0x104cb3048>
+2018-01-11 16:07:08,810 <song.Song object at 0x10f9df400>
+2018-01-11 16:07:08,810 <song.Song object at 0x104ccab00>
+2018-01-11 16:07:08,810 <song.Song object at 0x104cb3908>
+2018-01-11 16:07:08,810 <song.Song object at 0x10f9dfcf8>
+2018-01-11 16:07:08,810 <song.Song object at 0x10f9869b0>
+2018-01-11 16:07:08,823 127.0.0.1 - - [11/Jan/2018 16:07:08] "POST /recommend HTTP/1.1" 200 -
+2018-01-11 16:07:08,859 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/vendor/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 -
+2018-01-11 16:07:08,870 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/vendor/font-awesome/css/font-awesome.min.css HTTP/1.1" 200 -
+2018-01-11 16:07:08,878 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/vendor/simple-line-icons/css/simple-line-icons.css HTTP/1.1" 200 -
+2018-01-11 16:07:08,886 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/css/new-age.css HTTP/1.1" 200 -
+2018-01-11 16:07:08,895 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/css/custom.css HTTP/1.1" 200 -
+2018-01-11 16:07:08,907 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/vendor/jquery/jquery.min.js HTTP/1.1" 200 -
+2018-01-11 16:07:08,920 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/vendor/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 -
+2018-01-11 16:07:08,926 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/vendor/jquery-easing/jquery.easing.min.js HTTP/1.1" 200 -
+2018-01-11 16:07:08,932 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/js/new-age.min.js HTTP/1.1" 200 -
+2018-01-11 16:07:08,938 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/js/custom.js HTTP/1.1" 200 -
+2018-01-11 16:07:08,946 127.0.0.1 - - [11/Jan/2018 16:07:08] "GET /static/img/vinyl.png HTTP/1.1" 200 -
+2018-01-11 16:07:09,418 127.0.0.1 - - [11/Jan/2018 16:07:09] "GET /static/img/bg-pattern.png HTTP/1.1" 200 -
+2018-01-11 16:07:09,453 127.0.0.1 - - [11/Jan/2018 16:07:09] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:07:09,474 127.0.0.1 - - [11/Jan/2018 16:07:09] "GET /static/img/favicon-16x16.png HTTP/1.1" 200 -
+2018-01-11 16:07:09,486 127.0.0.1 - - [11/Jan/2018 16:07:09] "GET /static/img/favicon.ico HTTP/1.1" 200 -
+2018-01-11 16:07:23,209 127.0.0.1 - - [11/Jan/2018 16:07:23] "GET /static/vendor/bootstrap/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 -
+2018-01-11 16:07:23,284 127.0.0.1 - - [11/Jan/2018 16:07:23] "GET /static/vendor/bootstrap/css/bootstrap.min.css.map HTTP/1.1" 404 -
+2018-01-11 16:09:40,683 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-09-39/150000.mp3
+2018-01-11 16:09:42,811 [0.10347288620739736, 0.0013921253648342892, 1746.0956194331836, 197310.29570378363, 3335.31969751525, 997045.86464326165, 1767.5826925300055, 127737.53075815004, -5.5109348976376671, 2569.4536682474277]
+2018-01-11 16:09:42,812 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-09-39/150001.mp3
+2018-01-11 16:09:44,797 [0.1608280615574246, 0.011183239989038442, 2659.6651178775364, 1348385.8474412246, 6108.1603579067578, 5768402.6275356468, 2811.026204712181, 317861.98730481259, -6.8393302632150368, 2651.2602683437235]
+2018-01-11 16:09:44,800 Processing: /Volumes/expansion/project/data/uploads/2018-01-11_16-09-39/150002.mp3
+2018-01-11 16:09:47,031 [0.080030847574554614, 0.0014192618291344939, 1485.6529306016696, 282309.83284303441, 2796.3974980030016, 1318822.8516678098, 1526.0187449026037, 171702.83444054046, -0.65370193679437272, 2353.9036948117009]
+2018-01-11 16:09:47,034 Recommendations:
+2018-01-11 16:09:47,034 DBSCAN
+2018-01-11 16:09:47,040 <song.Song object at 0x10f98ebe0>
+2018-01-11 16:09:47,040 <song.Song object at 0x10f98e6a0>
+2018-01-11 16:09:47,040 <song.Song object at 0x10f98ef28>
+2018-01-11 16:09:47,040 <song.Song object at 0x104cd6668>
+2018-01-11 16:09:47,040 <song.Song object at 0x10f98e908>
+2018-01-11 16:09:47,041 <song.Song object at 0x104cd6978>
+2018-01-11 16:09:47,041 <song.Song object at 0x104cca978>
+2018-01-11 16:09:47,041 <song.Song object at 0x10f98e3c8>
+2018-01-11 16:09:47,041 <song.Song object at 0x104cd64a8>
+2018-01-11 16:09:47,041 <song.Song object at 0x10f98e978>
+2018-01-11 16:09:47,041 <song.Song object at 0x104cd6ba8>
+2018-01-11 16:09:47,041 <song.Song object at 0x104cd9080>
+2018-01-11 16:09:47,042 <song.Song object at 0x104cca6a0>
+2018-01-11 16:09:47,042 <song.Song object at 0x104cca9e8>
+2018-01-11 16:09:47,042 <song.Song object at 0x104ccac18>
+2018-01-11 16:09:47,043 <song.Song object at 0x104cd6c50>
+2018-01-11 16:09:47,043 <song.Song object at 0x104cca860>
+2018-01-11 16:09:47,043 <song.Song object at 0x104cd6860>
+2018-01-11 16:09:47,043 <song.Song object at 0x104cd65c0>
+2018-01-11 16:09:47,043 <song.Song object at 0x104ccad30>
+2018-01-11 16:09:47,043 <song.Song object at 0x10f98e828>
+2018-01-11 16:09:47,044 <song.Song object at 0x10f98ea20>
+2018-01-11 16:09:47,044 <song.Song object at 0x104cdc0b8>
+2018-01-11 16:09:47,044 <song.Song object at 0x10f95e320>
+2018-01-11 16:09:47,045 <song.Song object at 0x10f9df470>
+2018-01-11 16:09:47,045 <song.Song object at 0x104cca780>
+2018-01-11 16:09:47,045 <song.Song object at 0x10f9df7f0>
+2018-01-11 16:09:47,046 <song.Song object at 0x104cd6ef0>
+2018-01-11 16:09:47,046 <song.Song object at 0x104cd62e8>
+2018-01-11 16:09:47,046 <song.Song object at 0x104cd61d0>
+2018-01-11 16:09:47,046 <song.Song object at 0x10f98ed30>
+2018-01-11 16:09:47,046 <song.Song object at 0x104cca630>
+2018-01-11 16:09:47,047 <song.Song object at 0x104ccab00>
+2018-01-11 16:09:47,047 <song.Song object at 0x10f98e550>
+2018-01-11 16:09:47,047 <song.Song object at 0x104cca588>
+2018-01-11 16:09:47,048 <song.Song object at 0x10f98eac8>
+2018-01-11 16:09:47,048 <song.Song object at 0x104ccaf28>
+2018-01-11 16:09:47,048 <song.Song object at 0x104cd68d0>
+2018-01-11 16:09:47,048 <song.Song object at 0x10f9dfe10>
+2018-01-11 16:09:47,048 <song.Song object at 0x104cd6400>
+2018-01-11 16:09:47,049 <song.Song object at 0x104cd6e80>
+2018-01-11 16:09:47,049 <song.Song object at 0x104cd6b00>
+2018-01-11 16:09:47,049 <song.Song object at 0x10f95e1d0>
+2018-01-11 16:09:47,049 <song.Song object at 0x10f98eb38>
+2018-01-11 16:09:47,050 <song.Song object at 0x10f98e400>
+2018-01-11 16:09:47,051 <song.Song object at 0x104cd6390>
+2018-01-11 16:09:47,051 <song.Song object at 0x104cd67f0>
+2018-01-11 16:09:47,052 <song.Song object at 0x10f98e780>
+2018-01-11 16:09:47,052 <song.Song object at 0x10f9dff28>
+2018-01-11 16:09:47,052 <song.Song object at 0x104cd6a58>
+2018-01-11 16:09:47,053 <song.Song object at 0x10f98ec88>
+2018-01-11 16:09:47,053 <song.Song object at 0x104cd6fd0>
+2018-01-11 16:09:47,053 <song.Song object at 0x10f9df400>
+2018-01-11 16:09:47,054 <song.Song object at 0x104cd6550>
+2018-01-11 16:09:47,054 <song.Song object at 0x104cdc160>
+2018-01-11 16:09:47,054 <song.Song object at 0x104cd6748>
+2018-01-11 16:09:47,054 <song.Song object at 0x104cd6128>
+2018-01-11 16:09:47,055 <song.Song object at 0x10f98eeb8>
+2018-01-11 16:09:47,055 <song.Song object at 0x10f98e5f8>
+2018-01-11 16:09:47,055 <song.Song object at 0x104cd69e8>
+2018-01-11 16:09:47,055 <song.Song object at 0x10f98efd0>
+2018-01-11 16:09:47,056 <song.Song object at 0x10f97af28>
+2018-01-11 16:09:47,070 127.0.0.1 - - [11/Jan/2018 16:09:47] "POST /recommend HTTP/1.1" 200 -
+2018-01-11 16:09:47,122 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/vendor/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 -
+2018-01-11 16:09:47,135 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/vendor/font-awesome/css/font-awesome.min.css HTTP/1.1" 200 -
+2018-01-11 16:09:47,145 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/vendor/simple-line-icons/css/simple-line-icons.css HTTP/1.1" 200 -
+2018-01-11 16:09:47,155 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/css/new-age.css HTTP/1.1" 200 -
+2018-01-11 16:09:47,163 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/css/custom.css HTTP/1.1" 200 -
+2018-01-11 16:09:47,193 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/vendor/jquery/jquery.min.js HTTP/1.1" 200 -
+2018-01-11 16:09:47,209 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/vendor/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 -
+2018-01-11 16:09:47,222 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/vendor/jquery-easing/jquery.easing.min.js HTTP/1.1" 200 -
+2018-01-11 16:09:47,232 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/js/new-age.min.js HTTP/1.1" 200 -
+2018-01-11 16:09:47,240 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/js/custom.js HTTP/1.1" 200 -
+2018-01-11 16:09:47,264 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/img/vinyl.png HTTP/1.1" 200 -
+2018-01-11 16:09:47,770 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/img/bg-pattern.png HTTP/1.1" 200 -
+2018-01-11 16:09:47,826 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:09:47,842 127.0.0.1 - - [11/Jan/2018 16:09:47] "GET /static/img/favicon-16x16.png HTTP/1.1" 200 -
+2018-01-11 16:10:07,163 127.0.0.1 - - [11/Jan/2018 16:10:07] "GET /static/vendor/bootstrap/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 -
+2018-01-11 16:10:07,184 127.0.0.1 - - [11/Jan/2018 16:10:07] "GET /static/vendor/bootstrap/css/bootstrap.min.css.map HTTP/1.1" 404 -
+2018-01-11 16:10:59,570 127.0.0.1 - - [11/Jan/2018 16:10:59] "GET / HTTP/1.1" 500 -
+2018-01-11 16:10:59,695 127.0.0.1 - - [11/Jan/2018 16:10:59] "GET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2018-01-11 16:10:59,699 127.0.0.1 - - [11/Jan/2018 16:10:59] "GET /?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2018-01-11 16:10:59,703 127.0.0.1 - - [11/Jan/2018 16:10:59] "GET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2018-01-11 16:11:00,005 127.0.0.1 - - [11/Jan/2018 16:11:00] "GET /?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2018-01-11 16:11:00,129 127.0.0.1 - - [11/Jan/2018 16:11:00] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2018-01-11 16:11:00,380 127.0.0.1 - - [11/Jan/2018 16:11:00] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2018-01-11 16:12:40,979 127.0.0.1 - - [11/Jan/2018 16:12:40] "GET / HTTP/1.1" 500 -
+2018-01-11 16:12:41,037 127.0.0.1 - - [11/Jan/2018 16:12:41] "GET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2018-01-11 16:12:41,045 127.0.0.1 - - [11/Jan/2018 16:12:41] "GET /?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2018-01-11 16:12:41,052 127.0.0.1 - - [11/Jan/2018 16:12:41] "GET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2018-01-11 16:12:41,115 127.0.0.1 - - [11/Jan/2018 16:12:41] "GET /?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2018-01-11 16:12:41,175 127.0.0.1 - - [11/Jan/2018 16:12:41] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2018-01-11 16:12:41,394 127.0.0.1 - - [11/Jan/2018 16:12:41] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2018-01-11 16:12:42,760 127.0.0.1 - - [11/Jan/2018 16:12:42] "GET / HTTP/1.1" 200 -
+2018-01-11 16:12:43,164 127.0.0.1 - - [11/Jan/2018 16:12:43] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:12:43,177 127.0.0.1 - - [11/Jan/2018 16:12:43] "GET /static/img/favicon.ico HTTP/1.1" 200 -
+2018-01-11 16:14:03,713 127.0.0.1 - - [11/Jan/2018 16:14:03] "GET / HTTP/1.1" 200 -
+2018-01-11 16:14:04,191 127.0.0.1 - - [11/Jan/2018 16:14:04] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:14:12,243 127.0.0.1 - - [11/Jan/2018 16:14:12] "GET / HTTP/1.1" 200 -
+2018-01-11 16:14:12,474 127.0.0.1 - - [11/Jan/2018 16:14:12] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:14:13,941 127.0.0.1 - - [11/Jan/2018 16:14:13] "GET / HTTP/1.1" 200 -
+2018-01-11 16:14:14,136 127.0.0.1 - - [11/Jan/2018 16:14:14] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:14:15,736 127.0.0.1 - - [11/Jan/2018 16:14:15] "GET / HTTP/1.1" 200 -
+2018-01-11 16:14:15,897 127.0.0.1 - - [11/Jan/2018 16:14:15] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:15:07,375 127.0.0.1 - - [11/Jan/2018 16:15:07] "GET / HTTP/1.1" 200 -
+2018-01-11 16:15:07,667 127.0.0.1 - - [11/Jan/2018 16:15:07] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:15:09,070 127.0.0.1 - - [11/Jan/2018 16:15:09] "GET / HTTP/1.1" 200 -
+2018-01-11 16:15:09,286 127.0.0.1 - - [11/Jan/2018 16:15:09] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:15:37,136 127.0.0.1 - - [11/Jan/2018 16:15:37] "GET / HTTP/1.1" 200 -
+2018-01-11 16:15:37,440 127.0.0.1 - - [11/Jan/2018 16:15:37] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:15:39,009 127.0.0.1 - - [11/Jan/2018 16:15:39] "GET / HTTP/1.1" 200 -
+2018-01-11 16:15:39,196 127.0.0.1 - - [11/Jan/2018 16:15:39] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:16:21,469 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET / HTTP/1.1" 200 -
+2018-01-11 16:16:21,518 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/vendor/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 -
+2018-01-11 16:16:21,524 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/vendor/font-awesome/css/font-awesome.min.css HTTP/1.1" 200 -
+2018-01-11 16:16:21,532 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/vendor/simple-line-icons/css/simple-line-icons.css HTTP/1.1" 200 -
+2018-01-11 16:16:21,542 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/css/new-age.css HTTP/1.1" 200 -
+2018-01-11 16:16:21,552 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/css/custom.css HTTP/1.1" 200 -
+2018-01-11 16:16:21,564 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/vendor/jquery/jquery.min.js HTTP/1.1" 200 -
+2018-01-11 16:16:21,572 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/vendor/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 -
+2018-01-11 16:16:21,578 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/vendor/jquery-easing/jquery.easing.min.js HTTP/1.1" 200 -
+2018-01-11 16:16:21,584 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/js/new-age.min.js HTTP/1.1" 200 -
+2018-01-11 16:16:21,589 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/js/custom.js HTTP/1.1" 200 -
+2018-01-11 16:16:21,606 127.0.0.1 - - [11/Jan/2018 16:16:21] "GET /static/img/vinyl.png HTTP/1.1" 200 -
+2018-01-11 16:16:22,128 127.0.0.1 - - [11/Jan/2018 16:16:22] "GET /static/img/bg-pattern.png HTTP/1.1" 200 -
+2018-01-11 16:16:22,147 127.0.0.1 - - [11/Jan/2018 16:16:22] "GET /static/img/favicon-32x32.png HTTP/1.1" 200 -
+2018-01-11 16:16:22,157 127.0.0.1 - - [11/Jan/2018 16:16:22] "GET /static/img/favicon-16x16.png HTTP/1.1" 200 -
+2018-01-11 16:16:22,169 127.0.0.1 - - [11/Jan/2018 16:16:22] "GET /static/img/favicon.ico HTTP/1.1" 200 -
