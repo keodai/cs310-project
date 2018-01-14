@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, url_for, render_template, make_response
+from flask import Flask, request, url_for, render_template, make_response, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS, cross_origin
 from datetime import datetime
@@ -7,12 +7,13 @@ import errno
 
 import recommender
 
-UPLOAD_FOLDER = "/Volumes/expansion/project/data/uploads/"
+# UPLOAD_FOLDER = "/Volumes/expansion/project/data/uploads/"
+UPLOAD_FOLDER = "/Users/matthew/PycharmProjects/cs310-project/audio_data/data/uploads/"
 ALLOWED_EXTENSIONS = {'mp3', 'wav'}
 previous_upload_dir = None
 previous_filenames = None
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024
@@ -79,6 +80,11 @@ def upload_file():
                 recommendations, predictions, warning = recommender.recommend(args=args)
                 return render_template("index.html", current_song=filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
     return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error=None, warning=None)
+
+
+@app.route('/file')
+def send_file():
+    return send_from_directory('audio_data', request.args.get('path'))
 
 
 if __name__ == "__main__":

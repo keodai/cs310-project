@@ -48,6 +48,7 @@ This is the project repository, containing both the project code and documentati
 * Refactored ML
 * UI
 * Refactored to use Flask.
+sudo mount -t hfs /dev/disk4s2 ~/PycharmProjects/cs310-project/audio_data/
 
 
 ### TO DO

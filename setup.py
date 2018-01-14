@@ -54,6 +54,7 @@ def db_cluster(data):
 
 
 def create():
+    logging.basicConfig(filename="logs/output.log", level=logging.DEBUG, format="%(asctime)s %(message)s")
     logging.info("Starting setup...")
     logging.info("-Starting Training...")
 
@@ -156,3 +157,7 @@ def create():
     joblib.dump(dbscan, 'data/dbscan.pkl')
     joblib.dump(svm_on_dbscan, 'data/svm_on_dbscan.pkl')
     joblib.dump(genre_dbscan, 'data/genre_dbscan.pkl')
+
+
+if __name__ == "__main__":
+    create()

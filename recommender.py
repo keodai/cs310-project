@@ -76,6 +76,7 @@ def recommend(args):
     required_files_present = [os.path.isfile(file) for file in required_files]
     if not all(required_files_present):
         setup.create()
+        # todo: error here
 
     song_data = joblib.load(required_files[0])
     test_song_data = joblib.load(required_files[1])
@@ -161,7 +162,7 @@ def recommend(args):
             recommendation = rec[0]
             logging.info(recommendation)
             output.append(
-                make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src))
+                make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src.replace(paths.project_audio_dir, "")))
         return output, predictions, warning
         # END RECOMMENDATION
 

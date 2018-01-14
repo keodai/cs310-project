@@ -15,6 +15,17 @@ window.onload = function () {
 
 // Before refreshing the page, save the form data to sessionStorage
 window.onbeforeunload = function () {
-    sessionStorage.se//tItem("file", $('#file-upload').val());
     sessionStorage.setItem("mode", $('#mode').val());
 };
+
+function toggle (t, src) {
+    if (t.innerText === 'Play') {
+        t.innerText = 'Pause';
+        $(t).parent('label').addClass('fa-stop').removeClass('fa-play');
+        document.getElementById(src).play();
+    } else {
+        t.innerText = 'Play';
+        document.getElementById(src).pause();
+        $(t).parent('label').addClass('fa-play').removeClass('fa-stop');
+    }
+}
