@@ -96,17 +96,17 @@
                 </label>
                 <input id="file-upload" type="file" name="file[]" multiple hidden/>
                 <div id="file-selected">
-                    <i>
-                        {% if current_song is not none %}
-                        <ul>
-                            {% for song in current_song: %}
-                            <li>{{ song }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% else %}
-                        No file(s) selected
-                        {% endif %}
-                    </i>
+
+                    {% if current_song is not none %}
+                    <ul>
+                        {% for song in current_song: %}
+                        <li><i>{{ song }}</i></li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <i>No file(s) selected</i>
+                    {% endif %}
+
                 </div>
                 <hr class="short-rule">
                 <div class="divider">Algorithm</div>
@@ -147,19 +147,27 @@
             {% endif %}
 
             <div id="current-song" class="song-info">
-                Current song(s):
-                <i>
+                <form action="#" onsubmit="download();return false">
+
+                    Current song(s):
+                    <i>
+                        {% if current_song is not none %}
+                        {% for song in current_song[:-1] %}
+                        {{ song }},
+                        {% endfor %}
+                        {{ current_song[-1] }}
+                        {% else %}
+                        No songs selected
+                        {% endif %}
+                    </i>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Detected genre(s): <i>{% if predicted is not none %}{{ predicted }}{% else %}N/A{% endif %}</i>
                     {% if current_song is not none %}
-                    {% for song in current_song[:-1] %}
-                    {{ song }},
-                    {%endfor %}
-                    {{ current_song[-1] }}
-                    {% else %}
-                    No songs selected
+                    <a href="#" id="save-link" class="download-btn btn btn-outline">Download .csv</a>
                     {% endif %}
-                </i>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Detected genre(s): <i>{% if predicted is not none %}{{ predicted }}{% else %}N/A{% endif %}</i>
+                </form>
+
+
             </div>
             <table class="table table-striped table-light table-hover static-table-header">
                 <thead>
@@ -184,7 +192,9 @@
                         <th style="width: 8%">
                             <audio id="{{ entry['src'] }}" src="file?path={{ src }}"></audio>
                             <div>
-                                <label class="fa fa-play"><button onclick="toggle(this, '{{ src }}')" hidden>Play</button></label>
+                                <label class="fa fa-play">
+                                    <button onclick="toggle(this, '{{ src }}')" hidden>Play</button>
+                                </label>
                             </div>
                         </th>
                         <td style="width: 28%">{{ entry['title'] }}</td>

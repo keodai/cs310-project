@@ -158,6 +158,10 @@ def create():
     joblib.dump(svm_on_dbscan, 'data/svm_on_dbscan.pkl')
     joblib.dump(genre_dbscan, 'data/genre_dbscan.pkl')
 
+    # ------------------
+    # Mid-level features
+    # ------------------
+
 
 if __name__ == "__main__":
     create()

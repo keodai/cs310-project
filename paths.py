@@ -22,3 +22,8 @@ test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/small_d
 dst_ext = ".wav"
 output_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/small_data/converted/"
 project_audio_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/"
+
+raw_data_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/raw_dataset/"
+processed_data_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/processed/"
+data_path_exclude = "/Users/matthew/PycharmProjects/cs310-project/audio_data/no_genre/"
+

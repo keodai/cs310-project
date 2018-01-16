@@ -18,7 +18,7 @@ window.onbeforeunload = function () {
     sessionStorage.setItem("mode", $('#mode').val());
 };
 
-function toggle (t, src) {
+function toggle(t, src) {
     if (t.innerText === 'Play') {
         t.innerText = 'Pause';
         $(t).parent('label').addClass('fa-stop').removeClass('fa-play');
@@ -29,3 +29,20 @@ function toggle (t, src) {
         $(t).parent('label').addClass('fa-play').removeClass('fa-stop');
     }
 }
+
+$('#save-link').click(function () {
+    var retContent = [];
+    var retString = '';
+    $('tbody tr').each(function (idx, elem) {
+        var elemText = [];
+        $(elem).children('td').each(function (childIdx, childElem) {
+            elemText.push($(childElem).text());
+        });
+        retContent.push(`(${elemText.join(',')})`);
+    });
+    retString = retContent.join(',\r\n');
+    var file = new Blob([retString], {type: 'text/plain'});
+    var btn = $('#save-link');
+    btn.attr("href", URL.createObjectURL(file));
+    btn.prop("download", "recommendations.txt");
+});

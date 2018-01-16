@@ -31,18 +31,19 @@ class Song:
         return utils.format_string(TinyTag.get(self.src).album).replace('\x00', '')
 
     def extract_features(self):
-        ysr = librosa.load(self.dst)
-        zcr = librosa.feature.zero_crossing_rate(ysr[0])
-        sc = librosa.feature.spectral_centroid(y=ysr[0], sr=ysr[1])
-        sr = librosa.feature.spectral_rolloff(y=ysr[0], sr=ysr[1])
-        sb = librosa.feature.spectral_bandwidth(y=ysr[0], sr=ysr[1])
-        mfcc = librosa.feature.mfcc(y=ysr[0], sr=ysr[1])
+        y, sr = librosa.load(self.dst)
+        zcr = librosa.feature.zero_crossing_rate(y)
+        sc = librosa.feature.spectral_centroid(y=y, sr=sr)
+        sro = librosa.feature.spectral_rolloff(y=y, sr=sr)
+        sb = librosa.feature.spectral_bandwidth(y=y, sr=sr)
+        mfcc = librosa.feature.mfcc(y=y, sr=sr)
         feature_vector = [
             np.mean(zcr), np.var(zcr),
             np.mean(sc), np.var(sc),
-            np.mean(sr), np.var(sr),
+            np.mean(sro), np.var(sro),
             np.mean(sb), np.var(sb),
             np.mean(mfcc), np.var(mfcc)
         ]
         logging.info(str(feature_vector))
+
         return feature_vector
