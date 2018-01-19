@@ -37,12 +37,20 @@ class Song:
         sro = librosa.feature.spectral_rolloff(y=y, sr=sr)
         sb = librosa.feature.spectral_bandwidth(y=y, sr=sr)
         mfcc = librosa.feature.mfcc(y=y, sr=sr)
+
+        onset_env = librosa.onset.onset_strength(y, sr=sr)
+        tempo = librosa.beat.tempo(onset_envelope=onset_env, sr=sr, aggregate=None)
+        pitches, magnitudes = librosa.piptrack(y=y, sr=sr)
+        index = magnitudes[:, t].argmax()
+        pitch = pitches[index, t]
+
         feature_vector = [
             np.mean(zcr), np.var(zcr),
             np.mean(sc), np.var(sc),
             np.mean(sro), np.var(sro),
             np.mean(sb), np.var(sb),
-            np.mean(mfcc), np.var(mfcc)
+            np.mean(mfcc), np.var(mfcc),
+            # np.mean(tempo), np.var(tempo)
         ]
         logging.info(str(feature_vector))
 
