@@ -14,7 +14,7 @@ def detect_pitch(y, sr):
     return pitch
 
 
-def chunkIt(seq, num):
+def chunk_it(seq, num):
     avg = len(seq) / float(num)
     out = []
     last = 0.0
@@ -26,6 +26,26 @@ def chunkIt(seq, num):
     return out
 
 
+def muvar_sq(feature, axis=None):
+    frame_means = []
+    frame_vars = []
+    frames = chunk_it(feature, 10)
+    for frame in frames:
+        frame_means.append(np.mean(frame, axis=axis))
+        frame_vars.append(np.var(frame, axis=axis))
+    mean_of_mean = np.mean(frame_means, axis=axis)
+    mean_of_var = np.mean(frame_vars, axis=axis)
+    var_of_mean = np.var(frame_means, axis=axis)
+    var_of_var = np.var(frame_vars, axis=axis)
+    means = frame_means + mean_of_mean + mean_of_var
+    v = frame_vars + var_of_mean + var_of_var
+    return means, v
+
+
+def flatten(l):
+    return [item for sublist in l for item in sublist]
+
+
 class Song:
     def __init__(self, src, dst):
         self.src = src
@@ -35,7 +55,7 @@ class Song:
         self.album = self.album_from_metadata()
         self.listed_genre = self.genre_from_metadata()
         self.predicted_genre = None
-        self.features, self.timbre_features = self.extract_features()
+        self.features, self.timbre, self.features_sq, self.timbre_sq = self.extract_features()
         self.normalised_features = None
         self.dbscan_cluster_id = None
 
@@ -53,10 +73,10 @@ class Song:
 
     def extract_features(self):
         y, sr = librosa.load(self.dst)
-        zcr = librosa.feature.zero_crossing_rate(y)
-        sc = librosa.feature.spectral_centroid(y=y, sr=sr)
-        sro = librosa.feature.spectral_rolloff(y=y, sr=sr)
-        sb = librosa.feature.spectral_bandwidth(y=y, sr=sr)
+        [zcr] = librosa.feature.zero_crossing_rate(y)
+        [sc] = librosa.feature.spectral_centroid(y=y, sr=sr)
+        [sro] = librosa.feature.spectral_rolloff(y=y, sr=sr)
+        [sb] = librosa.feature.spectral_bandwidth(y=y, sr=sr)
         mfcc = librosa.feature.mfcc(y=y, sr=sr)
 
         onset_env = librosa.onset.onset_strength(y, sr=sr)
@@ -77,32 +97,33 @@ class Song:
             np.mean(pitch), np.var(pitch)
         ]
 
-        timbre = mfcc_mean + mfcc_var + stft
-        feature_vector = mfcc_mean + mfcc_var + stft + mid
+        timbre = mfcc_mean.tolist() + mfcc_var.tolist() + stft
+        feature_vector = timbre + mid
         logging.info(str(feature_vector))
 
         # MuVar^2
-        # todo: refactor this into a method for each feature, with optional param for axis.
-        mfcc_frame_means = []
-        mfcc_frame_vars = []
-        mfcc_frames = chunkIt(mfcc, 10)
-        for frame in mfcc_frames:
-            mfcc_frame_means.append(np.mean(frame, axis=0))
-            mfcc_frame_vars.append(np.var(frame, axis=0))
-        mfcc_mean_of_mean = np.mean(mfcc_frame_means, axis=0)
-        mfcc_mean_of_var = np.mean(mfcc_frame_vars, axis=0)
-        mfcc_var_of_mean = np.var(mfcc_frame_means, axis=0)
-        mfcc_var_of_var = np.var(mfcc_frame_vars, axis=0)
+        mfcc_m, mfcc_v = muvar_sq(mfcc, 0)
+        mfcc_means = flatten(mfcc_m)
+        mfcc_vars = flatten(mfcc_v)
+        zcr_means, zcr_vars = muvar_sq(zcr)
+        sc_means, sc_vars = muvar_sq(sc)
+        sro_means, sro_vars = muvar_sq(sro)
+        sb_means, sb_vars = muvar_sq(sb)
+        tempo_means, tempo_vars = muvar_sq(tempo)
+        pitch_means, pitch_vars = muvar_sq(pitch)
 
-        zcr_frames = chunkIt(zcr, 10)
-        sc_frames = chunkIt(sc, 10)
-        sro_frames = chunkIt(sro, 10)
-        sb_frames = chunkIt(sb, 10)
-        tempo_frames = chunkIt(tempo, 10)
-        pitch_frames = chunkIt(pitch, 10)
+        timbre_sq = mfcc_means + mfcc_vars + \
+                    zcr_means.tolist() + zcr_vars.tolist() + \
+                    sc_means.tolist() + sc_vars.tolist() + \
+                    sro_means.tolist() + sro_vars.tolist() + \
+                    sb_means.tolist() + sb_vars.tolist()
 
+        feature_vector_sq = mfcc_means + mfcc_vars + \
+                            zcr_means.tolist() + zcr_vars.tolist() + \
+                            sc_means.tolist() + sc_vars.tolist() + \
+                            sro_means.tolist() + sro_vars.tolist() + \
+                            sb_means.tolist() + sb_vars.tolist() + \
+                            tempo_means.tolist() + tempo_vars.tolist() + \
+                            pitch_means.tolist() + pitch_vars.tolist()
 
-
-
-
-        return feature_vector, timbre
+        return feature_vector, timbre, feature_vector_sq, timbre_sq
