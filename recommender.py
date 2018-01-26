@@ -121,8 +121,8 @@ def recommend(args):
 
     warning = None
 
-    if len(args) != 2:
-        print("Usage: python recommender path_to_music recommendation_mode")
+    if len(args) != 3:
+        print("Usage: python recommender path_to_music recommendation_mode vector_type")
     else:
         path = args[0]
         mode = args[1]

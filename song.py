@@ -129,7 +129,7 @@ class Song:
         pitch_means = muvar_sq(pitch)[0].tolist()
         pitch_vars = muvar_sq(pitch)[1].tolist()
 
-        timbre_sq = mfcc_means +  mfcc_vars + sc_means #np.append(mfcc_means, [mfcc_vars, zcr_means, zcr_vars, sc_means, sc_vars, sro_means, sro_vars, sb_means, sb_vars]).tolist()
-        feature_vector_sq = mfcc_means #np.append(mfcc_means, [mfcc_vars, zcr_means, zcr_vars, sc_means, sc_vars, sro_means, sro_vars, sb_means, sb_vars, tempo_means, tempo_vars, pitch_means, pitch_vars]).tolist()
+        timbre_sq = mfcc_means + mfcc_vars + zcr_means + zcr_vars + sc_means + sc_vars + sro_means + sro_vars + sb_means + sb_vars
+        feature_vector_sq = mfcc_means + mfcc_vars + zcr_means + zcr_vars + sc_means + sc_vars + sro_means + sro_vars + sb_means + sb_vars + tempo_means + tempo_vars + pitch_means + pitch_vars
 
         return timbre, feature_vector, timbre_sq, feature_vector_sq
