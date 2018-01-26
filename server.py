@@ -63,8 +63,9 @@ def upload_file():
                     if previous_upload_dir is None or previous_filenames is None:
                         return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No selected file", warning=None)
             mode = request.form['mode']
+            vector_type = request.form['features']
             if use_previous_path:
-                args = [previous_upload_dir, mode]
+                args = [previous_upload_dir, mode, vector_type]
                 recommendations, predictions, warning = recommender.recommend(args=args)
                 return render_template("index.html", current_song=previous_filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
             elif mode and all(allowed_file(f.filename) for f in file_list) and all(f for f in file_list):
@@ -74,7 +75,7 @@ def upload_file():
                     path = os.path.join(directory, filename)
                     f.save(path)
                     filenames.append(filename)
-                args = [directory, mode]
+                args = [directory, mode, vector_type]
                 previous_upload_dir = directory
                 previous_filenames = filenames
                 recommendations, predictions, warning = recommender.recommend(args=args)

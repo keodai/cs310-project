@@ -8,7 +8,7 @@ import logging
 def detect_pitch(y, sr):
     pitch = []
     pitches, magnitudes = librosa.piptrack(y=y, sr=sr)
-    for t in range(len(pitches)):
+    for t in range(0, len(pitches[0])):
         index = magnitudes[:, t].argmax()
         pitch.append(pitches[index, t])
     return pitch
@@ -33,17 +33,19 @@ def muvar_sq(feature, axis=None):
     for frame in frames:
         frame_means.append(np.mean(frame, axis=axis))
         frame_vars.append(np.var(frame, axis=axis))
+    frame_means = frame_means[:10]
+    frame_vars = frame_means[:10]
     mean_of_mean = np.mean(frame_means, axis=axis)
     mean_of_var = np.mean(frame_vars, axis=axis)
     var_of_mean = np.var(frame_means, axis=axis)
     var_of_var = np.var(frame_vars, axis=axis)
-    means = frame_means + mean_of_mean + mean_of_var
-    v = frame_vars + var_of_mean + var_of_var
+    means = np.append(np.array(frame_means), [mean_of_mean, mean_of_var])
+    v = np.append(np.array(frame_vars), [var_of_mean, var_of_var])
     return means, v
 
 
 def flatten(l):
-    return [item for sublist in l for item in sublist]
+    return np.array([item for sublist in l for item in sublist])
 
 
 class Song:
@@ -54,10 +56,19 @@ class Song:
         self.artist = self.artist_from_metadata()
         self.album = self.album_from_metadata()
         self.listed_genre = self.genre_from_metadata()
-        self.predicted_genre = None
-        self.features, self.timbre, self.features_sq, self.timbre_sq = self.extract_features()
+        self.predicted_genre_features = None
+        self.predicted_genre_timbre = None
+        self.predicted_genre_features_sq = None
+        self.predicted_genre_timbre_sq = None
+        self.timbre, self.features, self.timbre_sq, self.features_sq = self.extract_features()
         self.normalised_features = None
-        self.dbscan_cluster_id = None
+        self.normalised_timbre = None
+        self.normalised_features_sq = None
+        self.normalised_timbre_sq = None
+        self.dbscan_cluster_id_timbre = None
+        self.dbscan_cluster_id_features = None
+        self.dbscan_cluster_id_timbre_sq = None
+        self.dbscan_cluster_id_timbre_features_sq = None
 
     def genre_from_metadata(self):
         return utils.format_string(TinyTag.get(self.src).genre).replace('\x00', '')
@@ -77,15 +88,15 @@ class Song:
         [sc] = librosa.feature.spectral_centroid(y=y, sr=sr)
         [sro] = librosa.feature.spectral_rolloff(y=y, sr=sr)
         [sb] = librosa.feature.spectral_bandwidth(y=y, sr=sr)
-        mfcc = librosa.feature.mfcc(y=y, sr=sr)
+        mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=100)
 
         onset_env = librosa.onset.onset_strength(y, sr=sr)
         tempo = librosa.beat.tempo(onset_envelope=onset_env, sr=sr, aggregate=None)
         pitch = detect_pitch(y, sr)
 
         # MuVar
-        mfcc_mean = np.mean(mfcc, axis=0)
-        mfcc_var = np.var(mfcc, axis=0)
+        mfcc_mean = np.mean(mfcc, axis=1)
+        mfcc_var = np.var(mfcc, axis=1)
         stft = [
             np.mean(zcr), np.var(zcr),
             np.mean(sc), np.var(sc),
@@ -102,28 +113,23 @@ class Song:
         logging.info(str(feature_vector))
 
         # MuVar^2
-        mfcc_m, mfcc_v = muvar_sq(mfcc, 0)
-        mfcc_means = flatten(mfcc_m)
-        mfcc_vars = flatten(mfcc_v)
-        zcr_means, zcr_vars = muvar_sq(zcr)
-        sc_means, sc_vars = muvar_sq(sc)
-        sro_means, sro_vars = muvar_sq(sro)
-        sb_means, sb_vars = muvar_sq(sb)
-        tempo_means, tempo_vars = muvar_sq(tempo)
-        pitch_means, pitch_vars = muvar_sq(pitch)
+        mfcc_m, mfcc_v = muvar_sq(mfcc, 1)
+        mfcc_means = mfcc_m.tolist()
+        mfcc_vars = mfcc_v.tolist()
+        zcr_means = muvar_sq(zcr)[0].tolist()
+        zcr_vars = muvar_sq(zcr)[1].tolist()
+        sc_means = muvar_sq(sc)[0].tolist()
+        sc_vars = muvar_sq(sc)[1].tolist()
+        sro_means = muvar_sq(sro)[0].tolist()
+        sro_vars = muvar_sq(sro)[1].tolist()
+        sb_means = muvar_sq(sb)[0].tolist()
+        sb_vars = muvar_sq(sb)[1].tolist()
+        tempo_means = muvar_sq(tempo)[0].tolist()
+        tempo_vars = muvar_sq(tempo)[1].tolist()
+        pitch_means = muvar_sq(pitch)[0].tolist()
+        pitch_vars = muvar_sq(pitch)[1].tolist()
 
-        timbre_sq = mfcc_means + mfcc_vars + \
-                    zcr_means.tolist() + zcr_vars.tolist() + \
-                    sc_means.tolist() + sc_vars.tolist() + \
-                    sro_means.tolist() + sro_vars.tolist() + \
-                    sb_means.tolist() + sb_vars.tolist()
+        timbre_sq = mfcc_means +  mfcc_vars + sc_means #np.append(mfcc_means, [mfcc_vars, zcr_means, zcr_vars, sc_means, sc_vars, sro_means, sro_vars, sb_means, sb_vars]).tolist()
+        feature_vector_sq = mfcc_means #np.append(mfcc_means, [mfcc_vars, zcr_means, zcr_vars, sc_means, sc_vars, sro_means, sro_vars, sb_means, sb_vars, tempo_means, tempo_vars, pitch_means, pitch_vars]).tolist()
 
-        feature_vector_sq = mfcc_means + mfcc_vars + \
-                            zcr_means.tolist() + zcr_vars.tolist() + \
-                            sc_means.tolist() + sc_vars.tolist() + \
-                            sro_means.tolist() + sro_vars.tolist() + \
-                            sb_means.tolist() + sb_vars.tolist() + \
-                            tempo_means.tolist() + tempo_vars.tolist() + \
-                            pitch_means.tolist() + pitch_vars.tolist()
-
-        return feature_vector, timbre, feature_vector_sq, timbre_sq
+        return timbre, feature_vector, timbre_sq, feature_vector_sq

@@ -70,9 +70,15 @@ def main(args):
 
 def recommend(args):
     logging.basicConfig(filename="logs/output.log", level=logging.DEBUG, format="%(asctime)s %(message)s")
-    required_files = ["data/song_data.pkl", "data/test_song_data.pkl", "data/scaler.pkl", "data/classifier.pkl",
-                      "data/kmeans.pkl", "data/genre_kmeans.pkl", "data/dbscan.pkl", "data/svm_on_dbscan.pkl",
-                      "data/genre_dbscan.pkl"]
+    required_files = ["data/song_data.pkl", "data/test_song_data.pkl", "data/scaler_timbre.pkl", "data/classifier_timbre.pkl",
+                      "data/kmeans_timbre.pkl", "data/genre_kmeans_timbre.pkl", "data/dbscan_timbre.pkl", "data/svm_on_dbscan_timbre.pkl",
+                      "data/genre_dbscan_timbre.pkl", "data/scaler_mid.pkl", "data/classifier_mid.pkl",
+                      "data/kmeans_mid.pkl", "data/genre_kmeans_mid.pkl", "data/dbscan_mid.pkl", "data/svm_on_dbscan_mid.pkl",
+                      "data/genre_dbscan_mid.pkl", "data/scaler_timbre_sq.pkl", "data/classifier_timbre_sq.pkl",
+                      "data/kmeans_timbre_sq.pkl", "data/genre_kmeans_timbre_sq.pkl", "data/dbscan_timbre_sq.pkl", "data/svm_on_dbscan_timbre_sq.pkl",
+                      "data/genre_dbscan_timbre_sq.pkl", "data/scaler_mid_sq.pkl", "data/classifier_mid_sq.pkl",
+                      "data/kmeans_mid_sq.pkl", "data/genre_kmeans_mid_sq.pkl", "data/dbscan_mid_sq.pkl", "data/svm_on_dbscan_mid_sq.pkl",
+                      "data/genre_dbscan_mid_sq.pkl"]
     required_files_present = [os.path.isfile(file) for file in required_files]
     if not all(required_files_present):
         setup.create()
@@ -80,13 +86,39 @@ def recommend(args):
 
     song_data = joblib.load(required_files[0])
     test_song_data = joblib.load(required_files[1])
-    scaler = joblib.load(required_files[2])
-    clf = joblib.load(required_files[3])
-    kmeans = joblib.load(required_files[4])
-    genre_kmeans = joblib.load(required_files[5])
-    dbscan = joblib.load(required_files[6])
-    svm_on_dbscan = joblib.load(required_files[7])
-    genre_dbscan = joblib.load(required_files[8])
+
+    scaler_timbre = joblib.load(required_files[2])
+    clf_timbre = joblib.load(required_files[3])
+    kmeans_timbre = joblib.load(required_files[4])
+    genre_kmeans_timbre = joblib.load(required_files[5])
+    dbscan_timbre = joblib.load(required_files[6])
+    svm_on_dbscan_timbre = joblib.load(required_files[7])
+    genre_dbscan_timbre = joblib.load(required_files[8])
+
+    scaler_mid = joblib.load(required_files[9])
+    clf_mid = joblib.load(required_files[10])
+    kmeans_mid = joblib.load(required_files[11])
+    genre_kmeans_mid = joblib.load(required_files[12])
+    dbscan_mid = joblib.load(required_files[13])
+    svm_on_dbscan_mid = joblib.load(required_files[14])
+    genre_dbscan_mid = joblib.load(required_files[15])
+
+    scaler_timbre_sq = joblib.load(required_files[16])
+    clf_timbre_sq = joblib.load(required_files[17])
+    kmeans_timbre_sq = joblib.load(required_files[18])
+    genre_kmeans_timbre_sq = joblib.load(required_files[19])
+    dbscan_timbre_sq = joblib.load(required_files[20])
+    svm_on_dbscan_timbre_sq = joblib.load(required_files[21])
+    genre_dbscan_timbre_sq = joblib.load(required_files[22])
+
+    scaler_mid_sq = joblib.load(required_files[23])
+    clf_mid_sq = joblib.load(required_files[24])
+    kmeans_mid_sq = joblib.load(required_files[25])
+    genre_kmeans_mid_sq = joblib.load(required_files[26])
+    dbscan_mid_sq = joblib.load(required_files[27])
+    svm_on_dbscan_mid_sq = joblib.load(required_files[28])
+    genre_dbscan_mid_sq = joblib.load(required_files[29])
+
     warning = None
 
     if len(args) != 2:
@@ -94,27 +126,79 @@ def recommend(args):
     else:
         path = args[0]
         mode = args[1]
+        vector_type = args[2]
         predicted = None
         norm_features = None
         predictions = []
         if os.path.isfile(path):
             song = setup.single_song(path, paths.output_dir)
             logging.info("Listed Genre: " + song.listed_genre)
-            [song.normalised_features] = scaler.transform([song.features])
-            [song.predicted_genre] = clf.predict([song.normalised_features])
-            logging.info("Predicted Genre (SVM): " + song.predicted_genre)
-            norm_features, predicted = song.normalised_features, song.predicted_genre
+
+            if vector_type == "TIMBRE":
+                [song.normalised_timbre] = scaler_timbre.transform([song.timbre])
+                [song.predicted_genre_timbre] = clf_timbre.predict([song.normalised_timbre])
+                logging.info("Predicted Genre (SVM): " + song.predicted_genre_timbre)
+                norm_features, predicted = song.normalised_timbre, song.predicted_genre_timbre
+            elif vector_type == "MID":
+                [song.normalised_features] = scaler_timbre.transform([song.features])
+                [song.predicted_genre_features] = clf_mid.predict([song.normalised_features])
+                logging.info("Predicted Genre (SVM): " + song.predicted_genre_features)
+                norm_features, predicted = song.normalised_features, song.predicted_genre_features
+            elif vector_type == "TIMBRE_SQ":
+                [song.normalised_timbre_sq] = scaler_timbre.transform([song.timbre_sq])
+                [song.predicted_genre_timbre_sq] = clf_timbre_sq.predict([song.normalised_timbre_sq])
+                logging.info("Predicted Genre (SVM): " + song.predicted_genre_timbre_sq)
+                norm_features, predicted = song.normalised_timbre_sq, song.predicted_genre_timbre_sq
+            elif vector_type == "MID_SQ":
+                [song.normalised_features_sq] = scaler_timbre.transform([song.features_sq])
+                [song.predicted_genre_features_sq] = clf_mid_sq.predict([song.normalised_features_sq])
+                logging.info("Predicted Genre (SVM): " + song.predicted_genre_features_sq)
+                norm_features, predicted = song.normalised_features_sq, song.predicted_genre_features_sq
+            else:
+                print("Invalid vector type selected")
+                exit(1)
+
             predictions.append(predicted)
         elif os.path.isdir(path):
             songs = setup.convert_and_get_data(path, paths.output_dir)
             normalised = []
             for song in songs:
-                [song.normalised_features] = scaler.transform([song.features])
-                [song.predicted_genre] = clf.predict([song.normalised_features])
-                predictions.append(song.predicted_genre)
-                normalised.append(song.normalised_features)
+                if vector_type == "TIMBRE":
+                    [song.normalised_timbre] = scaler_timbre.transform([song.timbre])
+                    [song.predicted_genre_timbre] = clf_timbre.predict([song.normalised_timbre])
+                    predictions.append(song.predicted_genre_timbre)
+                    normalised.append(song.normalised_timbre)
+                elif vector_type == "MID":
+                    [song.normalised_features] = scaler_timbre.transform([song.features])
+                    [song.predicted_genre_features] = clf_mid.predict([song.normalised_features])
+                    predictions.append(song.predicted_genre_features)
+                    normalised.append(song.normalised_features)
+                elif vector_type == "TIMBRE_SQ":
+                    [song.normalised_timbre_sq] = scaler_timbre.transform([song.timbre_sq])
+                    [song.predicted_genre_timbre_sq] = clf_timbre_sq.predict([song.normalised_timbre_sq])
+                    predictions.append(song.predicted_genre_timbre_sq)
+                    normalised.append(song.normalised_timbre_sq)
+                elif vector_type == "MID_SQ":
+                    [song.normalised_features_sq] = scaler_timbre.transform([song.features_sq])
+                    [song.predicted_genre_features_sq] = clf_mid_sq.predict([song.normalised_features_sq])
+                    predictions.append(song.predicted_genre_features_sq)
+                    normalised.append(song.normalised_features_sq)
+                else:
+                    print("Invalid vector type selected")
+                    exit(1)
             norm_features = [float(sum(l)) / len(l) for l in zip(*normalised)]
-            [predicted] = clf.predict([norm_features])
+            if vector_type == "TIMBRE":
+                [predicted] = clf_timbre.predict([norm_features])
+            elif vector_type == "MID":
+                [predicted] = clf_mid.predict([norm_features])
+            elif vector_type == "TIMBRE_SQ":
+                [predicted] = clf_timbre_sq.predict([norm_features])
+            elif vector_type == "MID_SQ":
+                [predicted] = clf_mid_sq.predict([norm_features])
+            else:
+                print("Invalid vector type selected")
+                exit(1)
+
             if predictions.count(predictions[0]) != len(predictions):
                 warning = "Input songs are from different genres"
         else:
@@ -123,39 +207,147 @@ def recommend(args):
         # BEGIN RECOMMENDATION
         logging.info("Recommendations:")
         recommendations = []
-        if mode == "SVM":  # Sorted songs in genre region.
-            logging.info("SVM")
-            songs_in_genre = [song for song in song_data if song.predicted_genre == predicted]
-            dist = calculate_distances(songs_in_genre, norm_features)
-            recommendations = sorted(zip(songs_in_genre, dist), key=lambda l: l[1])[:MAX_RECS]
-        elif mode == "FASTKMEANS":  # Unsorted songs in single cluster.
-            logging.info("FASTKMEANS")
-            recommendations = fast_kmeans(kmeans, norm_features, song_data)[1][:MAX_RECS]
-        elif mode == "FASTSORTEDKMEANS":  # Sorted songs in single cluster.
-            logging.info("FASTSORTEDKMEANS")
-            songs_in_cluster = [entry[0] for entry in fast_kmeans(kmeans, norm_features, song_data)[1]]
-            dist = calculate_distances(songs_in_cluster, norm_features)
-            recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
-        elif mode == "KMEANS":  # All clusters, sorted by cluster, then song distance.
-            logging.info("KMEANS")
-            recommendations = perform_kmeans(kmeans, song_data, norm_features)
-        elif mode == "DBSCAN":  # Sorted songs in single cluster.
-            logging.info("DBSCAN")
-            recommendations = perform_dbscan(dbscan, song_data, norm_features)
-        elif mode == "SVM+KMEANS":
-            logging.info("SVM+KMEANS")
-            recommendations = svm_then_classifier(genre_kmeans, predicted, song_data, norm_features, perform_kmeans)
-        elif mode == "SVM+DBSCAN":
-            logging.info("SVM+DBSCAN")
-            recommendations = svm_then_classifier(genre_dbscan, predicted, song_data, norm_features, perform_dbscan)
-        elif mode == "DBSCAN+SVM":
-            logging.info("DBSCAN+SVM")
-            [predicted_cluster] = svm_on_dbscan.predict([norm_features])
-            songs_in_cluster = [song for song in song_data if song.dbscan_cluster_id == predicted_cluster]
-            dist = calculate_distances(songs_in_cluster, norm_features)
-            recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
+
+        if vector_type == "TIMBRE":
+            if mode == "SVM":  # Sorted songs in genre region.
+                logging.info("SVM")
+                songs_in_genre = [song for song in song_data if song.predicted_genre_timbre == predicted]
+                dist = calculate_distances(songs_in_genre, norm_features)
+                recommendations = sorted(zip(songs_in_genre, dist), key=lambda l: l[1])[:MAX_RECS]
+            elif mode == "FASTKMEANS":  # Unsorted songs in single cluster.
+                logging.info("FASTKMEANS")
+                recommendations = fast_kmeans(kmeans_timbre, norm_features, song_data)[1][:MAX_RECS]
+            elif mode == "FASTSORTEDKMEANS":  # Sorted songs in single cluster.
+                logging.info("FASTSORTEDKMEANS")
+                songs_in_cluster = [entry[0] for entry in fast_kmeans(kmeans_timbre, norm_features, song_data)[1]]
+                dist = calculate_distances(songs_in_cluster, norm_features)
+                recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
+            elif mode == "KMEANS":  # All clusters, sorted by cluster, then song distance.
+                logging.info("KMEANS")
+                recommendations = perform_kmeans(kmeans_timbre, song_data, norm_features)
+            elif mode == "DBSCAN":  # Sorted songs in single cluster.
+                logging.info("DBSCAN")
+                recommendations = perform_dbscan(dbscan_timbre, song_data, norm_features)
+            elif mode == "SVM+KMEANS":
+                logging.info("SVM+KMEANS")
+                recommendations = svm_then_classifier(genre_kmeans_timbre, predicted, song_data, norm_features, perform_kmeans)
+            elif mode == "SVM+DBSCAN":
+                logging.info("SVM+DBSCAN")
+                recommendations = svm_then_classifier(genre_dbscan_timbre, predicted, song_data, norm_features, perform_dbscan)
+            elif mode == "DBSCAN+SVM":
+                logging.info("DBSCAN+SVM")
+                [predicted_cluster] = svm_on_dbscan_timbre.predict([norm_features])
+                songs_in_cluster = [song for song in song_data if song.dbscan_cluster_id_timbre == predicted_cluster]
+                dist = calculate_distances(songs_in_cluster, norm_features)
+                recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
+            else:
+                print(
+                    "Invalid mode. Options: [SVM, FASTKMEANS, FASTSORTEDKMEANS, KMEANS, DBSCAN, SVM+KMEANS, SVM+DBSCAN, DBSCAN+SVM]")
+        elif vector_type == "MID":
+            if mode == "SVM":  # Sorted songs in genre region.
+                logging.info("SVM")
+                songs_in_genre = [song for song in song_data if song.predicted_genre_mid == predicted]
+                dist = calculate_distances(songs_in_genre, norm_features)
+                recommendations = sorted(zip(songs_in_genre, dist), key=lambda l: l[1])[:MAX_RECS]
+            elif mode == "FASTKMEANS":  # Unsorted songs in single cluster.
+                logging.info("FASTKMEANS")
+                recommendations = fast_kmeans(kmeans_mid, norm_features, song_data)[1][:MAX_RECS]
+            elif mode == "FASTSORTEDKMEANS":  # Sorted songs in single cluster.
+                logging.info("FASTSORTEDKMEANS")
+                songs_in_cluster = [entry[0] for entry in fast_kmeans(kmeans_mid, norm_features, song_data)[1]]
+                dist = calculate_distances(songs_in_cluster, norm_features)
+                recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
+            elif mode == "KMEANS":  # All clusters, sorted by cluster, then song distance.
+                logging.info("KMEANS")
+                recommendations = perform_kmeans(kmeans_mid, song_data, norm_features)
+            elif mode == "DBSCAN":  # Sorted songs in single cluster.
+                logging.info("DBSCAN")
+                recommendations = perform_dbscan(dbscan_mid, song_data, norm_features)
+            elif mode == "SVM+KMEANS":
+                logging.info("SVM+KMEANS")
+                recommendations = svm_then_classifier(genre_kmeans_mid, predicted, song_data, norm_features, perform_kmeans)
+            elif mode == "SVM+DBSCAN":
+                logging.info("SVM+DBSCAN")
+                recommendations = svm_then_classifier(genre_dbscan_mid, predicted, song_data, norm_features, perform_dbscan)
+            elif mode == "DBSCAN+SVM":
+                logging.info("DBSCAN+SVM")
+                [predicted_cluster] = svm_on_dbscan_mid.predict([norm_features])
+                songs_in_cluster = [song for song in song_data if song.dbscan_cluster_id_mid == predicted_cluster]
+                dist = calculate_distances(songs_in_cluster, norm_features)
+                recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
+            else:
+                print("Invalid mode. Options: [SVM, FASTKMEANS, FASTSORTEDKMEANS, KMEANS, DBSCAN, SVM+KMEANS, SVM+DBSCAN, DBSCAN+SVM]")
+        elif vector_type == "TIMBRE_SQ":
+            if mode == "SVM":  # Sorted songs in genre region.
+                logging.info("SVM")
+                songs_in_genre = [song for song in song_data if song.predicted_genre_timbre_sq == predicted]
+                dist = calculate_distances(songs_in_genre, norm_features)
+                recommendations = sorted(zip(songs_in_genre, dist), key=lambda l: l[1])[:MAX_RECS]
+            elif mode == "FASTKMEANS":  # Unsorted songs in single cluster.
+                logging.info("FASTKMEANS")
+                recommendations = fast_kmeans(kmeans_timbre_sq, norm_features, song_data)[1][:MAX_RECS]
+            elif mode == "FASTSORTEDKMEANS":  # Sorted songs in single cluster.
+                logging.info("FASTSORTEDKMEANS")
+                songs_in_cluster = [entry[0] for entry in fast_kmeans(kmeans_timbre_sq, norm_features, song_data)[1]]
+                dist = calculate_distances(songs_in_cluster, norm_features)
+                recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
+            elif mode == "KMEANS":  # All clusters, sorted by cluster, then song distance.
+                logging.info("KMEANS")
+                recommendations = perform_kmeans(kmeans_timbre_sq, song_data, norm_features)
+            elif mode == "DBSCAN":  # Sorted songs in single cluster.
+                logging.info("DBSCAN")
+                recommendations = perform_dbscan(dbscan_timbre_sq, song_data, norm_features)
+            elif mode == "SVM+KMEANS":
+                logging.info("SVM+KMEANS")
+                recommendations = svm_then_classifier(genre_kmeans_timbre_sq, predicted, song_data, norm_features, perform_kmeans)
+            elif mode == "SVM+DBSCAN":
+                logging.info("SVM+DBSCAN")
+                recommendations = svm_then_classifier(genre_dbscan_timbre_sq, predicted, song_data, norm_features, perform_dbscan)
+            elif mode == "DBSCAN+SVM":
+                logging.info("DBSCAN+SVM")
+                [predicted_cluster] = svm_on_dbscan_timbre_sq.predict([norm_features])
+                songs_in_cluster = [song for song in song_data if song.dbscan_cluster_id_timbre_sq == predicted_cluster]
+                dist = calculate_distances(songs_in_cluster, norm_features)
+                recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
+            else:
+                print("Invalid mode. Options: [SVM, FASTKMEANS, FASTSORTEDKMEANS, KMEANS, DBSCAN, SVM+KMEANS, SVM+DBSCAN, DBSCAN+SVM]")
+        elif vector_type == "MID_SQ":
+            if mode == "SVM":  # Sorted songs in genre region.
+                logging.info("SVM")
+                songs_in_genre = [song for song in song_data if song.predicted_genre_mid_sq == predicted]
+                dist = calculate_distances(songs_in_genre, norm_features)
+                recommendations = sorted(zip(songs_in_genre, dist), key=lambda l: l[1])[:MAX_RECS]
+            elif mode == "FASTKMEANS":  # Unsorted songs in single cluster.
+                logging.info("FASTKMEANS")
+                recommendations = fast_kmeans(kmeans_mid_sq, norm_features, song_data)[1][:MAX_RECS]
+            elif mode == "FASTSORTEDKMEANS":  # Sorted songs in single cluster.
+                logging.info("FASTSORTEDKMEANS")
+                songs_in_cluster = [entry[0] for entry in fast_kmeans(kmeans_mid_sq, norm_features, song_data)[1]]
+                dist = calculate_distances(songs_in_cluster, norm_features)
+                recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
+            elif mode == "KMEANS":  # All clusters, sorted by cluster, then song distance.
+                logging.info("KMEANS")
+                recommendations = perform_kmeans(kmeans_mid_sq, song_data, norm_features)
+            elif mode == "DBSCAN":  # Sorted songs in single cluster.
+                logging.info("DBSCAN")
+                recommendations = perform_dbscan(dbscan_mid_sq, song_data, norm_features)
+            elif mode == "SVM+KMEANS":
+                logging.info("SVM+KMEANS")
+                recommendations = svm_then_classifier(genre_kmeans_mid_sq, predicted, song_data, norm_features, perform_kmeans)
+            elif mode == "SVM+DBSCAN":
+                logging.info("SVM+DBSCAN")
+                recommendations = svm_then_classifier(genre_dbscan_mid_sq, predicted, song_data, norm_features, perform_dbscan)
+            elif mode == "DBSCAN+SVM":
+                logging.info("DBSCAN+SVM")
+                [predicted_cluster] = svm_on_dbscan_mid_sq.predict([norm_features])
+                songs_in_cluster = [song for song in song_data if song.dbscan_cluster_id_mid_sq == predicted_cluster]
+                dist = calculate_distances(songs_in_cluster, norm_features)
+                recommendations = sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
+            else:
+                print("Invalid mode. Options: [SVM, FASTKMEANS, FASTSORTEDKMEANS, KMEANS, DBSCAN, SVM+KMEANS, SVM+DBSCAN, DBSCAN+SVM]")
         else:
-            print("Invalid mode. Options: [SVM, FASTKMEANS, FASTSORTEDKMEANS, KMEANS, DBSCAN, SVM+KMEANS, SVM+DBSCAN, DBSCAN+SVM]")
+            print("Invalid vector type selected")
+            exit(1)
 
         output = []
         for rec in recommendations:
