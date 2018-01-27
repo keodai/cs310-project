@@ -1,14 +1,18 @@
+import multi_logging
 import setup
 import paths
 
 import sys
 import os
 from sklearn.externals import joblib
-import logging
 from scipy.spatial import distance
 from sklearn.neighbors import KDTree
+from timeit import default_timer as timer
 
 MAX_RECS = 100
+
+timing = multi_logging.setup_logger('timing', 'logs/recommendation_times.log')
+logging = multi_logging.setup_logger('output', 'logs/output.log')
 
 
 def fast_kmeans(kmeans, norm_features, song_data):
@@ -69,7 +73,6 @@ def main(args):
 
 
 def recommend(args):
-    logging.basicConfig(filename="logs/output.log", level=logging.DEBUG, format="%(asctime)s %(message)s")
     required_files = ["data/song_data.pkl", "data/test_song_data.pkl", "data/scaler_timbre.pkl", "data/classifier_timbre.pkl",
                       "data/kmeans_timbre.pkl", "data/genre_kmeans_timbre.pkl", "data/dbscan_timbre.pkl", "data/svm_on_dbscan_timbre.pkl",
                       "data/genre_dbscan_timbre.pkl", "data/scaler_mid.pkl", "data/classifier_mid.pkl",
@@ -207,7 +210,7 @@ def recommend(args):
         # BEGIN RECOMMENDATION
         logging.info("Recommendations:")
         recommendations = []
-
+        start = timer()
         if vector_type == "TIMBRE":
             if mode == "SVM":  # Sorted songs in genre region.
                 logging.info("SVM")
@@ -348,6 +351,10 @@ def recommend(args):
         else:
             print("Invalid vector type selected")
             exit(1)
+
+        end = timer()
+        recommendation_time = end - start
+        timing.info('Recommendation time ' + vector_type + ': ' + mode + ' - ' + str(recommendation_time))
 
         output = []
         for rec in recommendations:

@@ -4,11 +4,11 @@ import paths
 from song import Song
 
 import os
-import logging
+import multi_logging
 from sklearn.externals import joblib
 from sklearn.preprocessing import MinMaxScaler
 import sklearn
-import numpy as np
+from timeit import default_timer as timer
 
 
 # CONVERSION/NORMALISATION
@@ -19,6 +19,9 @@ import numpy as np
 # DBSCAN
 # DBSCAN ON SVM
 # SVM ON DBSCAN
+
+logging = multi_logging.setup_logger('output', 'logs/output.log')
+timing = multi_logging.setup_logger('timing', 'logs/training_times.log')
 
 
 def single_song(src, dst_path):
@@ -77,7 +80,11 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
 
     # BEGIN STANDALONE SVM
     logging.info("--Training Classifier...")
+    start = timer()
     clf = sklearn.svm.SVC().fit(normalised_features, listed_genres)
+    end = timer()
+    svm_time = end-start
+    timing.info('Trained' + vector_type + 'SVM in ' + str(svm_time))
 
     normalised = normalised_features[::-1]
     predicted_genres = clf.predict(normalised).tolist()
@@ -132,11 +139,15 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
 
     # BEGIN STANDALONE K-MEANS
     genres = [song.listed_genre for song in song_data]
+    start = timer()
     kmeans = sklearn.cluster.KMeans(len(set(genres))).fit(normalised_features)
+    end = timer()
+    timing.info('Trained' + vector_type + 'K-MEANS in ' + str(end - start))
     # END STANDALONE K-MEANS
 
     # BEGIN GENRE K-MEANS
     genre_kmeans = []
+    start = timer()
     for cls in clf.classes_:
         if vector_type == "TIMBRE":
             cls_songs = [song for song in song_data if song.predicted_genre_timbre == cls]
@@ -163,17 +174,31 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
                 print("Invalid vector type selected")
                 exit(1)
             genre_kmeans.append((cls, sklearn.cluster.KMeans(min(10, len(cls_songs))).fit(cls_features)))
+    end = timer()
+    kmeans_genre_time = end - start
+    total_time = svm_time + kmeans_genre_time
+    timing.info('Trained' + vector_type + ' - KMEANS PER GENRE in ' + str(kmeans_genre_time) + ' Total time (inc. SVM for genre) ' + str(total_time))
     # END GENRE K-MEANS
 
     # BEGIN DBSCAN
+    start = timer()
     dbscan = sklearn.cluster.DBSCAN().fit(normalised_features)
+    end = timer()
+    dbscan_time = end - start
+    timing.info('Trained' + vector_type + 'DBSCAN in ' + str(dbscan_time))
     # END DBSCAN
 
     # BEGIN SVM ON DBSCAN todo: justify - simplify distance lookup/classification
     labels = dbscan.labels_.tolist()
     svm_on_dbscan = None
     if labels.count(labels[0]) != len(labels):
+        start = timer()
         svm_on_dbscan = sklearn.svm.SVC().fit(normalised_features, dbscan.labels_)
+        end = timer()
+        svm_on_dbscan_time = end - start
+        total_time = dbscan_time + svm_on_dbscan_time
+        timing.info('Trained' + vector_type + ' - SVM ON DBSCAN in ' + str(svm_on_dbscan_time) + ' Total time (inc. DBSCAN) ' + str(total_time))
+
         for song in song_data:
             if vector_type == "TIMBRE":
                 [song.dbscan_cluster_id_timbre] = svm_on_dbscan.predict([song.normalised_timbre])
@@ -202,6 +227,7 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
 
     # BEGIN GENRE DBSCAN
     genre_dbscan = []
+    start = timer()
     for cls in clf.classes_:
         if vector_type == "TIMBRE":
             cls_songs = [song for song in song_data if song.predicted_genre_timbre == cls]
@@ -228,6 +254,10 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
                 print("Invalid vector type selected")
                 exit(1)
             genre_dbscan.append((cls, sklearn.cluster.DBSCAN().fit(cls_features)))
+    end = timer()
+    genre_dbscan_time = end - start
+    total_time = svm_time + genre_dbscan_time
+    timing.info('Trained ' + vector_type + ' - DBSCAN PER GENRE in ' + str(genre_dbscan_time) + ' Total time (inc. SVM for genre) ' + str(total_time))
     # END GENRE DBSCAN
 
     logging.info("--Storage...")
@@ -247,7 +277,6 @@ def create():
     # ------------------
     # General Setup/Song Operations
     # ------------------
-    logging.basicConfig(filename="logs/output.log", level=logging.DEBUG, format="%(asctime)s %(message)s")
     logging.info("Starting setup...")
     logging.info("-Starting Training...")
 
