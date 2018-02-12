@@ -50,6 +50,12 @@ This is the project repository, containing both the project code and documentati
 * Refactored to use Flask.
 sudo mount -t hfs /dev/disk4s2 ~/PycharmProjects/cs310-project/audio_data/
 
+req
+conda
+flask, flask-cors
+librosa
+
+
 
 ### TO DO
 * SoX for conversion?

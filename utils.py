@@ -2,7 +2,7 @@ import os
 
 
 def format_string(s):
-    return '' if s is None else str(s)
+    return '' if s is None else s.encode('utf-8')
 
 
 def visible(src_path):
