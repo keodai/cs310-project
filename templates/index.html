@@ -86,55 +86,65 @@
     {% endif %}
     <div class="row">
         <div class="col-sm-3 text-center">
-            <form class="form-spacing" action="http://127.0.0.1:5000/recommend" method="POST"
-                  enctype="multipart/form-data">
+            <form class="form-spacing" action="http://127.0.0.1:5000/recommend" method="POST" enctype="multipart/form-data" name="input-form"> <!-- todo: update action? -->
                 <hr class="short-rule">
                 <div class="divider">Source Files</div>
                 <hr class="short-rule">
-                <label for="file-upload" class="btn btn-outline btn-xl js-scroll-trigger upload">
-                    Choose file(s)
-                </label>
-                <input id="file-upload" type="file" name="file[]" multiple hidden/>
-                <div id="file-selected">
-
-                    {% if current_song is not none %}
-                    <ul>
-                        {% for song in current_song: %}
-                        <li><i>{{ song }}</i></li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <i>No file(s) selected</i>
-                    {% endif %}
-
+                <label class="radio-inline"><input class="input-spacing" type="radio" name="input-method" value="file" onclick="uploadCheck()" id="file" checked="checked">File Upload</label>
+                <label class="radio-inline"><input class="input-spacing" type="radio" name="input-method" value="mic" onclick="uploadCheck()" id="mic">Microphone Input</label>
+                <div id="file-input">
+                    <label for="file-upload" class="btn btn-outline btn-xl js-scroll-trigger upload">
+                        Choose file(s)
+                    </label>
+                    <input id="file-upload" type="file" name="file[]" multiple hidden/>
+                    <div id="file-selected">
+                        {% if current_song is not none %}
+                        <ul>
+                            {% for song in current_song: %}
+                            <li><i>{{ song }}</i></li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <i>No file(s) selected</i>
+                        {% endif %}
+                    </div>
                 </div>
-                <hr class="short-rule">
-                <div class="divider">Features</div>
-                <hr class="short-rule">
-                <select class="form-control selection-box" id="features" name="features">
-                    <option value="TIMBRE">TIMBRE</option>
-                    <option value="MID">TIMBRE + MID-LEVEL</option>
-                    <option value="TIMBRE_SQ">TIMBRE (MuVar<sup>2</sup>)</option>
-                    <option value="MID_SQ">TIMBRE + MID-LEVEL (MuVar<sup>2</sup>)</option>
-                </select>
-                <hr class="short-rule">
-                <div class="divider">Algorithm</div>
-                <hr class="short-rule">
-                <select class="form-control selection-box" id="mode" name="mode">
-                    <option value="SVM">SVM</option>
-                    <option value="FASTKMEANS">FASTKMEANS</option>
-                    <option value="FASTSORTEDKMEANS">FASTSORTEDKMEANS</option>
-                    <option value="KMEANS">KMEANS</option>
-                    <option value="DBSCAN">DBSCAN</option>
-                    <option value="SVM+KMEANS">SVM+KMEANS</option>
-                    <option value="SVM+DBSCAN">SVM+DBSCAN</option>
-                    <option value="DBSCAN+SVM">DBSCAN+SVM</option>
-                </select>
+                <div id="mic-selected" style="display: none"><i>Submit to begin recording</i></div>
+                <div id="options-toggle">
+                    <hr class="short-rule">
+                    <a href="javascript:showOptions()">Under the hood</a>
+                </div>
+                <div id="options" style="display: none">
+                    <hr class="short-rule">
+                    <div class="divider">Features</div>
+                    <hr class="short-rule">
+                    <select class="form-control selection-box" id="features" name="features">
+                        <option value="TIMBRE">TIMBRE</option>
+                        <option value="MID">TIMBRE + MID-LEVEL</option>
+                        <option value="TIMBRE_SQ">TIMBRE (MuVar<sup>2</sup>)</option>
+                        <option value="MID_SQ">TIMBRE + MID-LEVEL (MuVar<sup>2</sup>)</option>
+                    </select>
+                    <hr class="short-rule">
+                    <div class="divider">Algorithm</div>
+                    <hr class="short-rule">
+                    <select class="form-control selection-box" id="mode" name="mode">
+                        <option value="SVM">SVM</option>
+                        <option value="FASTKMEANS">FASTKMEANS</option>
+                        <option value="FASTSORTEDKMEANS">FASTSORTEDKMEANS</option>
+                        <option value="KMEANS">KMEANS</option>
+                        <option value="DBSCAN">DBSCAN</option>
+                        <option value="SVM+KMEANS">SVM+KMEANS</option>
+                        <option value="SVM+DBSCAN">SVM+DBSCAN</option>
+                        <option value="DBSCAN+SVM">DBSCAN+SVM</option>
+                    </select>
+                    <hr class="short-rule">
+                    <a href="javascript:hideOptions()">Keep it simple</a>
+                </div>
+
                 <hr class="short-rule">
                 <div><label class="btn btn-outline btn-xl js-scroll-trigger upload form-field-spacing">
-                    Submit<input type="submit" hidden/>
+                    Submit<input type="submit" id="submit" hidden/>
                 </label></div>
-                <hr class="short-rule">
             </form>
         </div>
 
@@ -189,7 +199,15 @@
                 </tr>
                 </thead>
             </table>
-
+            <div id="progress" style="display: none">
+                <img src="{{ url_for('static', filename='img/spinner.gif') }}" alt="Spinner" style="width:200px;height:200px;">
+                Listening...
+            </div>
+            <div id="loading" style="display: none">
+                <img src="{{ url_for('static', filename='img/spinner.gif') }}" alt="Spinner" style="width:200px;height:200px;">
+                Retrieving recommendations...
+            </div>
+            </div>
             <div class="vertical-scroll">
                 <table class="table table-striped table-light table-hover">
                     <tbody>

@@ -34,6 +34,7 @@ test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst/tes
 dst_ext = ".wav"
 output_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/converted/"
 project_audio_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/"
+upload_folder = "/Users/matthew/PycharmProjects/cs310-project/audio_data/data/uploads/"
 plot_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/plots/"
 
 

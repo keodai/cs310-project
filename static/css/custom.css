@@ -105,3 +105,29 @@ ul {
     text-decoration: none;
     background-color: Transparent;
 }
+
+#mic-selected {
+    margin: 50px auto;
+}
+
+#file-input {
+    margin-top: 12px;
+}
+
+#options-toggle {
+    text-decoration: none;
+}
+
+#options {
+    text-decoration: none;
+}
+
+#progress {
+    padding-left: 20%;
+    font-size: 200%;
+}
+
+#loading {
+    padding-left: 20%;
+    font-size: 200%;
+}

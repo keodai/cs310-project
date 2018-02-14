@@ -1,3 +1,19 @@
+$(document).ready(function() {
+  // $(".submit").click(function() {
+  //   // $(".submit").addClass("loading");
+  //
+  // })
+    $("#submit").click(function(event){
+        progressBar();
+    });
+});
+
+// $('#input-form').ajaxForm(function(response) {
+//   return response
+// });
+
+
+
 $("input:file").change(function () {
     var filenames = '';
     for (var i = 0; i < this.files.length; i++) {
@@ -30,6 +46,26 @@ function toggle(t, src) {
     }
 }
 
+function uploadCheck() {
+    if (document.getElementById('file').checked) {
+        document.getElementById('file-input').style.display = 'block';
+        document.getElementById('mic-selected').style.display = 'none';
+    } else if (document.getElementById('mic').checked) {
+        document.getElementById('file-input').style.display = 'none';
+        document.getElementById('mic-selected').style.display = 'block';
+    }
+}
+
+function showOptions() {
+    document.getElementById('options-toggle').style.display = 'none';
+    document.getElementById('options').style.display = 'block';
+}
+
+function hideOptions() {
+    document.getElementById('options-toggle').style.display = 'block';
+    document.getElementById('options').style.display = 'none';
+}
+
 $('#save-link').click(function () {
     var retContent = [];
     var retString = '';
@@ -46,3 +82,38 @@ $('#save-link').click(function () {
     btn.attr("href", URL.createObjectURL(file));
     btn.prop("download", "recommendations.txt");
 });
+
+function progressBar() {
+    var method = document.forms["input-form"]["input-method"].value;
+    var $progress = $('#progress');
+    // var $progressBar = $('.progress-bar');
+    var $loading = $('#loading');
+
+    if (method === 'mic') {
+        $progress.css('display', 'block');
+
+        // setTimeout(function () {
+        //     $progressBar.css('width', '20%');
+        //     setTimeout(function () {
+        //         $progressBar.css('width', '40%');
+        //         setTimeout(function () {
+        //             $progressBar.css('width', '60%');
+        //             setTimeout(function () {
+        //                 $progressBar.css('width', '80%');
+        //                 setTimeout(function () {
+        //                     $progressBar.css('width', '100%');
+                            setTimeout(function () {
+                                $progress.css('display', 'none');
+                                $loading.css('display', 'block');
+                            }, 5000); // WAIT 1 second
+        //                 }, 1000); // WAIT 1 second
+        //             }, 1000); // WAIT 1 second
+        //         }, 1000); // WAIT 1 second
+        //     }, 1000); // WAIT 1 second
+        // }, 1000); // WAIT 1 second
+    } else {
+        $loading.css('display', 'block');
+    }
+
+}
+

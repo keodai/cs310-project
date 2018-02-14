@@ -5,10 +5,11 @@ from flask_cors import CORS, cross_origin
 from datetime import datetime
 import errno
 
+import paths
 import recommender
+import sound_recording
 
-# UPLOAD_FOLDER = "/Volumes/expansion/project/data/uploads/"
-UPLOAD_FOLDER = "/Users/matthew/PycharmProjects/cs310-project/audio_data/data/uploads/"
+UPLOAD_FOLDER = paths.upload_folder
 ALLOWED_EXTENSIONS = {'mp3', 'wav'}
 previous_upload_dir = None
 previous_filenames = None
@@ -49,43 +50,60 @@ def upload_file():
             if e.errno != errno.EEXIST:
                 raise  # This was not a "directory exist" error..
 
-        # check if the post request has the file part
-        if 'file[]' not in request.files:
-            use_previous_path = True
-        if use_previous_path:
-            if previous_upload_dir is None or previous_filenames is None:
-                return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No file part", warning=None)
-        else:
-            file_list = request.files.getlist("file[]")
-            for f in file_list:
-                if f.filename == '':
-                    use_previous_path = True
-                    if previous_upload_dir is None or previous_filenames is None:
-                        return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No selected file", warning=None)
-            mode = request.form['mode']
-            vector_type = request.form['features']
+        if request.form['input-method'] == 'mic':
+            filenames = sound_recording.record(directory)
+            # mode = request.form['mode']
+            # vector_type = request.form['features']
+            # args = [directory, mode, vector_type]
+            # previous_upload_dir = directory
+            # previous_filenames = filenames
+            # recommendations, predictions, warning = recommender.recommend(args=args)
+            # return render_template("index.html", current_song=filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
+            return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No file part", warning=None)
+        elif request.form['input-method'] == 'file':
+            # check if the post request has the file part
+            if 'file[]' not in request.files:
+                use_previous_path = True
             if use_previous_path:
-                args = [previous_upload_dir, mode, vector_type]
-                recommendations, predictions, warning = recommender.recommend(args=args)
-                return render_template("index.html", current_song=previous_filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
-            elif mode and all(allowed_file(f.filename) for f in file_list) and all(f for f in file_list):
-                filenames = []
+                if previous_upload_dir is None or previous_filenames is None:
+                    return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No file part", warning=None)
+            else:
+                file_list = request.files.getlist("file[]")
                 for f in file_list:
-                    filename = secure_filename(f.filename)
-                    path = os.path.join(directory, filename)
-                    f.save(path)
-                    filenames.append(filename)
-                args = [directory, mode, vector_type]
-                previous_upload_dir = directory
-                previous_filenames = filenames
-                recommendations, predictions, warning = recommender.recommend(args=args)
-                return render_template("index.html", current_song=filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
+                    if f.filename == '':
+                        use_previous_path = True
+                        if previous_upload_dir is None or previous_filenames is None:
+                            return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No selected file", warning=None)
+                mode = request.form['mode']
+                vector_type = request.form['features']
+                if use_previous_path:
+                    args = [previous_upload_dir, mode, vector_type]
+                    recommendations, predictions, warning = recommender.recommend(args=args)
+                    return render_template("index.html", current_song=previous_filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
+                elif mode and all(allowed_file(f.filename) for f in file_list) and all(f for f in file_list):
+                    filenames = []
+                    for f in file_list:
+                        filename = secure_filename(f.filename)
+                        path = os.path.join(directory, filename)
+                        f.save(path)
+                        filenames.append(filename)
+                    args = [directory, mode, vector_type]
+                    previous_upload_dir = directory
+                    previous_filenames = filenames
+                    recommendations, predictions, warning = recommender.recommend(args=args)
+                    return render_template("index.html", current_song=filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
     return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error=None, warning=None)
 
 
 @app.route('/file')
 def send_file():
     return send_from_directory('audio_data', request.args.get('path'))
+
+
+@app.route('/record', methods=['GET', 'POST'])
+def record():
+    sound_recording.record()
+    return render_template("index.html", current_song='Recorded audio', recommendations=None, predicted=None, scroll="app", error=None, warning='Audio recorded. Continue to get your recommendations for this audio sample.')
 
 
 if __name__ == "__main__":
