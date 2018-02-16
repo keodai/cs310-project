@@ -1,6 +1,5 @@
 import pyaudio
 import wave
-
 import paths
 
 FORMAT = pyaudio.paInt16
@@ -11,7 +10,7 @@ RECORD_SECONDS = 10
 
 
 def record(dir):
-    wave_output_filename = dir + "recording.wav"
+    wave_output_filename = dir + "/recording.wav"
     audio = pyaudio.PyAudio()
 
     # Start recording
@@ -27,6 +26,8 @@ def record(dir):
 
     print "finished recording"
 
+    full_length = frames*6
+
     # stop Recording
     stream.stop_stream()
     stream.close()
@@ -36,6 +37,10 @@ def record(dir):
     waveFile.setnchannels(CHANNELS)
     waveFile.setsampwidth(audio.get_sample_size(FORMAT))
     waveFile.setframerate(RATE)
-    waveFile.writeframes(b''.join(frames))
+    waveFile.writeframes(b''.join(full_length))
     waveFile.close()
     return wave_output_filename
+
+
+if __name__ == '__main__':
+    record(paths.upload_folder)

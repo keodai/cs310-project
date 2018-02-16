@@ -51,15 +51,15 @@ def upload_file():
                 raise  # This was not a "directory exist" error..
 
         if request.form['input-method'] == 'mic':
-            filenames = sound_recording.record(directory)
-            # mode = request.form['mode']
-            # vector_type = request.form['features']
-            # args = [directory, mode, vector_type]
-            # previous_upload_dir = directory
-            # previous_filenames = filenames
-            # recommendations, predictions, warning = recommender.recommend(args=args)
-            # return render_template("index.html", current_song=filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
-            return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No file part", warning=None)
+            d, f = os.path.split(sound_recording.record(directory))
+            filenames = [f]
+            mode = request.form['mode']
+            vector_type = request.form['features']
+            args = [directory, mode, vector_type]
+            previous_upload_dir = directory
+            previous_filenames = filenames
+            recommendations, predictions, warning = recommender.recommend(args=args)
+            return render_template("index.html", current_song=filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
         elif request.form['input-method'] == 'file':
             # check if the post request has the file part
             if 'file[]' not in request.files:

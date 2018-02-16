@@ -1,18 +1,8 @@
 $(document).ready(function() {
-  // $(".submit").click(function() {
-  //   // $(".submit").addClass("loading");
-  //
-  // })
     $("#submit").click(function(event){
         progressBar();
     });
 });
-
-// $('#input-form').ajaxForm(function(response) {
-//   return response
-// });
-
-
 
 $("input:file").change(function () {
     var filenames = '';
@@ -86,31 +76,14 @@ $('#save-link').click(function () {
 function progressBar() {
     var method = document.forms["input-form"]["input-method"].value;
     var $progress = $('#progress');
-    // var $progressBar = $('.progress-bar');
     var $loading = $('#loading');
 
     if (method === 'mic') {
         $progress.css('display', 'block');
-
-        // setTimeout(function () {
-        //     $progressBar.css('width', '20%');
-        //     setTimeout(function () {
-        //         $progressBar.css('width', '40%');
-        //         setTimeout(function () {
-        //             $progressBar.css('width', '60%');
-        //             setTimeout(function () {
-        //                 $progressBar.css('width', '80%');
-        //                 setTimeout(function () {
-        //                     $progressBar.css('width', '100%');
-                            setTimeout(function () {
-                                $progress.css('display', 'none');
-                                $loading.css('display', 'block');
-                            }, 5000); // WAIT 1 second
-        //                 }, 1000); // WAIT 1 second
-        //             }, 1000); // WAIT 1 second
-        //         }, 1000); // WAIT 1 second
-        //     }, 1000); // WAIT 1 second
-        // }, 1000); // WAIT 1 second
+            setTimeout(function () {
+                $progress.css('display', 'none');
+                $loading.css('display', 'block');
+            }, 5000); // WAIT 1 second
     } else {
         $loading.css('display', 'block');
     }

@@ -9,7 +9,7 @@ from sklearn.externals import joblib
 from sklearn.preprocessing import MinMaxScaler
 import sklearn
 from timeit import default_timer as timer
-
+import shutil
 
 # CONVERSION/NORMALISATION
 # ------------------------
@@ -26,7 +26,13 @@ timing = multi_logging.setup_logger('timing', 'logs/training_times.log')
 
 def single_song(src, dst_path):
     logging.info("Processing: " + src)
-    dst = converter.convert(src, dst_path, paths.dst_ext)
+    if src.endswith('.wav'):
+        base = os.path.basename(src)
+        dst = dst_path + os.path.splitext(base)[0] + paths.dst_ext
+        shutil.copy2(src, dst)
+    else:
+        dst = converter.convert(src, dst_path, paths.dst_ext)
+
     return Song(src, dst)
 
 

@@ -90,57 +90,6 @@ def main(args):
 
 def recommend(args):
     global vector_type
-    required_files = ["data/song_data.pkl", "data/test_song_data.pkl", "data/scaler_timbre.pkl", "data/classifier_timbre.pkl",
-                      "data/kmeans_timbre.pkl", "data/genre_kmeans_timbre.pkl", "data/dbscan_timbre.pkl", "data/svm_on_dbscan_timbre.pkl",
-                      "data/genre_dbscan_timbre.pkl", "data/scaler_mid.pkl", "data/classifier_mid.pkl",
-                      "data/kmeans_mid.pkl", "data/genre_kmeans_mid.pkl", "data/dbscan_mid.pkl", "data/svm_on_dbscan_mid.pkl",
-                      "data/genre_dbscan_mid.pkl", "data/scaler_timbre_sq.pkl", "data/classifier_timbre_sq.pkl",
-                      "data/kmeans_timbre_sq.pkl", "data/genre_kmeans_timbre_sq.pkl", "data/dbscan_timbre_sq.pkl", "data/svm_on_dbscan_timbre_sq.pkl",
-                      "data/genre_dbscan_timbre_sq.pkl", "data/scaler_mid_sq.pkl", "data/classifier_mid_sq.pkl",
-                      "data/kmeans_mid_sq.pkl", "data/genre_kmeans_mid_sq.pkl", "data/dbscan_mid_sq.pkl", "data/svm_on_dbscan_mid_sq.pkl",
-                      "data/genre_dbscan_mid_sq.pkl"]
-    required_files_present = [os.path.isfile(file) for file in required_files]
-    if not all(required_files_present):
-        setup.create()
-        # todo: error here
-
-    song_data = joblib.load(required_files[0])
-    test_song_data = joblib.load(required_files[1])
-
-    scaler_timbre = joblib.load(required_files[2])
-    clf_timbre = joblib.load(required_files[3])
-    kmeans_timbre = joblib.load(required_files[4])
-    genre_kmeans_timbre = joblib.load(required_files[5])
-    dbscan_timbre = joblib.load(required_files[6])
-    svm_on_dbscan_timbre = joblib.load(required_files[7])
-    genre_dbscan_timbre = joblib.load(required_files[8])
-
-    scaler_mid = joblib.load(required_files[9])
-    clf_mid = joblib.load(required_files[10])
-    kmeans_mid = joblib.load(required_files[11])
-    genre_kmeans_mid = joblib.load(required_files[12])
-    dbscan_mid = joblib.load(required_files[13])
-    svm_on_dbscan_mid = joblib.load(required_files[14])
-    genre_dbscan_mid = joblib.load(required_files[15])
-
-    scaler_timbre_sq = joblib.load(required_files[16])
-    clf_timbre_sq = joblib.load(required_files[17])
-    kmeans_timbre_sq = joblib.load(required_files[18])
-    genre_kmeans_timbre_sq = joblib.load(required_files[19])
-    dbscan_timbre_sq = joblib.load(required_files[20])
-    svm_on_dbscan_timbre_sq = joblib.load(required_files[21])
-    genre_dbscan_timbre_sq = joblib.load(required_files[22])
-
-    scaler_mid_sq = joblib.load(required_files[23])
-    clf_mid_sq = joblib.load(required_files[24])
-    kmeans_mid_sq = joblib.load(required_files[25])
-    genre_kmeans_mid_sq = joblib.load(required_files[26])
-    dbscan_mid_sq = joblib.load(required_files[27])
-    svm_on_dbscan_mid_sq = joblib.load(required_files[28])
-    genre_dbscan_mid_sq = joblib.load(required_files[29])
-
-    warning = None
-
     if len(args) != 3:
         print("Usage: python recommender path_to_music recommendation_mode vector_type")
     else:
@@ -150,6 +99,86 @@ def recommend(args):
         predicted = None
         norm_features = None
         predictions = []
+
+        required_files = ["data/song_data.pkl", "data/test_song_data.pkl", "data/scaler_timbre.pkl", "data/classifier_timbre.pkl",
+                          "data/kmeans_timbre.pkl", "data/genre_kmeans_timbre.pkl", "data/dbscan_timbre.pkl", "data/svm_on_dbscan_timbre.pkl",
+                          "data/genre_dbscan_timbre.pkl", "data/scaler_mid.pkl", "data/classifier_mid.pkl",
+                          "data/kmeans_mid.pkl", "data/genre_kmeans_mid.pkl", "data/dbscan_mid.pkl", "data/svm_on_dbscan_mid.pkl",
+                          "data/genre_dbscan_mid.pkl", "data/scaler_timbre_sq.pkl", "data/classifier_timbre_sq.pkl",
+                          "data/kmeans_timbre_sq.pkl", "data/genre_kmeans_timbre_sq.pkl", "data/dbscan_timbre_sq.pkl", "data/svm_on_dbscan_timbre_sq.pkl",
+                          "data/genre_dbscan_timbre_sq.pkl", "data/scaler_mid_sq.pkl", "data/classifier_mid_sq.pkl",
+                          "data/kmeans_mid_sq.pkl", "data/genre_kmeans_mid_sq.pkl", "data/dbscan_mid_sq.pkl", "data/svm_on_dbscan_mid_sq.pkl",
+                          "data/genre_dbscan_mid_sq.pkl"]
+        required_files_present = [os.path.isfile(file) for file in required_files]
+        if not all(required_files_present):
+            setup.create()
+            # todo: error here
+
+        song_data = joblib.load(required_files[0])
+        test_song_data = joblib.load(required_files[1])
+
+        if vector_type == "TIMBRE":
+            scaler_timbre = joblib.load(required_files[2])
+            if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
+                clf_timbre = joblib.load(required_files[3])
+            elif mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
+                kmeans_timbre = joblib.load(required_files[4])
+            elif mode == "SVM+KMEANS":
+                genre_kmeans_timbre = joblib.load(required_files[5])
+            elif mode == "DBSCAN" or mode == "DBSCAN+SVM":
+                dbscan_timbre = joblib.load(required_files[6])
+            elif mode == "DBSCAN+SVM":
+                svm_on_dbscan_timbre = joblib.load(required_files[7])
+            elif mode == "SVM+DBSCAN":
+                genre_dbscan_timbre = joblib.load(required_files[8])
+        elif vector_type == "MID":
+            scaler_mid = joblib.load(required_files[9])
+            if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
+                clf_mid = joblib.load(required_files[10])
+            elif mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
+                kmeans_mid = joblib.load(required_files[11])
+            elif mode == "SVM+KMEANS":
+                genre_kmeans_mid = joblib.load(required_files[12])
+            elif mode == "DBSCAN" or mode == "DBSCAN+SVM":
+                dbscan_mid = joblib.load(required_files[13])
+            elif mode == "DBSCAN+SVM":
+                svm_on_dbscan_mid = joblib.load(required_files[14])
+            elif mode == "SVM+DBSCAN":
+                genre_dbscan_mid = joblib.load(required_files[15])
+        elif vector_type == "TIMBRE_SQ":
+            scaler_timbre_sq = joblib.load(required_files[16])
+            if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
+                clf_timbre_sq = joblib.load(required_files[17])
+            elif mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
+                kmeans_timbre_sq = joblib.load(required_files[18])
+            elif mode == "SVM+KMEANS":
+                genre_kmeans_timbre_sq = joblib.load(required_files[19])
+            elif mode == "DBSCAN" or mode == "DBSCAN+SVM":
+                dbscan_timbre_sq = joblib.load(required_files[20])
+            elif mode == "DBSCAN+SVM":
+                svm_on_dbscan_timbre_sq = joblib.load(required_files[21])
+            elif mode == "SVM+DBSCAN":
+                genre_dbscan_timbre_sq = joblib.load(required_files[22])
+        elif vector_type == "MID_SQ":
+            scaler_mid_sq = joblib.load(required_files[23])
+            if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
+                clf_mid_sq = joblib.load(required_files[24])
+            elif mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
+                kmeans_mid_sq = joblib.load(required_files[25])
+            elif mode == "SVM+KMEANS":
+                genre_kmeans_mid_sq = joblib.load(required_files[26])
+            elif mode == "DBSCAN" or mode == "DBSCAN+SVM":
+                dbscan_mid_sq = joblib.load(required_files[27])
+            elif mode == "DBSCAN+SVM":
+                svm_on_dbscan_mid_sq = joblib.load(required_files[28])
+            elif mode == "SVM+DBSCAN":
+                genre_dbscan_mid_sq = joblib.load(required_files[29])
+        else:
+            print("Invalid vector type selected")
+            exit(1)
+
+        warning = None
+
         if os.path.isfile(path):
             song = setup.single_song(path, paths.output_dir)
             logging.info("Listed Genre: " + song.listed_genre)
@@ -160,17 +189,17 @@ def recommend(args):
                 logging.info("Predicted Genre (SVM): " + song.predicted_genre_timbre)
                 norm_features, predicted = song.normalised_timbre, song.predicted_genre_timbre
             elif vector_type == "MID":
-                [song.normalised_features] = scaler_timbre.transform([song.features])
+                [song.normalised_features] = scaler_mid.transform([song.features])
                 [song.predicted_genre_features] = clf_mid.predict([song.normalised_features])
                 logging.info("Predicted Genre (SVM): " + song.predicted_genre_features)
                 norm_features, predicted = song.normalised_features, song.predicted_genre_features
             elif vector_type == "TIMBRE_SQ":
-                [song.normalised_timbre_sq] = scaler_timbre.transform([song.timbre_sq])
+                [song.normalised_timbre_sq] = scaler_timbre_sq.transform([song.timbre_sq])
                 [song.predicted_genre_timbre_sq] = clf_timbre_sq.predict([song.normalised_timbre_sq])
                 logging.info("Predicted Genre (SVM): " + song.predicted_genre_timbre_sq)
                 norm_features, predicted = song.normalised_timbre_sq, song.predicted_genre_timbre_sq
             elif vector_type == "MID_SQ":
-                [song.normalised_features_sq] = scaler_timbre.transform([song.features_sq])
+                [song.normalised_features_sq] = scaler_mid_sq.transform([song.features_sq])
                 [song.predicted_genre_features_sq] = clf_mid_sq.predict([song.normalised_features_sq])
                 logging.info("Predicted Genre (SVM): " + song.predicted_genre_features_sq)
                 norm_features, predicted = song.normalised_features_sq, song.predicted_genre_features_sq
@@ -189,17 +218,17 @@ def recommend(args):
                     predictions.append(song.predicted_genre_timbre)
                     normalised.append(song.normalised_timbre)
                 elif vector_type == "MID":
-                    [song.normalised_features] = scaler_timbre.transform([song.features])
+                    [song.normalised_features] = scaler_mid.transform([song.features])
                     [song.predicted_genre_features] = clf_mid.predict([song.normalised_features])
                     predictions.append(song.predicted_genre_features)
                     normalised.append(song.normalised_features)
                 elif vector_type == "TIMBRE_SQ":
-                    [song.normalised_timbre_sq] = scaler_timbre.transform([song.timbre_sq])
+                    [song.normalised_timbre_sq] = scaler_timbre_sq.transform([song.timbre_sq])
                     [song.predicted_genre_timbre_sq] = clf_timbre_sq.predict([song.normalised_timbre_sq])
                     predictions.append(song.predicted_genre_timbre_sq)
                     normalised.append(song.normalised_timbre_sq)
                 elif vector_type == "MID_SQ":
-                    [song.normalised_features_sq] = scaler_timbre.transform([song.features_sq])
+                    [song.normalised_features_sq] = scaler_mid_sq.transform([song.features_sq])
                     [song.predicted_genre_features_sq] = clf_mid_sq.predict([song.normalised_features_sq])
                     predictions.append(song.predicted_genre_features_sq)
                     normalised.append(song.normalised_features_sq)
