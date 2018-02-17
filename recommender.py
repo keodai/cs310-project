@@ -76,7 +76,18 @@ def perform_kmeans(kmeans, song_data, norm_features):
 
 def svm_then_classifier(genre_classifier, predicted, song_data, norm_features, perform_clustering):
     [genre_clusters] = [i[1] for i in genre_classifier if i[0] == predicted]
-    songs_in_genre = [song for song in song_data if song.predicted_genre == predicted]
+
+    if vector_type == "TIMBRE":
+        songs_in_genre = [song for song in song_data if song.predicted_genre_timbre == predicted]
+    elif vector_type == "MID":
+        songs_in_genre = [song for song in song_data if song.predicted_genre_features == predicted]
+    elif vector_type == "TIMBRE_SQ":
+        songs_in_genre = [song for song in song_data if song.predicted_genre_timbre_sq == predicted]
+    elif vector_type == "MID_SQ":
+        songs_in_genre = [song for song in song_data if song.predicted_genre_features_sq == predicted]
+    else:
+        print("Invalid vector type selected")
+        exit(1)
     return perform_clustering(genre_clusters, songs_in_genre, norm_features)
 
 
@@ -119,59 +130,59 @@ def recommend(args):
 
         if vector_type == "TIMBRE":
             scaler_timbre = joblib.load(required_files[2])
-            if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
-                clf_timbre = joblib.load(required_files[3])
-            elif mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
+            # if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
+            clf_timbre = joblib.load(required_files[3])
+            if mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
                 kmeans_timbre = joblib.load(required_files[4])
-            elif mode == "SVM+KMEANS":
+            if mode == "SVM+KMEANS":
                 genre_kmeans_timbre = joblib.load(required_files[5])
-            elif mode == "DBSCAN" or mode == "DBSCAN+SVM":
+            if mode == "DBSCAN" or mode == "DBSCAN+SVM":
                 dbscan_timbre = joblib.load(required_files[6])
-            elif mode == "DBSCAN+SVM":
+            if mode == "DBSCAN+SVM":
                 svm_on_dbscan_timbre = joblib.load(required_files[7])
-            elif mode == "SVM+DBSCAN":
+            if mode == "SVM+DBSCAN":
                 genre_dbscan_timbre = joblib.load(required_files[8])
         elif vector_type == "MID":
             scaler_mid = joblib.load(required_files[9])
-            if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
-                clf_mid = joblib.load(required_files[10])
-            elif mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
+            # if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
+            clf_mid = joblib.load(required_files[10])
+            if mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
                 kmeans_mid = joblib.load(required_files[11])
-            elif mode == "SVM+KMEANS":
+            if mode == "SVM+KMEANS":
                 genre_kmeans_mid = joblib.load(required_files[12])
-            elif mode == "DBSCAN" or mode == "DBSCAN+SVM":
+            if mode == "DBSCAN" or mode == "DBSCAN+SVM":
                 dbscan_mid = joblib.load(required_files[13])
-            elif mode == "DBSCAN+SVM":
+            if mode == "DBSCAN+SVM":
                 svm_on_dbscan_mid = joblib.load(required_files[14])
-            elif mode == "SVM+DBSCAN":
+            if mode == "SVM+DBSCAN":
                 genre_dbscan_mid = joblib.load(required_files[15])
         elif vector_type == "TIMBRE_SQ":
             scaler_timbre_sq = joblib.load(required_files[16])
-            if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
-                clf_timbre_sq = joblib.load(required_files[17])
-            elif mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
+            # if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
+            clf_timbre_sq = joblib.load(required_files[17])
+            if mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
                 kmeans_timbre_sq = joblib.load(required_files[18])
-            elif mode == "SVM+KMEANS":
+            if mode == "SVM+KMEANS":
                 genre_kmeans_timbre_sq = joblib.load(required_files[19])
-            elif mode == "DBSCAN" or mode == "DBSCAN+SVM":
+            if mode == "DBSCAN" or mode == "DBSCAN+SVM":
                 dbscan_timbre_sq = joblib.load(required_files[20])
-            elif mode == "DBSCAN+SVM":
+            if mode == "DBSCAN+SVM":
                 svm_on_dbscan_timbre_sq = joblib.load(required_files[21])
-            elif mode == "SVM+DBSCAN":
+            if mode == "SVM+DBSCAN":
                 genre_dbscan_timbre_sq = joblib.load(required_files[22])
         elif vector_type == "MID_SQ":
             scaler_mid_sq = joblib.load(required_files[23])
-            if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
-                clf_mid_sq = joblib.load(required_files[24])
-            elif mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
+            # if mode == "SVM" or mode == "SVM+KMEANS" or mode == "SVM+DBSCAN":
+            clf_mid_sq = joblib.load(required_files[24])
+            if mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS":
                 kmeans_mid_sq = joblib.load(required_files[25])
-            elif mode == "SVM+KMEANS":
+            if mode == "SVM+KMEANS":
                 genre_kmeans_mid_sq = joblib.load(required_files[26])
-            elif mode == "DBSCAN" or mode == "DBSCAN+SVM":
+            if mode == "DBSCAN" or mode == "DBSCAN+SVM":
                 dbscan_mid_sq = joblib.load(required_files[27])
-            elif mode == "DBSCAN+SVM":
+            if mode == "DBSCAN+SVM":
                 svm_on_dbscan_mid_sq = joblib.load(required_files[28])
-            elif mode == "SVM+DBSCAN":
+            if mode == "SVM+DBSCAN":
                 genre_dbscan_mid_sq = joblib.load(required_files[29])
         else:
             print("Invalid vector type selected")
@@ -295,7 +306,7 @@ def recommend(args):
         elif vector_type == "MID":
             if mode == "SVM":  # Sorted songs in genre region.
                 logging.info("SVM")
-                songs_in_genre = [song for song in song_data if song.predicted_genre_mid == predicted]
+                songs_in_genre = [song for song in song_data if song.predicted_genre_features == predicted]
                 dist = calculate_distances(songs_in_genre, norm_features)
                 recommendations = sorted(zip(songs_in_genre, dist), key=lambda l: l[1])[:MAX_RECS]
             elif mode == "FASTKMEANS":  # Unsorted songs in single cluster.
@@ -363,7 +374,7 @@ def recommend(args):
         elif vector_type == "MID_SQ":
             if mode == "SVM":  # Sorted songs in genre region.
                 logging.info("SVM")
-                songs_in_genre = [song for song in song_data if song.predicted_genre_mid_sq == predicted]
+                songs_in_genre = [song for song in song_data if song.predicted_genre_features_sq == predicted]
                 dist = calculate_distances(songs_in_genre, norm_features)
                 recommendations = sorted(zip(songs_in_genre, dist), key=lambda l: l[1])[:MAX_RECS]
             elif mode == "FASTKMEANS":  # Unsorted songs in single cluster.

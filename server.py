@@ -67,31 +67,31 @@ def upload_file():
             if use_previous_path:
                 if previous_upload_dir is None or previous_filenames is None:
                     return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No file part", warning=None)
-            else:
-                file_list = request.files.getlist("file[]")
+
+            file_list = request.files.getlist("file[]")
+            for f in file_list:
+                if f.filename == '':
+                    use_previous_path = True
+                    if previous_upload_dir is None or previous_filenames is None:
+                        return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No selected file", warning=None)
+            mode = request.form['mode']
+            vector_type = request.form['features']
+            if use_previous_path:
+                args = [previous_upload_dir, mode, vector_type]
+                recommendations, predictions, warning = recommender.recommend(args=args)
+                return render_template("index.html", current_song=previous_filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
+            elif mode and all(allowed_file(f.filename) for f in file_list) and all(f for f in file_list):
+                filenames = []
                 for f in file_list:
-                    if f.filename == '':
-                        use_previous_path = True
-                        if previous_upload_dir is None or previous_filenames is None:
-                            return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No selected file", warning=None)
-                mode = request.form['mode']
-                vector_type = request.form['features']
-                if use_previous_path:
-                    args = [previous_upload_dir, mode, vector_type]
-                    recommendations, predictions, warning = recommender.recommend(args=args)
-                    return render_template("index.html", current_song=previous_filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
-                elif mode and all(allowed_file(f.filename) for f in file_list) and all(f for f in file_list):
-                    filenames = []
-                    for f in file_list:
-                        filename = secure_filename(f.filename)
-                        path = os.path.join(directory, filename)
-                        f.save(path)
-                        filenames.append(filename)
-                    args = [directory, mode, vector_type]
-                    previous_upload_dir = directory
-                    previous_filenames = filenames
-                    recommendations, predictions, warning = recommender.recommend(args=args)
-                    return render_template("index.html", current_song=filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
+                    filename = secure_filename(f.filename)
+                    path = os.path.join(directory, filename)
+                    f.save(path)
+                    filenames.append(filename)
+                args = [directory, mode, vector_type]
+                previous_upload_dir = directory
+                previous_filenames = filenames
+                recommendations, predictions, warning = recommender.recommend(args=args)
+                return render_template("index.html", current_song=filenames, recommendations=recommendations, predicted=make_string(predictions), scroll="app", error=None, warning=warning)
     return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error=None, warning=None)
 
 

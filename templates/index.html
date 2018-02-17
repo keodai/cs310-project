@@ -216,7 +216,7 @@
                     <tr>
                         <th scope="row" style="width: 8%">{{ loop.index0 }}</th>
                         <th style="width: 8%">
-                            <audio id="{{ entry['src'] }}" src="file?path={{ src }}"></audio>
+                            <audio preload="none" id="{{ entry['src'] }}" src="file?path={{ src }}"></audio>
                             <div>
                                 <label class="fa fa-play">
                                     <button onclick="toggle(this, '{{ src }}')" hidden>Play</button>
