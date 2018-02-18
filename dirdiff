@@ -1,8 +1,9 @@
 #!/usr/bin/env bash#/bin/bash
+# Utility for checking files all converted files from source directory are in destination
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 folder1=$1 #"/Volumes/expansion/project/data/src/training"
-folder2=$2 #"/Volumes/expansion/project/data/dest/training"
+folder2=$2 #"/Volumes/expansion/project/data/dst/training"
 ext1=$3 #"mp3"
 ext2=$4 #"wav"
 

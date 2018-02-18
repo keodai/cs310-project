@@ -1,3 +1,6 @@
+# Paths for use throughout system to ensure consistency
+# Update to change directories used for audio data or for use on another system
+
 # STANDARD DATASET
 # training_src_path = "/Volumes/expansion/project/data/src/training/"
 # training_dst_path = "/Volumes/expansion/project/data/dest/training/"

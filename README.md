@@ -55,7 +55,9 @@ conda
 flask, flask-cors
 librosa
 
-
+### 02/2017
+* Main functionality, performance issues, refactoring
+* Python 3 -> Python 2.7
 
 ### TO DO
 * SoX for conversion?

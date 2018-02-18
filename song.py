@@ -1,12 +1,16 @@
 import multi_logging
-from tinytag import TinyTag
-import utils
+from tinytag import TinyTag 
 import librosa
 import numpy as np
 from timeit import default_timer as timer
 
 timing = multi_logging.setup_logger('timing', 'logs/feature_times.log')
 logging = multi_logging.setup_logger('output', 'logs/output.log')
+
+
+# Return a utf-8 encoded string, of the input
+def format_string(s):
+    return '' if s is None else s.encode('utf-8')
 
 
 def detect_pitch(y, sr):
@@ -72,19 +76,19 @@ class Song:
         self.dbscan_cluster_id_timbre = None
         self.dbscan_cluster_id_features = None
         self.dbscan_cluster_id_timbre_sq = None
-        self.dbscan_cluster_id_timbre_features_sq = None
+        self.dbscan_cluster_id_features_sq = None
 
     def genre_from_metadata(self):
-        return utils.format_string(TinyTag.get(self.src).genre).replace('\x00', '')
+        return format_string(TinyTag.get(self.src).genre).replace('\x00', '')
 
     def title_from_metadata(self):
-        return utils.format_string(TinyTag.get(self.src).title).replace('\x00', '')
+        return format_string(TinyTag.get(self.src).title).replace('\x00', '')
 
     def artist_from_metadata(self):
-        return utils.format_string(TinyTag.get(self.src).artist).replace('\x00', '')
+        return format_string(TinyTag.get(self.src).artist).replace('\x00', '')
 
     def album_from_metadata(self):
-        return utils.format_string(TinyTag.get(self.src).album).replace('\x00', '')
+        return format_string(TinyTag.get(self.src).album).replace('\x00', '')
 
     def extract_features(self):
         y, sr = librosa.load(self.dst)
@@ -232,3 +236,88 @@ class Song:
         timing.info('Total Mid-level MuVar2 Time: ' + str(total_mid_muvar2_time))
 
         return timbre, feature_vector, timbre_sq, feature_vector_sq
+
+    # Getters and setters depending on the vector type
+    def set_normalised_features(self, vector_type, value):
+        if vector_type == "TIMBRE":
+            self.normalised_timbre = value
+        elif vector_type == "MID":
+            self.normalised_features = value
+        elif vector_type == "TIMBRE_SQ":
+            self.normalised_timbre_sq = value
+        elif vector_type == "MID_SQ":
+            self.normalised_features_sq = value
+        else:
+            raise ValueError('Invalid vector type specified')
+
+    def set_predicted_genre(self, vector_type, value):
+        if vector_type == "TIMBRE":
+            self.predicted_genre_timbre = value
+        elif vector_type == "MID":
+            self.predicted_genre_features = value
+        elif vector_type == "TIMBRE_SQ":
+            self.predicted_genre_timbre_sq = value
+        elif vector_type == "MID_SQ":
+            self.predicted_genre_features_sq = value
+        else:
+            raise ValueError('Invalid vector type specified')
+
+    def set_dbscan_cluster_id(self, vector_type, value):
+        if vector_type == "TIMBRE":
+            self.dbscan_cluster_id_timbre = value
+        elif vector_type == "MID":
+            self.dbscan_cluster_id_features = value
+        elif vector_type == "TIMBRE_SQ":
+            self.dbscan_cluster_id_timbre_sq = value
+        elif vector_type == "MID_SQ":
+            self.dbscan_cluster_id_features_sq = value
+        else:
+            raise ValueError('Invalid vector type specified')
+
+    def get_predicted_genre(self, vector_type):
+        if vector_type == "TIMBRE":
+            return self.predicted_genre_timbre
+        elif vector_type == "MID":
+            return self.predicted_genre_features
+        elif vector_type == "TIMBRE_SQ":
+            return self.predicted_genre_timbre_sq
+        elif vector_type == "MID_SQ":
+            return self.predicted_genre_features_sq
+        else:
+            raise ValueError('Invalid vector type specified')
+
+    def get_normalised_features(self, vector_type):
+        if vector_type == "TIMBRE":
+            return self.normalised_timbre
+        elif vector_type == "MID":
+            return self.normalised_features
+        elif vector_type == "TIMBRE_SQ":
+            return self.normalised_timbre_sq
+        elif vector_type == "MID_SQ":
+            return self.normalised_features_sq
+        else:
+            raise ValueError('Invalid vector type specified')
+
+    def get_dbscan_cluster_id(self, vector_type):
+        if vector_type == "TIMBRE":
+            return self.dbscan_cluster_id_timbre
+        elif vector_type == "MID":
+            return self.dbscan_cluster_id_features
+        elif vector_type == "TIMBRE_SQ":
+            return self.dbscan_cluster_id_timbre_sq
+        elif vector_type == "MID_SQ":
+            return self.dbscan_cluster_id_features_sq
+        else:
+            raise ValueError('Invalid vector type specified')
+
+    def get_features(self, vector_type):
+        if vector_type == "TIMBRE":
+            return self.timbre
+        elif vector_type == "MID":
+            return self.features
+        elif vector_type == "TIMBRE_SQ":
+            return self.timbre_sq
+        elif vector_type == "MID_SQ":
+            return self.features_sq
+        else:
+            raise ValueError('Invalid vector type specified')
