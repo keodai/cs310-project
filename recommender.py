@@ -4,7 +4,6 @@ import paths
 
 import sys
 import os
-from sklearn.externals import joblib
 from scipy.spatial import distance
 from sklearn.neighbors import KDTree
 from timeit import default_timer as timer
@@ -13,38 +12,6 @@ from timeit import default_timer as timer
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-
-# List files required for all forms of recommendation, created during setup
-REQUIRED_FILES = {"song_data": "data/song_data.pkl",
-                  "test_song_data": "data/test_song_data.pkl",
-                  "scaler_timbre": "data/scaler_timbre.pkl",
-                  "classifier_timbre": "data/classifier_timbre.pkl",
-                  "kmeans_timbre": "data/kmeans_timbre.pkl",
-                  "genre_kmeans_timbre": "data/genre_kmeans_timbre.pkl",
-                  "dbscan_timbre": "data/dbscan_timbre.pkl",
-                  "svm_on_dbscan_timbre": "data/svm_on_dbscan_timbre.pkl",
-                  "genre_dbscan_timbre": "data/genre_dbscan_timbre.pkl",
-                  "scaler_mid": "data/scaler_mid.pkl",
-                  "classifier_mid": "data/classifier_mid.pkl",
-                  "kmeans_mid": "data/kmeans_mid.pkl",
-                  "genre_kmeans_mid": "data/genre_kmeans_mid.pkl",
-                  "dbscan_mid": "data/dbscan_mid.pkl",
-                  "svm_on_dbscan_mid": "data/svm_on_dbscan_mid.pkl",
-                  "genre_dbscan_mid": "data/genre_dbscan_mid.pkl",
-                  "scaler_timbre_sq": "data/scaler_timbre_sq.pkl",
-                  "classifier_timbre_sq": "data/classifier_timbre_sq.pkl",
-                  "kmeans_timbre_sq": "data/kmeans_timbre_sq.pkl",
-                  "genre_kmeans_timbre_sq": "data/genre_kmeans_timbre_sq.pkl",
-                  "dbscan_timbre_sq": "data/dbscan_timbre_sq.pkl",
-                  "svm_on_dbscan_timbre_sq": "data/svm_on_dbscan_timbre_sq.pkl",
-                  "genre_dbscan_timbre_sq": "data/genre_dbscan_timbre_sq.pkl",
-                  "scaler_mid_sq": "data/scaler_mid_sq.pkl",
-                  "classifier_mid_sq": "data/classifier_mid_sq.pkl",
-                  "kmeans_mid_sq": "data/kmeans_mid_sq.pkl",
-                  "genre_kmeans_mid_sq": "data/genre_kmeans_mid_sq.pkl",
-                  "dbscan_mid_sq": "data/dbscan_mid_sq.pkl",
-                  "svm_on_dbscan_mid_sq": "data/svm_on_dbscan_mid_sq.pkl",
-                  "genre_dbscan_mid_sq": "data/genre_dbscan_mid_sq.pkl"}
 MAX_RECS = 100  # Maximum number of recommendations to return
 
 # Loggers
@@ -98,8 +65,8 @@ def perform_kmeans(kmeans, song_data, norm_features, vector_type):
     cluster_label = -2
     song_cluster_ids = zip(song_data, kmeans.labels_)
     cluster_distances = zip(kmeans.predict(kmeans.cluster_centers_),
-                            [distance.euclidean(cluster_center, norm_features) for cluster_center in
-                             kmeans.cluster_centers_])
+                            [distance.euclidean(cluster_center, norm_features)
+                             for cluster_center in kmeans.cluster_centers_])
     sorted_cluster_distances = sorted(cluster_distances, key=lambda l: l[1])
     for entry in sorted_cluster_distances:
         if cluster_label != entry[0]:
@@ -125,7 +92,6 @@ def make_song_record(title, artist, album, path):
 def select_data(item, vector_type, data, condition=True, ):
     if condition:
         name = item + '_' + vector_type.lower()
-        # return joblib.load(REQUIRED_FILES[name])
         return data[name]
     else:
         return None
@@ -137,11 +103,6 @@ def recommend(args):
     if len(args) != 4:
         raise ValueError("Usage: python recommender path_to_music recommendation_mode vector_type data")
     else:
-        # Ensure all files have been created by setup
-        # required_files_present = [os.path.isfile(value) for value in REQUIRED_FILES.values()]
-        # if not all(required_files_present):
-        #     raise IOError('Required data files or models are not present')
-
         # Retrieve specified song location and options
         path = args[0]
         mode = args[1]
@@ -149,12 +110,9 @@ def recommend(args):
         warning = None
         predictions = []
 
-        # Load required files for the current recommendation task
-        # song_data = joblib.load(REQUIRED_FILES['song_data'])
+        # Select required files for the current recommendation task
         data = args[3]
         song_data = data['song_data']
-        # test_song_data = joblib.load(REQUIRED_FILES['test_song_data'])
-
         scaler = select_data('scaler', vector_type, data)
         svm_classifier = select_data('classifier', vector_type, data)
         kmeans = select_data('kmeans', vector_type, data, mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS")

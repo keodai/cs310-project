@@ -52,10 +52,6 @@ def muvar_sq(feature, axis=None):
     return means, v
 
 
-def flatten(l):
-    return np.array([item for sublist in l for item in sublist])
-
-
 class Song:
     def __init__(self, src, dst):
         self.src = src

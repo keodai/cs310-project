@@ -34,32 +34,18 @@ REQUIRED_FILES = {"song_data": "data/song_data.pkl",
                   "genre_dbscan_mid_sq": "data/genre_dbscan_mid_sq.pkl"}
 
 
-# def select_data(item, vector_type, condition=True):
-#     if condition:
-#         name = item + '_' + vector_type.lower()
-#         return joblib.load(REQUIRED_FILES[name])
-#     else:
-#         return None
-
-
+# Load all files from disk that may be required to perform recommendation
+# (on server start to speed up recommendation process)
 def init():
     # Ensure all files have been created by setup
     required_files_present = [os.path.isfile(value) for value in REQUIRED_FILES.values()]
     if not all(required_files_present):
         raise IOError('Required data files or models are not present')
+
     print("Loading song data...")
-    # Load required files for the current recommendation task
     song_data = joblib.load(REQUIRED_FILES['song_data'])
     print("Loading test song data...")
     test_song_data = joblib.load(REQUIRED_FILES['test_song_data'])
-
-    # scaler = select_data('scaler', vector_type)
-    # svm_classifier = select_data('classifier', vector_type)
-    # kmeans = select_data('kmeans', vector_type, mode == "FASTKMEANS" or mode == "FASTSORTEDKMEANS" or mode == "KMEANS")
-    # genre_kmeans = select_data('genre_kmeans', vector_type, mode == "SVM+KMEANS")
-    # dbscan = select_data('dbscan', vector_type, mode == "DBSCAN" or mode == "DBSCAN+SVM")
-    # svm_on_dbscan = select_data('svm_on_dbscan', vector_type, mode == "DBSCAN+SVM")
-    # genre_dbscan = select_data('genre_dbscan', vector_type, mode == "SVM+DBSCAN")
     print("Loading scalers and ml models...")
     scaler_timbre = joblib.load(REQUIRED_FILES['scaler_timbre'])
     classifier_timbre = joblib.load(REQUIRED_FILES['classifier_timbre'])

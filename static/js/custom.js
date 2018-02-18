@@ -98,7 +98,7 @@ function progressBar() {
             setTimeout(function () {
                 $progress.css('display', 'none');
                 $loading.css('display', 'block');
-            }, 5000); // Wait 5 seconds
+            }, 10000); // Wait 10 seconds for recording to complete
     } else {
         $loading.css('display', 'block');
         $vs.css('display', 'none');
