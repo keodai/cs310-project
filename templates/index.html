@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -58,7 +57,7 @@
         </div>
     </div>
 </nav>
-
+<!--Home/Intro screen-->
 <header class="masthead">
     <div class="container h-100">
         <div class="row h-100">
@@ -78,15 +77,18 @@
         </div>
     </div>
 </header>
+<!--Main application screen-->
 <div id="app" class="container-fluid">
+    <!--Scroll to app on load-->
     {% if scroll %}
     <script>
         document.getElementById('{{ scroll }}').scrollIntoView();
     </script>
     {% endif %}
     <div class="row">
+        <!--File input and option selection form-->
         <div class="col-sm-3 text-center">
-            <form class="form-spacing" action="http://127.0.0.1:5000/recommend" method="POST" enctype="multipart/form-data" name="input-form"> <!-- todo: update action? -->
+            <form class="form-spacing" action="http://127.0.0.1:5000/recommend" method="POST" enctype="multipart/form-data" name="input-form">
                 <hr class="short-rule">
                 <div class="divider">Source Files</div>
                 <hr class="short-rule">
@@ -97,6 +99,7 @@
                         Choose file(s)
                     </label>
                     <input id="file-upload" type="file" name="file[]" multiple hidden/>
+                    <!--Display the currently selected songs to user (they will be retained on page load)-->
                     <div id="file-selected">
                         {% if current_song is not none %}
                         <ul>
@@ -118,20 +121,30 @@
                     <hr class="short-rule">
                     <div class="divider">Features</div>
                     <hr class="short-rule">
+                    <!--Feature vector type selection-->
                     <select class="form-control selection-box" id="features" name="features">
                         <option value="TIMBRE">TIMBRE</option>
                         <option value="MID">TIMBRE + MID-LEVEL</option>
                         <option value="TIMBRE_SQ">TIMBRE (MuVar<sup>2</sup>)</option>
                         <option value="MID_SQ">TIMBRE + MID-LEVEL (MuVar<sup>2</sup>)</option>
+                        <option value="SHORT_TIMBRE">SHORT TIMBRE</option>
+                        <option value="SHORT_MID">SHORT TIMBRE + MID-LEVEL</option>
                     </select>
                     <hr class="short-rule">
                     <div class="divider">Algorithm</div>
                     <hr class="short-rule">
+                    <!--ML model selection-->
                     <select class="form-control selection-box" id="mode" name="mode">
                         <option value="SVM">SVM</option>
+                        <option value="UNSORTEDSVM">UNSORTEDSVM</option>
+                        <option value="LINEARSVM">LINEARSVM</option>
+                        <option value="KNN">KNN</option>
+                        <option value="KNN11">KNN11</option>
                         <option value="FASTKMEANS">FASTKMEANS</option>
                         <option value="FASTSORTEDKMEANS">FASTSORTEDKMEANS</option>
                         <option value="KMEANS">KMEANS</option>
+                        <option value="KMEANS2">KMEANS2</option>
+                        <option value="KMEANSFIXED">KMEANSFIXED</option>
                         <option value="DBSCAN">DBSCAN</option>
                         <option value="SVM+KMEANS">SVM+KMEANS</option>
                         <option value="SVM+DBSCAN">SVM+DBSCAN</option>
@@ -147,10 +160,11 @@
                 </label></div>
             </form>
         </div>
-
+        <!--Results area-->
         <div class="col-sm-9 panel-sizing">
             <hr class="wide-rule">
             <div class="divider">Recommendations</div>
+            <!--Server errors and recommendation warnings-->
             <hr class="wide-rule">
             {% if error is not none %}
             <div class="alert alert-danger alert-dismissable">
@@ -164,10 +178,9 @@
                 <strong>Warning:</strong> {{ warning }}
             </div>
             {% endif %}
-
+            <!--Display the songs recommendations are based on, and their predicted genre (SVM)-->
             <div id="current-song" class="song-info">
                 <form action="#" onsubmit="download();return false">
-
                     Current song(s):
                     <i>
                         {% if current_song is not none %}
@@ -185,9 +198,8 @@
                     <a href="#" id="save-link" class="download-btn btn btn-outline">Download .csv</a>
                     {% endif %}
                 </form>
-
-
             </div>
+            <!--Table headings for recommended song results-->
             <table class="table table-striped table-light table-hover static-table-header">
                 <thead>
                 <tr>
@@ -199,6 +211,7 @@
                 </tr>
                 </thead>
             </table>
+            <!--Progress spinners-->
             <div id="progress" style="display: none">
                 <img src="{{ url_for('static', filename='img/spinner.gif') }}" alt="Spinner" style="width:200px;height:200px;">
                 Listening...
@@ -207,6 +220,7 @@
                 <img src="{{ url_for('static', filename='img/spinner.gif') }}" alt="Spinner" style="width:200px;height:200px;">
                 Retrieving recommendations...
             </div>
+            <!--Returned results-->
             <div class="vertical-scroll">
                 <table class="table table-striped table-light table-hover">
                     <tbody>
@@ -238,7 +252,9 @@
 
 <footer>
     <div class="container">
-        <p>&copy; Matthew Penny [1509819] <br> CS310: Third Year Project, University of Warwick </p>
+        <p>Matthew Penny [1509819] <br> CS310: Third Year Project, University of Warwick
+        <br><i>Applying Machine Learning and Audio Analysis Techniques to Music Recommendation</i></p>
+        <a href="https://goo.gl/forms/Mvx4giEYs9AMhVbs1">Submit User Feedback</a>
     </div>
 </footer>
 

@@ -17,13 +17,10 @@ def record(dir):
     stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
 
     print("Recording...")
-
     frames = []
-
     for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
         data = stream.read(CHUNK)
         frames.append(data)
-
     print("Recording finished")
 
     full_length = frames*3
