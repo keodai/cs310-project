@@ -35,6 +35,3 @@ data_path_exclude = "/Users/matthew/PycharmProjects/cs310-project/audio_data/no_
 project_audio_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/"
 upload_folder = "/Users/matthew/PycharmProjects/cs310-project/audio_data/data/uploads/"
 plot_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/plots/"
-
-
-

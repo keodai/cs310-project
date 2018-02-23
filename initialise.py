@@ -62,7 +62,7 @@ REQUIRED_FILES = {"song_data": "data/song_data.pkl",
                   "classifier_linear_short_timbre": "data/classifier_linear_short_timbre.pkl",
                   "knn_short_timbre": "data/knn_short_timbre.pkl",
                   "knn11_short_timbre": "data/knn11_short_timbre.pkl",
-                  "kmeans_fixed_short_timbre": "data/kmeans_short_short_timbre.pkl",
+                  "kmeans_fixed_short_timbre": "data/kmeans_fixed_short_timbre.pkl",
                   "kmeans_short_timbre": "data/kmeans_short_timbre.pkl",
                   "kmeans2_short_timbre": "data/kmeans2_short_timbre.pkl",
                   "dbscan_short_timbre": "data/dbscan_short_timbre.pkl",
@@ -75,7 +75,7 @@ REQUIRED_FILES = {"song_data": "data/song_data.pkl",
                   "classifier_linear_short_mid": "data/classifier_linear_short_mid.pkl",
                   "knn_short_mid": "data/knn_short_mid.pkl",
                   "knn11_short_mid": "data/knn11_short_mid.pkl",
-                  "kmeans_fixed_short_mid": "data/kmeans_short_short_mid.pkl",
+                  "kmeans_fixed_short_mid": "data/kmeans_fixed_short_mid.pkl",
                   "kmeans_short_mid": "data/kmeans_short_mid.pkl",
                   "kmeans2_short_mid": "data/kmeans2_short_mid.pkl",
                   "dbscan_short_mid": "data/dbscan_short_mid.pkl",
@@ -90,7 +90,7 @@ def init():
     # Ensure all files have been created by setup
     required_files_present = [os.path.isfile(value) for value in REQUIRED_FILES.values()]
     if not all(required_files_present):
-        raise IOError('Required data files or models are not present')
+        raise IOError('Required data files or models are not present\n' + str(zip(REQUIRED_FILES.keys(),required_files_present)))
 
     print("Loading song data...")
     song_data = joblib.load(REQUIRED_FILES['song_data'])
