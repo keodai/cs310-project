@@ -141,22 +141,6 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
     for idx, song in enumerate(song_data):
         song.set_normalised_features(vector_type, normalised_features[idx])
         song.set_predicted_genre(vector_type, predicted_genres[idx])
-
-    print("-Test feature scaling...")
-    normalised_test_features = scaler.transform(test_features)
-    print("-Updating test song data with predictions...")
-    test_predicted_genres = clf.predict(normalised_test_features)
-    for idx, test_song in enumerate(test_song_data):
-        test_song.set_normalised_features(vector_type, normalised_test_features[idx])
-        test_song.set_predicted_genre(vector_type, test_predicted_genres[idx])
-
-    print("-Testing SVM...")
-    accuracy = clf.score(normalised_test_features, test_listed_genres)
-    cv.info("SVM Test Accuracy: %0.2f (+/- %0.2f)" % (accuracy.mean(), accuracy.std()))
-
-    print("-Testing Linear SVM...")
-    accuracy = clf_linear.score(normalised_test_features, test_listed_genres)
-    cv.info("Linear SVM Test Accuracy: %0.2f (+/- %0.2f)" % (accuracy.mean(), accuracy.std()))
     # END STANDALONE SVM
 
     # BEGIN KNN
@@ -174,15 +158,34 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
     cross_validation(knn11, "KNN11 accuracy", normalised_features, listed_genres)
     print("-Training KNN11...")
     knn11 = timed_fit(knn11, vector_type, "KNN11", normalised_features, listed_genres)
-
-    print("-Testing KNN99...")
-    accuracy = knn.score(normalised_test_features, test_listed_genres)
-    cv.info("KNN99 Test Accuracy: %0.2f (+/- %0.2f)" % (accuracy.mean(), accuracy.std()))
-
-    print("-Testing KNN11...")
-    accuracy = knn11.score(normalised_test_features, test_listed_genres)
-    cv.info("KNN11 Test Accuracy: %0.2f (+/- %0.2f)" % (accuracy.mean(), accuracy.std()))
     # END KNN
+
+    # CLASSIFIER TESTING
+    if np.size(test_features) > 0:
+        print("-Test feature scaling...")
+        normalised_test_features = scaler.transform(test_features)
+        print("-Updating test song data with predictions...")
+        test_predicted_genres = clf.predict(normalised_test_features)
+        for idx, test_song in enumerate(test_song_data):
+            test_song.set_normalised_features(vector_type, normalised_test_features[idx])
+            test_song.set_predicted_genre(vector_type, test_predicted_genres[idx])
+
+        print("-Testing SVM...")
+        accuracy = clf.score(normalised_test_features, test_listed_genres)
+        cv.info("SVM Test Accuracy: %0.2f (+/- %0.2f)" % (accuracy.mean(), accuracy.std()))
+
+        print("-Testing Linear SVM...")
+        accuracy = clf_linear.score(normalised_test_features, test_listed_genres)
+        cv.info("Linear SVM Test Accuracy: %0.2f (+/- %0.2f)" % (accuracy.mean(), accuracy.std()))
+
+        print("-Testing KNN99...")
+        accuracy = knn.score(normalised_test_features, test_listed_genres)
+        cv.info("KNN99 Test Accuracy: %0.2f (+/- %0.2f)" % (accuracy.mean(), accuracy.std()))
+
+        print("-Testing KNN11...")
+        accuracy = knn11.score(normalised_test_features, test_listed_genres)
+        cv.info("KNN11 Test Accuracy: %0.2f (+/- %0.2f)" % (accuracy.mean(), accuracy.std()))
+    # END CLASSIFIER TESTING
 
     # BEGIN STANDALONE K-MEANS
     genres = [song.listed_genre for song in song_data]
@@ -235,64 +238,64 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
     cv.info("DBSCAN hcv: %0.2f, %0.2f, %0.2f" % (h, c, v))
     # END STANDALONE DBSCAN
 
-    # BEGIN GENRE K-MEANS
-    print("-Training GENRE_KMEANS...")
-    genre_kmeans = []
-    start = timer()
-    for cls in clf.classes_:
-        cls_songs = [song for song in song_data if song.get_predicted_genre(vector_type) == cls]
-        if len(cls_songs) > 0:
-            cls_features = np.array([song.get_normalised_features(vector_type) for song in cls_songs])
-            genre_kmeans.append((cls, KMeans(min(10, len(cls_songs))).fit(cls_features)))
-    end = timer()
-    kmeans_genre_time = end - start
-    timing.info('Trained ' + vector_type + ' - GENRE_KMEANS in an additional' + str(kmeans_genre_time))
-    # END GENRE K-MEANS
-
-    # BEGIN GENRE DBSCAN
-    print("-Training GENRE_DBSCAN...")
-    genre_dbscan = []
-    start = timer()
-    for cls in clf.classes_:
-        cls_songs = [song for song in song_data if song.get_predicted_genre(vector_type) == cls]
-        if len(cls_songs) > 0:
-            cls_features = np.array([song.get_normalised_features(vector_type) for song in cls_songs])
-            genre_dbscan.append((cls, DBSCAN(eps=2.5, min_samples=5).fit(cls_features)))
-    end = timer()
-    genre_dbscan_time = end - start
-    timing.info('Trained ' + vector_type + ' - GENRE_DBSCAN in ' + str(genre_dbscan_time))
-    # END GENRE DBSCAN
-
-    # BEGIN SVM ON DBSCAN
-    print("-Training SVM_ON_DBSCAN...")
-    labels = dbscan.labels_
-    # Need >1 labels to be able to train an SVM classifier
-    svm_on_dbscan = SVC()
-    if np.size(np.unique(labels)) > 1:
-        svm_on_dbscan = timed_fit(svm_on_dbscan, vector_type, "SVM_ON_DBSCAN", normalised_features, dbscan.labels_)
-
-        for song in song_data:
-            song.set_dbscan_cluster_id(vector_type, svm_on_dbscan.predict([song.get_normalised_features(vector_type)])[0])
-        for test_song in test_song_data:
-            test_song.set_dbscan_cluster_id(vector_type, svm_on_dbscan.predict([test_song.get_normalised_features(vector_type)])[0])
-    # END SVM ON DBSCAN
-
-    print("-Storage...")
-    # Song Data
-    joblib.dump(scaler, 'data/scaler_' + vector_type.lower() + '.pkl')
-    # Classifiers & Clusters
-    joblib.dump(clf, 'data/classifier_' + vector_type.lower() + '.pkl')
-    joblib.dump(clf_linear, 'data/classifier_linear_' + vector_type.lower() + '.pkl')
-    joblib.dump(knn, 'data/knn_' + vector_type.lower() + '.pkl')
-    joblib.dump(knn11, 'data/knn11_' + vector_type.lower() + '.pkl')
-    joblib.dump(kmeans, 'data/kmeans_fixed_' + vector_type.lower() + '.pkl')
-    joblib.dump(kmeans, 'data/kmeans_' + vector_type.lower() + '.pkl')
-    joblib.dump(kmeans2, 'data/kmeans2_' + vector_type.lower() + '.pkl')
-    joblib.dump(dbscan, 'data/dbscan_' + vector_type.lower() + '.pkl')
-    joblib.dump(genre_kmeans, 'data/genre_kmeans_' + vector_type.lower() + '.pkl')
-    joblib.dump(genre_dbscan, 'data/genre_dbscan_' + vector_type.lower() + '.pkl')
-    if svm_on_dbscan is not None:
-        joblib.dump(svm_on_dbscan, 'data/svm_on_dbscan_' + vector_type.lower() + '.pkl')
+    # # BEGIN GENRE K-MEANS
+    # print("-Training GENRE_KMEANS...")
+    # genre_kmeans = []
+    # start = timer()
+    # for cls in clf.classes_:
+    #     cls_songs = [song for song in song_data if song.get_predicted_genre(vector_type) == cls]
+    #     if len(cls_songs) > 0:
+    #         cls_features = np.array([song.get_normalised_features(vector_type) for song in cls_songs])
+    #         genre_kmeans.append((cls, KMeans(min(10, len(cls_songs))).fit(cls_features)))
+    # end = timer()
+    # kmeans_genre_time = end - start
+    # timing.info('Trained ' + vector_type + ' - GENRE_KMEANS in an additional' + str(kmeans_genre_time))
+    # # END GENRE K-MEANS
+    #
+    # # BEGIN GENRE DBSCAN
+    # print("-Training GENRE_DBSCAN...")
+    # genre_dbscan = []
+    # start = timer()
+    # for cls in clf.classes_:
+    #     cls_songs = [song for song in song_data if song.get_predicted_genre(vector_type) == cls]
+    #     if len(cls_songs) > 0:
+    #         cls_features = np.array([song.get_normalised_features(vector_type) for song in cls_songs])
+    #         genre_dbscan.append((cls, DBSCAN(eps=2.5, min_samples=5).fit(cls_features)))
+    # end = timer()
+    # genre_dbscan_time = end - start
+    # timing.info('Trained ' + vector_type + ' - GENRE_DBSCAN in ' + str(genre_dbscan_time))
+    # # END GENRE DBSCAN
+    #
+    # # BEGIN SVM ON DBSCAN
+    # print("-Training SVM_ON_DBSCAN...")
+    # labels = dbscan.labels_
+    # # Need >1 labels to be able to train an SVM classifier
+    # svm_on_dbscan = SVC()
+    # if np.size(np.unique(labels)) > 1:
+    #     svm_on_dbscan = timed_fit(svm_on_dbscan, vector_type, "SVM_ON_DBSCAN", normalised_features, dbscan.labels_)
+    #
+    #     for song in song_data:
+    #         song.set_dbscan_cluster_id(vector_type, svm_on_dbscan.predict([song.get_normalised_features(vector_type)])[0])
+    #     for test_song in test_song_data:
+    #         test_song.set_dbscan_cluster_id(vector_type, svm_on_dbscan.predict([test_song.get_normalised_features(vector_type)])[0])
+    # # END SVM ON DBSCAN
+    #
+    # print("-Storage...")
+    # # Song Data
+    # joblib.dump(scaler, 'data/scaler_' + vector_type.lower() + '.pkl')
+    # # Classifiers & Clusters
+    # joblib.dump(clf, 'data/classifier_' + vector_type.lower() + '.pkl')
+    # joblib.dump(clf_linear, 'data/classifier_linear_' + vector_type.lower() + '.pkl')
+    # joblib.dump(knn, 'data/knn_' + vector_type.lower() + '.pkl')
+    # joblib.dump(knn11, 'data/knn11_' + vector_type.lower() + '.pkl')
+    # joblib.dump(kmeans, 'data/kmeans_fixed_' + vector_type.lower() + '.pkl')
+    # joblib.dump(kmeans, 'data/kmeans_' + vector_type.lower() + '.pkl')
+    # joblib.dump(kmeans2, 'data/kmeans2_' + vector_type.lower() + '.pkl')
+    # joblib.dump(dbscan, 'data/dbscan_' + vector_type.lower() + '.pkl')
+    # joblib.dump(genre_kmeans, 'data/genre_kmeans_' + vector_type.lower() + '.pkl')
+    # joblib.dump(genre_dbscan, 'data/genre_dbscan_' + vector_type.lower() + '.pkl')
+    # if svm_on_dbscan is not None:
+    #     joblib.dump(svm_on_dbscan, 'data/svm_on_dbscan_' + vector_type.lower() + '.pkl')
 
 
 # Song data conversion/preprocessing and model training
@@ -309,6 +312,11 @@ def create():
     test_song_data = calculate_or_load("data/test_song_data.pkl", convert_and_get_data, paths.test_src_path, paths.test_dst_path)
     logging.info("Features to List...")
     test_mid_features, test_timbre_features, test_mid_sq_features, test_timbre_sq_features, test_short_timbre_features, test_short_mid_features, test_listed_genres = songs_to_features(test_song_data)
+
+    print("Writing training song data...")
+    joblib.dump(song_data, "data/song_data.pkl")
+    print("Writing test song data...")
+    joblib.dump(test_song_data, "data/test_song_data.pkl")
 
     # Train models for each vector type
     print("Training models (TIMBRE)...")

@@ -15,16 +15,25 @@
 
 
 # MEDIUM (10000) DATASET
-training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src/training/"
-training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst/training/"
-test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src/test/"
-test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst/test/"
+# training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src/training/"
+# training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst/training/"
+# test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src/test/"
+# test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst/test/"
 
 # FULL DATASET
 # training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src_full/training/"
 # training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst_full/training/"
 # test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src_full/test/"
 # test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst_full/test/"
+
+# DATASET 2
+mode = "ds2"
+ds2_src = "/Users/matthew/PycharmProjects/cs310-project/audio_data/gtzan/"
+ds2_dst = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2/"
+training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2/"
+training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2/training/"
+test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2t/"
+test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2t/test/"
 
 
 dst_ext = ".wav"

@@ -7,9 +7,20 @@ from tinytag import TinyTag, TinyTagException
 from shutil import copy2
 
 
+mode = 'main_genres'  # 'empty'
+
+
 # Return a utf-8 encoded string, of the input
 def format_string(s):
     return '' if s is None else s.encode('utf-8')
+
+
+def exclude_condition(mode, genre):
+    if mode == 'empty':
+        return genre == ""
+    else:
+        valid_genres = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock'] # electronic, rap, r&b/soul,
+        return genre in valid_genres
 
 
 # Recursively convert all non-hidden mp3 and wav files in source directory
@@ -28,7 +39,7 @@ def convert_and_get_data(src_path, dst_path):
             except TinyTagException:
                 dst = paths.data_path_exclude
             else:
-                if genre == "":
+                if exclude_condition(mode, genre):
                     dst = paths.data_path_exclude
             finally:
                 if not os.path.exists(os.path.join(dst, element)):

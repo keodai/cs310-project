@@ -1,8 +1,10 @@
 import multi_logging
+import paths
 from tinytag import TinyTag 
 import librosa
 import numpy as np
 from timeit import default_timer as timer
+import os
 
 timing = multi_logging.setup_logger('timing', 'logs/feature_times.log')
 
@@ -85,16 +87,29 @@ class Song:
         self.dbscan_cluster_id_short_features = None
 
     def genre_from_metadata(self):
-        return format_string(TinyTag.get(self.src).genre).replace('\x00', '')
+        if paths.mode == "ds2":
+            fname = os.path.splitext(os.path.basename(self.src))[0]
+            return fname.split(".")[0]
+        else:
+            return format_string(TinyTag.get(self.src).genre).replace('\x00', '')
 
     def title_from_metadata(self):
-        return format_string(TinyTag.get(self.src).title).replace('\x00', '')
+        if paths.mode == "ds2":
+            return os.path.splitext(os.path.basename(self.src))[0]
+        else:
+            return format_string(TinyTag.get(self.src).title).replace('\x00', '')
 
     def artist_from_metadata(self):
-        return format_string(TinyTag.get(self.src).artist).replace('\x00', '')
+        if paths.mode == "ds2":
+            return os.path.splitext(os.path.basename(self.src))[0]
+        else:
+            return format_string(TinyTag.get(self.src).artist).replace('\x00', '')
 
     def album_from_metadata(self):
-        return format_string(TinyTag.get(self.src).album).replace('\x00', '')
+        if paths.mode == "ds2":
+            return os.path.splitext(os.path.basename(self.src))[0]
+        else:
+            return format_string(TinyTag.get(self.src).album).replace('\x00', '')
 
     # Perform extraction of all features
     def extract_features(self):
