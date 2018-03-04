@@ -19,8 +19,20 @@ def exclude_condition(mode, genre):
     if mode == 'empty':
         return genre == ""
     else:
-        valid_genres = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock'] # electronic, rap, r&b/soul,
-        return genre in valid_genres
+        valid_genres = ['rock', 'punk', 'indie', 'metal', 'alternative',
+                        'electronic', 'disco', 'dance', 'drum and bass', 'techno', 'electro', 'garage',
+                        'folk',
+                        'hip-hop', 'rap',
+                        'pop',
+                        'noise',
+                        'classical',
+                        'acapella',
+                        'jazz',
+                        'blues',
+                        'country',
+                        'reggae',
+                        'instrumental', 'band', 'acoustic', 'percussion']
+        return any([True for vg in valid_genres if vg in genre.lower()])
 
 
 # Recursively convert all non-hidden mp3 and wav files in source directory

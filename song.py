@@ -8,6 +8,20 @@ import os
 
 timing = multi_logging.setup_logger('timing', 'logs/feature_times.log')
 
+rock_aliases = ['rock', 'punk', 'indie', 'metal', 'alternative']
+elec_aliases = ['electronic', 'disco', 'dance', 'drum and bass', 'techno', 'electro', 'garage']
+folk_aliases = ['folk']
+hh_aliases = ['hip-hop', 'rap']
+pop_aliases = ['pop']
+noise_aliases = ['noise']
+classic_aliases = ['classical']
+acapella_aliases = ['acapella']
+jazz_aliases = ['jazz']
+blues_aliases = ['blues']
+country_aliases = ['country']
+reggae_aliases = ['reggae']
+instr_aliases = ['instrumental', 'band', 'acoustic', 'percussion']
+
 
 # Return the input as a utf-8 encoded string
 def format_string(s):
@@ -91,7 +105,50 @@ class Song:
             fname = os.path.splitext(os.path.basename(self.src))[0]
             return fname.split(".")[0]
         else:
-            return format_string(TinyTag.get(self.src).genre).replace('\x00', '')
+            genre = format_string(TinyTag.get(self.src).genre).replace('\x00', '').lower()
+
+            rock_aliases = ['rock', 'punk', 'indie', 'metal', 'alternative']
+            elec_aliases = ['electronic', 'disco', 'dance', 'drum and bass', 'techno', 'electro', 'garage']
+            folk_aliases = ['folk']
+            hh_aliases = ['hip-hop', 'rap']
+            pop_aliases = ['pop']
+            noise_aliases = ['noise']
+            classic_aliases = ['classical']
+            acapella_aliases = ['acapella']
+            jazz_aliases = ['jazz']
+            blues_aliases = ['blues']
+            country_aliases = ['country']
+            reggae_aliases = ['reggae']
+            instr_aliases = ['instrumental', 'band', 'acoustic', 'percussion']
+
+            if any([alias in genre for alias in rock_aliases]):
+                genre = 'rock'
+            elif any([alias in genre for alias in elec_aliases]):
+                genre = 'electronic'
+            elif any([alias in genre for alias in folk_aliases]):
+                genre = 'folk'
+            elif any([alias in genre for alias in hh_aliases]):
+                genre = 'hip-hop'
+            elif any([alias in genre for alias in pop_aliases]):
+                genre = 'pop'
+            elif any([alias in genre for alias in noise_aliases]):
+                genre = 'noise'
+            elif any([alias in genre for alias in classic_aliases]):
+                genre = 'classical'
+            elif any([alias in genre for alias in acapella_aliases]):
+                genre = 'acapella'
+            elif any([alias in genre for alias in jazz_aliases]):
+                genre = 'jazz'
+            elif any([alias in genre for alias in blues_aliases]):
+                genre = 'blues'
+            elif any([alias in genre for alias in country_aliases]):
+                genre = 'country'
+            elif any([alias in genre for alias in reggae_aliases]):
+                genre = 'reggae'
+            elif any([alias in genre for alias in instr_aliases]):
+                genre = 'instrumental'
+
+            return genre
 
     def title_from_metadata(self):
         if paths.mode == "ds2":

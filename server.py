@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS, cross_origin
 from datetime import datetime
 import errno
+import multi_logging
 
 import initialise
 import paths
@@ -14,6 +15,7 @@ UPLOAD_FOLDER = paths.upload_folder
 ALLOWED_EXTENSIONS = {'mp3', 'wav'}
 previous_upload_dir = None
 previous_filenames = None
+genre_data_stats = True
 
 app = Flask(__name__, static_url_path='')
 CORS(app)
@@ -21,6 +23,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024
 app.secret_key = 'key'
 data = initialise.init()
+
+if genre_data_stats:
+    from collections import Counter
+    gsl = multi_logging.setup_logger('genre_stats', 'logs/genre_stats.log')
+    genre_stats = Counter([song.listed_genre for song in data['song_data']])
+    for key, value in genre_stats.most_common():
+        gsl.info(str(key) + " " + str(value))
 
 
 # Utility function for formatting predicted genres
