@@ -3,6 +3,8 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/audio_data" />
+      <excludeFolder url="file://$MODULE_DIR$/data" />
+      <excludeFolder url="file://$MODULE_DIR$/logs" />
     </content>
     <orderEntry type="jdk" jdkName="Python 2.7.14 (~/anaconda/envs/cs310-project-27/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

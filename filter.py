@@ -15,7 +15,7 @@ def format_string(s):
     return '' if s is None else s.encode('utf-8')
 
 
-def exclude_condition(mode, genre):
+def include_condition(mode, genre):
     if mode == 'empty':
         return genre == ""
     else:
@@ -44,18 +44,22 @@ def convert_and_get_data(src_path, dst_path):
         if os.path.isdir(path):
             convert_and_get_data(path, dst_path)
         elif os.path.isfile(path) and path.endswith(('.mp3', '.wav')):
+            perform_copy = True
             dst = dst_path
             try:
                 genre = format_string(TinyTag.get(path).genre).replace('\x00', '')
                 logging.info(genre)
             except TinyTagException:
-                dst = paths.data_path_exclude
+                # dst = paths.data_path_exclude
+                perform_copy = False
             else:
-                if exclude_condition(mode, genre):
-                    dst = paths.data_path_exclude
+                if not include_condition(mode, genre):
+                    # dst = paths.data_path_exclude
+                    perform_copy = False
             finally:
-                if not os.path.exists(os.path.join(dst, element)):
-                    copy2(path, dst)
+                if perform_copy:
+                    if not os.path.exists(os.path.join(dst, element)):
+                        copy2(path, dst)
 
 
 def scan(path):

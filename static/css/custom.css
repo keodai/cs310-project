@@ -21,7 +21,7 @@
 }
 
 .form-spacing {
-    padding-top: 15px;
+    padding-top: 25px;
     padding-bottom: 15px;
 }
 
@@ -31,7 +31,7 @@
 
 .vertical-scroll {
     overflow-y: auto;
-    height: 70vh;
+    height: 63vh;
 }
 
 .static-table-header {
@@ -85,7 +85,7 @@ ul {
 
 .short-rule {
     width: 70%;
-    margin: 25px auto;
+    margin: 15px auto;
     max-width: 70%;
 }
 
