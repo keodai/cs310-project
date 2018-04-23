@@ -1,63 +1,64 @@
 # Paths for use throughout system to ensure consistency
-# Update to change directories used for audio data or for use on another system
+# *** UPDATE TO CHANGE DIRECTORIES USED FOR AUDIO DATA OR FOR USE ON ANOTHER SYSTEM ***
 
-# SMALL (100) DATASET
+project_audio_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/"
+
+# SMALL (100) DATASET (FMA)
 # mode = "fma"
-# training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/small_data/src/training/"
-# training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/small_data/dst/training/"
-# test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/small_data/src/test/"
-# test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/small_data/dst/test/"
+# training_src_path = project_audio_dir + "small_data/src/training/"
+# training_dst_path = project_audio_dir + "small_data/dst/training/"
+# test_src_path = project_audio_dir + "small_data/src/test/"
+# test_dst_path = project_audio_dir + "small_data/dst/test/"
 
-# MEDIUM (1000) DATASET
+# MEDIUM (1000) DATASET (FMA)
 # mode = "fma"
-# training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/med_data/src/training/"
-# training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/med_data/dst/training/"
-# test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/med_data/src/test/"
-# test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/med_data/dst/test/"
+# training_src_path = project_audio_dir + "med_data/src/training/"
+# training_dst_path = project_audio_dir + "med_data/dst/training/"
+# test_src_path = project_audio_dir + "med_data/src/test/"
+# test_dst_path = project_audio_dir + "med_data/dst/test/"
 
 
-# MEDIUM (10000) DATASET
+# MEDIUM (10000) DATASET (FMA)
 # mode = "fma"
-# training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src/training/"
-# training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst/training/"
-# test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src/test/"
-# test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst/test/"
+# training_src_path = project_audio_dir + "src/training/"
+# training_dst_path = project_audio_dir + "dst/training/"
+# test_src_path = project_audio_dir + "src/test/"
+# test_dst_path = project_audio_dir + "dst/test/"
 
-# FULL DATASET
+# FULL DATASET (FMA)
 # mode = "fma"
-# training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src_full/training/"
-# training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst_full/training/"
-# test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/src_full/test/"
-# test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/dst_full/test/"
+# training_src_path = project_audio_dir + "src_full/training/"
+# training_dst_path = project_audio_dir + "dst_full/training/"
+# test_src_path = project_audio_dir + "src_full/test/"
+# test_dst_path = project_audio_dir + "dst_full/test/"
 
-# MEDIUM (10000) DATASET (RESTRICTED GENRES)
+# MEDIUM (10000) DATASET (FMA RESTRICTED GENRES)
 mode = "fma"
-training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/restricted/src/training/"
-training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/restricted/dst/training/"
-test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/restricted/src/test/"
-test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/restricted/dst/test/"
+training_src_path = project_audio_dir + "restricted/src/training/"
+training_dst_path = project_audio_dir + "restricted/dst/training/"
+test_src_path = project_audio_dir + "restricted/src/test/"
+test_dst_path = project_audio_dir + "restricted/dst/test/"
 
-# DATASET 2
+# DATASET 2 (GTZAN)
 # mode = "ds2"
-# training_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2/"
-# training_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2/training/"
-# test_src_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2t/"
-# test_dst_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2t/test/"
+# training_src_path = project_audio_dir + "ds2/"
+# training_dst_path = project_audio_dir + "ds2/training/"
+# test_src_path = project_audio_dir + "ds2t/"
+# test_dst_path = project_audio_dir + "ds2t/test/"
 
 # PERMANENT PATHS
 # FMA Info
-raw_data_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/raw_dataset/"
-processed_data_path = "/Users/matthew/PycharmProjects/cs310-project/audio_data/processed/"
-data_path_exclude = "/Users/matthew/PycharmProjects/cs310-project/audio_data/no_genre/"
+raw_data_path = project_audio_dir + "raw_dataset/"
+processed_data_path = project_audio_dir + "processed/"
+data_path_exclude = project_audio_dir + "no_genre/"
 
 # GTZAN info
-ds2_src = "/Users/matthew/PycharmProjects/cs310-project/audio_data/gtzan/"
-ds2_dst = "/Users/matthew/PycharmProjects/cs310-project/audio_data/ds2/"
+ds2_src = project_audio_dir + "gtzan/"
+ds2_dst = project_audio_dir + "ds2/"
 
 # App info
 dst_ext = ".wav"
-# output_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/converted/"
-output_dir = "/Users/matthew/PycharmProjects/cs310-project/"
-project_audio_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/"
-upload_folder = "/Users/matthew/PycharmProjects/cs310-project/audio_data/data/uploads/"
-plot_dir = "/Users/matthew/PycharmProjects/cs310-project/audio_data/plots/"
+output_dir = project_audio_dir + "converted/"
+
+upload_folder = project_audio_dir + "data/uploads/"
+plot_dir = project_audio_dir + "plots/"

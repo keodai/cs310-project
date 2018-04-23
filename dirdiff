@@ -2,22 +2,20 @@
 # Utility for checking files all converted files from source directory are in destination
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
-folder1=$1 #"/Volumes/expansion/project/data/src/training"
-folder2=$2 #"/Volumes/expansion/project/data/dst/training"
-ext1=$3 #"mp3"
-ext2=$4 #"wav"
+folder1=$1  #"/Volumes/expansion/project/data/src/training"
+folder2=$2  #"/Volumes/expansion/project/data/dst/training"
+ext1=$3     #"mp3"
+ext2=$4     #"wav"
 
 
 for fullfile in ${folder1}/*.$ext1
 do
-        #echo "$fullfile fullfile"
+        # Retrieve filename from file path
         filename=$(basename "$fullfile")
-        #echo "$filename file"
-        extension="${filename##*.}"
-        #echo "$extension ext"
-        cleanfilename="${filename%.*}"
-        #echo "$cleanfilename base"
-        if ! [ -a "${folder2}/$cleanfilename.$ext2" ]
+        # Retrieve base filename
+        basefilename="${filename%.*}"
+        # Check file with name exists with destination extension in destination folder, otherwise print
+        if ! [ -a "${folder2}/$basefilename.$ext2" ]
         then
                 echo $fullfile
         fi

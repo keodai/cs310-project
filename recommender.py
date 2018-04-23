@@ -1,3 +1,5 @@
+# Perform recommendation using the specified options
+
 import multi_logging
 import setup
 import paths
@@ -27,7 +29,7 @@ def fast_kmeans(kmeans, norm_features, song_data):
     return nearest_cluster, songs_labels
 
 
-# Calculate distances from input vector to other songs in cluster (Euclidean distance)
+# Calculate distances from input vector to other songs in cluster (Euclidean distance) - depends on vector type
 def calculate_distances(songs_in_cluster, norm_features, vector_type):
     dist = []
     for sic in songs_in_cluster:
@@ -55,12 +57,12 @@ def calculate_distances(songs_in_cluster, norm_features, vector_type):
 def perform_dbscan(dbscan, song_data, norm_features, vector_type):
     if len(dbscan.components_) == 0:
         return None
-    core_sample_labels = [dbscan.labels_[index] for index in dbscan.core_sample_indices_]
+    core_sample_labels = [dbscan.labels_[index] for index in dbscan.core_sample_indices_]  # Find core samples
     core_samples = list(zip(core_sample_labels, dbscan.components_))
-    song_cluster_ids = zip(song_data, dbscan.labels_)
+    song_cluster_ids = zip(song_data, dbscan.labels_)  # Find song cluster ids
     tree = KDTree(dbscan.components_)
-    [[index]] = tree.query([norm_features])[1]
-    nearest_cluster = core_samples[index][0]  # For single nearest cluster, change query for more clusters.
+    [[index]] = tree.query([norm_features])[1]  # Use tree to retrieve index of nearest cluster
+    nearest_cluster = core_samples[index][0]  # Retrieve single nearest cluster using index
     songs_in_cluster = [entry[0] for entry in song_cluster_ids if entry[1] == nearest_cluster]
     dist = calculate_distances(songs_in_cluster, norm_features, vector_type)
     return sorted(zip(songs_in_cluster, dist), key=lambda l: l[1])[:MAX_RECS]
@@ -70,11 +72,12 @@ def perform_dbscan(dbscan, song_data, norm_features, vector_type):
 def perform_kmeans(kmeans, song_data, norm_features, vector_type):
     recs = []
     cluster_label = -2
-    song_cluster_ids = zip(song_data, kmeans.labels_)
+    song_cluster_ids = zip(song_data, kmeans.labels_)  # Retrieve k-means labels for songs
     cluster_distances = zip(kmeans.predict(kmeans.cluster_centers_),
                             [distance.euclidean(cluster_center, norm_features)
-                             for cluster_center in kmeans.cluster_centers_])
+                             for cluster_center in kmeans.cluster_centers_])  # Retrieve distances to cluster centroids
     sorted_cluster_distances = sorted(cluster_distances, key=lambda l: l[1])
+    # Add songs from clusters
     for entry in sorted_cluster_distances:
         if cluster_label != entry[0]:
             cluster_label = entry[0]
@@ -96,7 +99,8 @@ def make_song_record(title, artist, album, path):
     return {"title": title, "artist": artist, "album": album, "src": path}
 
 
-def select_data(item, vector_type, data, condition=True, ):
+# Retrieve element of item and vector type from data dictionary
+def select_data(item, vector_type, data, condition=True):
     if condition:
         name = item + '_' + vector_type.lower()
         return data[name]
@@ -146,7 +150,7 @@ def recommend(args):
             norm_features, predicted = nf, pg
             predictions.append(predicted)
 
-        # Directory
+        # Recommendations from a directory
         elif os.path.isdir(path):
             songs = setup.convert_and_get_data(path, paths.output_dir)  # Input song conversion and feature extraction
             normalised = []
@@ -238,10 +242,6 @@ def recommend(args):
                 logging.info(recommendation)
                 output.append(make_song_record(recommendation.title, recommendation.artist, recommendation.album, recommendation.src.replace(paths.project_audio_dir, "")))
         return output, predictions, warning
-
-
-def main(args):
-    recommend(args)
 
 
 if __name__ == "__main__":

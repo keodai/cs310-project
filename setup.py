@@ -1,3 +1,5 @@
+# Perform one-time setup - dataset feature extraction and machine learning model training
+
 import logging
 import os
 import shutil
@@ -85,9 +87,9 @@ def songs_to_features(song_data):
 
 # Perform feature scaling to standardise attributes
 def scale_data(features, scaler=None):
-    # todo: should this be standardisation? MinMaxScaler
+    # Applies scaling to features (fit) - creates new scaler if one does not exist
     if scaler is None:
-        scaler = StandardScaler()
+        scaler = StandardScaler()  # change to MinMaxScaler for normalisation
         normalised_features = scaler.fit_transform(features)
     else:
         normalised_features = scaler.transform(features)
@@ -101,20 +103,23 @@ def cross_validation(model, desc, x, y, scoring=None, folds=10):
     cv.info(str(scores))
 
 
-def timed_fit(clf, vector_type, model_desc, x, y=None):
+# Fit model, with timing
+def timed_fit(model, vector_type, model_desc, x, y=None):
     start = timer()
-    clf = clf.fit(x, y)
+    model = model.fit(x, y)
     end = timer()
     calc_time = end - start
     timing.info('Trained ' + vector_type + ' ' + model_desc + ' in ' + str(calc_time) + 's')
-    return clf
+    return model
 
 
 # Perform training of models using features of the given vector type
 def train_models(song_data, test_song_data, features, test_features, listed_genres, test_listed_genres, vector_type):
+    # Scale data
     logging.info("-Feature scaling...")
     scaler, normalised_features = scale_data(features)
 
+    # Decision tree for calculating Gini importance values
     print("-DT gini feature importance...")
     cv.info("DT gini feature importance:")
     dt = DecisionTreeClassifier().fit(normalised_features, listed_genres)
@@ -223,7 +228,6 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
     print("-Testing KMEANS2...")
     h, c, v = homogeneity_completeness_v_measure(listed_genres, kmeans2.labels_)
     cv.info("KMEANS2 hcv: %0.2f, %0.2f, %0.2f" % (h, c, v))
-
     # END STANDALONE K-MEANS
 
     # BEGIN STANDALONE DBSCAN
@@ -242,6 +246,7 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
     print("-Training GENRE_KMEANS...")
     genre_kmeans = []
     start = timer()
+    # Perform clustering within each class defined by the SVM
     for cls in clf.classes_:
         cls_songs = [song for song in song_data if song.get_predicted_genre(vector_type) == cls]
         if len(cls_songs) > 0:
@@ -256,6 +261,7 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
     print("-Training GENRE_DBSCAN...")
     genre_dbscan = []
     start = timer()
+    # Perform clustering within each class defined by the SVM
     for cls in clf.classes_:
         cls_songs = [song for song in song_data if song.get_predicted_genre(vector_type) == cls]
         if len(cls_songs) > 0:
@@ -269,19 +275,20 @@ def train_models(song_data, test_song_data, features, test_features, listed_genr
     # BEGIN SVM ON DBSCAN
     print("-Training SVM_ON_DBSCAN...")
     labels = dbscan.labels_
-    # Need >1 labels to be able to train an SVM classifier
     svm_on_dbscan = SVC()
+    # Need >1 labels to be able to train an SVM classifier
     if np.size(np.unique(labels)) > 1:
         svm_on_dbscan = timed_fit(svm_on_dbscan, vector_type, "SVM_ON_DBSCAN", normalised_features, dbscan.labels_)
-
+        # Store the found dbscan cluster id for each song
         for song in song_data:
             song.set_dbscan_cluster_id(vector_type, svm_on_dbscan.predict([song.get_normalised_features(vector_type)])[0])
         for test_song in test_song_data:
             test_song.set_dbscan_cluster_id(vector_type, svm_on_dbscan.predict([test_song.get_normalised_features(vector_type)])[0])
     # END SVM ON DBSCAN
 
+    # Write to files
     print("-Storage...")
-    # Song Data
+    # Scaler
     joblib.dump(scaler, 'data/scaler_' + vector_type.lower() + '.pkl')
     # Classifiers & Clusters
     joblib.dump(clf, 'data/classifier_' + vector_type.lower() + '.pkl')
@@ -305,7 +312,6 @@ def create():
     print("Converting training files and extracting features...")
     song_data = calculate_or_load("data/song_data.pkl", convert_and_get_data, paths.training_src_path, paths.training_dst_path)
     print("Features to list...")
-    # todo: convert these to pandas dataframe and perform manipulation
     mid_features, timbre_features, mid_sq_features, timbre_sq_features, short_timbre_features, short_mid_features, listed_genres = songs_to_features(song_data)
 
     print("Converting test files and extracting features...")
@@ -332,6 +338,7 @@ def create():
     print("Training models (SHORT_MID)...")
     train_models(song_data, test_song_data, short_mid_features, test_short_mid_features, listed_genres, test_listed_genres, "SHORT_MID")
 
+    # Write song data to file
     print("Writing training song data...")
     joblib.dump(song_data, "data/song_data.pkl")
     print("Writing test song data...")

@@ -1,3 +1,5 @@
+# Application server - run this to start the recommendation system once trained
+
 import os
 from flask import Flask, request, url_for, render_template, make_response, send_from_directory
 from werkzeug.utils import secure_filename
@@ -11,6 +13,7 @@ import paths
 import recommender
 import sound_recording
 
+# Options
 UPLOAD_FOLDER = paths.upload_folder
 ALLOWED_EXTENSIONS = {'mp3', 'wav'}
 previous_upload_dir = None
@@ -22,8 +25,11 @@ CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024
 app.secret_key = 'key'
+
+# Load all data from disk
 data = initialise.init()
 
+# Calculate genre stats on load if option is enabled
 if genre_data_stats:
     from collections import Counter
     gsl = multi_logging.setup_logger('genre_stats', 'logs/genre_stats.log')
@@ -89,12 +95,13 @@ def upload_file():
             if 'file[]' not in request.files:
                 use_previous_path = True
             if use_previous_path:
+                # If there are no previous songs to use, then return error as no files have been selected, otherwise continue and use previous songs
                 if previous_upload_dir is None or previous_filenames is None:
                     return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error="No file selected", warning=None)
             # Retrieve files from request
             file_list = request.files.getlist("file[]")
             for f in file_list:
-                # Check uploaded files are valid
+                # Check uploaded files are valid - if empty use previous songs or return invalid filename error
                 if f.filename == '':
                     use_previous_path = True
                     if previous_upload_dir is None or previous_filenames is None:
@@ -102,6 +109,7 @@ def upload_file():
             # Retrieve other information from request
             mode = request.form['mode']
             vector_type = request.form['features']
+            # If set to use previous path/songs due to request with no file part or empty filename, then use the stored directory
             if use_previous_path:
                 args = [previous_upload_dir, mode, vector_type, data]
                 recommendations, predictions, warning = recommender.recommend(args=args)
@@ -124,5 +132,7 @@ def upload_file():
     return render_template("index.html", current_song=None, recommendations=None, predicted=None, scroll="app", error=None, warning=None)
 
 
+# Start the application
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)  # Turn on debugging (swap)
+    app.run()

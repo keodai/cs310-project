@@ -1,3 +1,6 @@
+# Checks all files that may be required for recommendation exist and loads them from disk into dictionary
+# Performed on server start to speed up recommendation process
+
 import os
 from sklearn.externals import joblib
 
@@ -92,6 +95,7 @@ def init():
     if not all(required_files_present):
         raise IOError('Required data files or models are not present\n' + str(zip(REQUIRED_FILES.keys(),required_files_present)))
 
+    # Load song data from disk
     print("Loading song data...")
     song_data = joblib.load(REQUIRED_FILES['song_data'])
     print("Loading test song data...")
