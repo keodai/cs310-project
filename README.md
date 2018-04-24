@@ -21,7 +21,7 @@ The application is created in [Python](https://www.python.org/downloads/) 2.7.14
 
 \* not included in Anaconda distribution.
 
-These libraries may be installed in the Python environment using the `conda` (Anaconda) or `pip` (Python) package managers
+These libraries may be installed in the Python environment using the `conda` (Anaconda) or `pip` (Python) package managers.
 
 [FFmpeg](https://ffmpeg.org/) is used to implement file format conversion, and may require additional codecs (libavcodec-extra-53) to be installed or enabled to handle MP3 files (for the GTZAN dataset). This can be performed by compiling FFmpeg manually, through Homebrew (macOS) or by the following command on Linux systems:
 ```
