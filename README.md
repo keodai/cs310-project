@@ -71,3 +71,5 @@ A video demo, showing the operation of the system is also included (**demo.mov**
  - Recommendation can be performed without the UI, by running **recommender.py** directly to obtain a list of textual information about the recommended songs, such as title, artist and path: 
  `python recommender <path_to_music> <recommendation_mode> <vector_type> <data>`
  - The directories used for audio data can be updated by modifying the paths in **paths.py**. If new directories are assigned, they must already exist before running the system.
+
+(Repository made public: 27/04/2018)
